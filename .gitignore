@@ -1,0 +1,16 @@
+# unnecessary build artifacts
+.git
+venv
+.venv
+
+# caches
+**/__pycache__
+.pytest_cache
+.mypy_cache
+
+# editor artifacts
+.vscode
+.idea
+
+# python compiled files
+**.pyc
