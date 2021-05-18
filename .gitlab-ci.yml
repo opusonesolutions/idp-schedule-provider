@@ -46,8 +46,8 @@ unit_tests:
     - poetry run pytest
 
 build:
-  image: docker:19.03.8
   stage: build
+  image: docker:19.03.8
   script: |
     set -e -x
     image=${DKR_REGISTRY}/gridos/$CI_PROJECT_NAME
@@ -57,3 +57,18 @@ build:
         image=$image:COMMIT-$CI_COMMIT_SHA
     fi
     docker build -t $image --build-arg JFROG_USER=$JFROG_USER --build-arg JFROG_PASSWORD=$JFROG_PASSWORD --label commit=$CI_COMMIT_SHA .
+
+pages:
+  stage: build
+  image: python:3.7-slim
+  before_script:
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run create_api_docs
+  artifacts:
+    when: on_success
+    paths:
+      - public
+  only:
+    - master
