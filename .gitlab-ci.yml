@@ -1,0 +1,59 @@
+stages:
+  - static-analysis
+  - testing
+  - build
+
+flake8:
+  stage: static-analysis
+  image: python:3.7-slim
+  before_script:
+    - pip install flake8
+  script:
+    - flake8 idp_schedule_provider tests
+
+black:
+  stage: static-analysis
+  image: python:3.7-slim
+  before_script:
+    - pip install black
+  script:
+    - black --check -v --diff idp_schedule_provider tests
+
+isort:
+  stage: static-analysis
+  image: python:3.7-slim
+  before_script:
+    - pip install isort
+  script:
+    - isort --check idp_schedule_provider tests
+
+mypy:
+  stage: static-analysis
+  image: python:3.7-slim
+  before_script:
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run mypy idp_schedule_provider
+
+unit_tests:
+  stage: testing
+  image: python:3.7-slim
+  before_script:
+    - pip install poetry
+    - poetry install
+  script:
+    - poetry run pytest
+
+build:
+  image: docker:19.03.8
+  stage: build
+  script: |
+    set -e -x
+    image=${DKR_REGISTRY}/gridos/$CI_PROJECT_NAME
+    if [[ $CI_COMMIT_REF_NAME == master || "$CI_COMMIT_TAG" != "" ]]; then
+        image=$image:$CI_COMMIT_REF_NAME
+    else
+        image=$image:COMMIT-$CI_COMMIT_SHA
+    fi
+    docker build -t $image --build-arg JFROG_USER=$JFROG_USER --build-arg JFROG_PASSWORD=$JFROG_PASSWORD --label commit=$CI_COMMIT_SHA .

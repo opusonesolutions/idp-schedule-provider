@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "idp-schedule-provider"
+version = "0.1.0"
+description = "A service implementing IDPs external schedule provider APIs"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = "^0.65.1"
+uvicorn = {extras = ["standard"], version = "^0.13.4"}
+
+[tool.poetry.dev-dependencies]
+black = {version="==21.*", allow-prereleases = true}
+isort = "==5.*"
+mypy = "==0.770"
+flake8 = "==3.*"
+pytest = "==6.*"
+
+[tool.isort]
+src_paths=["idp_schedule_provider", "tests"]
+profile = "black"
+multi_line_output = 3
+
+[tool.black]
+line-length = 100
+target-version = ['py37', 'py38']
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
