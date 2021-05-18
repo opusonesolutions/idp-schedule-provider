@@ -6,7 +6,7 @@ from idp_schedule_provider.exceptions import ScenarioNotFoundException
 
 SCENARIOS: Dict[models.ScenarioID, models.ScenarioModel] = {
     "012443-54543535-345345": models.ScenarioModel(name="test1", description="I be testin'"),
-    "012345-54523532532-543": models.ScenarioModel(name="test2", description="I be testin' more")
+    "012345-54523532532-543": models.ScenarioModel(name="test2", description="I be testin' more"),
 }
 
 
@@ -60,7 +60,7 @@ def get_asset_data(
     time_interval: models.TimeInterval,
     interpolation_method: models.InterpolationMethod,
     sampling_modes: models.SamplingMode,
-    asset_name: str
+    asset_name: str,
 ) -> models.GetSchedulesResponseModel:
     if scenario not in SCENARIOS:
         raise ScenarioNotFoundException()
@@ -97,7 +97,7 @@ def get_scenario_data(
     time_interval: models.TimeInterval,
     interpolation_method: models.InterpolationMethod,
     sampling_modes: models.SamplingMode,
-    feeders: List[str]
+    feeders: List[str],
 ) -> models.GetSchedulesResponseModel:
     if scenario not in SCENARIOS:
         raise ScenarioNotFoundException()

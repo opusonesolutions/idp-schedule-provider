@@ -16,6 +16,9 @@ mypy = "==0.770"
 flake8 = "==3.*"
 pytest = "==6.*"
 
+[tool.poetry.scripts]
+create_api_docs = "poetry_scripts:create_docs"
+
 [tool.isort]
 src_paths=["idp_schedule_provider", "tests"]
 profile = "black"
