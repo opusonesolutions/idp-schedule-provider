@@ -1,14 +1,8 @@
-import json
+from fastapi import FastAPI
 
-from fastapi import FastAPI, Response
-from fastapi.exceptions import RequestValidationError
-
-from idp_schedule_provider import routes
+from idp_schedule_provider.authentication import routes as authentication_routes
+from idp_schedule_provider.forecaster import routes as forecaster_routes
 
 app = FastAPI()
-app.include_router(routes.router)
-
-
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc: RequestValidationError):
-    return Response(json.dumps(exc.errors()), 400)
+app.include_router(authentication_routes.router)
+app.include_router(forecaster_routes.router)
