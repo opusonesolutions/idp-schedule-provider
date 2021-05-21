@@ -13,11 +13,11 @@ router = APIRouter()
 
 
 @router.post("/seed_data")
-async def seed_db(_=Depends(validate_token), db: Session = Depends(get_db_session)):
+async def seed_db(db: Session = Depends(get_db_session)):
     forecast_controller.seed(db)
 
 
-@router.get("/scenario", response_model=schemas.GetScenariosSchema)
+@router.get("/scenario", response_model=schemas.GetScenariosResponseModel)
 async def get_scenarios(_=Depends(validate_token), db: Session = Depends(get_db_session)):
     """
     Gets all scenarios currently available from the schedule provider.
@@ -104,6 +104,12 @@ async def get_schedules(
     The many asset version of this API will be used for the following
     * Loading schedule data for analysis
     """
+
+    # this is actually implemented and works fine as of writing this but we are
+    # intentionnally preventing this from working for testing purposes
+    if time_interval == schemas.TimeInterval.YEAR_1:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "No yearly aggregation available")
+
     try:
         if asset_name is not None:
             result = forecast_controller.get_asset_data(

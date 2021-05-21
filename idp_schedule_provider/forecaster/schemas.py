@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Dict, List, Optional, Union
+from typing import List, MutableMapping, Optional, Union
 
+from dateutil.relativedelta import relativedelta
 from pydantic import BaseModel
 
 from idp_schedule_provider.forecaster.models import Scenarios
@@ -15,8 +16,8 @@ class ScenarioModel(BaseModel):
     description: Optional[str] = None
 
 
-class GetScenariosSchema(BaseModel):
-    scenarios: Dict[ScenarioID, ScenarioModel]
+class GetScenariosResponseModel(BaseModel):
+    scenarios: MutableMapping[ScenarioID, ScenarioModel]
 
     class Config:
         schema_extra = {
@@ -34,7 +35,7 @@ class GetScenariosSchema(BaseModel):
 
     @staticmethod
     def from_scenarios(scenarios: List[Scenarios]):
-        return GetScenariosSchema(
+        return GetScenariosResponseModel(
             scenarios={
                 scenario.id: ScenarioModel(name=scenario.name, description=scenario.description)
                 for scenario in scenarios
@@ -48,7 +49,7 @@ class TimeSpanModel(BaseModel):
 
 
 class GetTimeSpanModel(BaseModel):
-    assets: Dict[AssetID, TimeSpanModel]
+    assets: MutableMapping[AssetID, TimeSpanModel]
 
     class Config:
         schema_extra = {
@@ -77,10 +78,11 @@ class UnbalancedScheduleValue(BaseModel):
     C: ScheduleValue
 
 
-ScheduleEntry = Dict[VariableName, Union[ScheduleValue, UnbalancedScheduleValue]]
+ScheduleEntry = MutableMapping[VariableName, Union[ScheduleValue, UnbalancedScheduleValue]]
 
 
-class TimeInterval(str, Enum):
+class TimeInterval(Enum):
+    # ensure entries are sorted smallest to largest
     MIN_5 = "5 minutes"
     MIN_15 = "15 minutes"
     MIN_30 = "30 minutes"
@@ -89,14 +91,38 @@ class TimeInterval(str, Enum):
     MONTH_1 = "1 month"
     YEAR_1 = "1 year"
 
+    def __gt__(self, other: "TimeInterval"):
+        agg_order = [item for item in TimeInterval]
+        return agg_order.index(self) > agg_order.index(other)
 
-class InterpolationMethod(str, Enum):
+    def __ge__(self, other: "TimeInterval"):
+        return self is other or self > other
+
+    def get_delta(self) -> relativedelta:
+        if self == TimeInterval.MIN_5:
+            return relativedelta(minutes=5)
+        if self == TimeInterval.MIN_15:
+            return relativedelta(minutes=15)
+        if self == TimeInterval.MIN_30:
+            return relativedelta(minutes=30)
+        if self == TimeInterval.HOUR_1:
+            return relativedelta(hours=1)
+        if self == TimeInterval.DAY_1:
+            return relativedelta(days=1)
+        if self == TimeInterval.MONTH_1:
+            return relativedelta(months=1)
+        if self == TimeInterval.YEAR_1:
+            return relativedelta(years=1)
+        raise NotImplementedError("Specified interval is not implemented")
+
+
+class InterpolationMethod(Enum):
     LINEAR = "linear"
     NOCB = "next_observation_carried_backward"
     LOCF = "last_observation_carried_forward"
 
 
-class SamplingMode(str, Enum):
+class SamplingMode(Enum):
     WEIGHTED_AVERAGE = "weighted_average"
     HOLD_FIRST = "hold_first_value"
 
@@ -104,7 +130,7 @@ class SamplingMode(str, Enum):
 class GetSchedulesResponseModel(BaseModel):
     time_interval: TimeInterval
     timestamps: List[datetime]
-    assets: Dict[AssetID, List[ScheduleEntry]]
+    assets: MutableMapping[AssetID, List[ScheduleEntry]]
 
     class Config:
         schema_extra = {

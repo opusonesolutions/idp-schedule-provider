@@ -10,6 +10,7 @@ fastapi = {extras = ["all"], version = "^0.65.1"}
 uvicorn = {extras = ["standard"], version = "^0.13.4"}
 PyJWT = "^2.1.0"
 SQLAlchemy = "^1.4.15"
+python-dateutil = "^2.8.1"
 
 [tool.poetry.dev-dependencies]
 black = {version="==21.*", allow-prereleases = true}

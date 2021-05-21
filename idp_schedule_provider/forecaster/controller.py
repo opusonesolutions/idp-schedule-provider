@@ -5,32 +5,43 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
 
-from idp_schedule_provider.forecaster import exceptions, schemas
+from idp_schedule_provider.forecaster import exceptions, resampler, schemas
 from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
 
 
 def seed(db: Session):
+    """
+    This function exists for testing purposes only. It is used to seed the database with fake data
+    """
+
     scenario1 = Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1")
     scenario2 = Scenarios(id="sce2", name="Scenario 2", description="Test Scenario 2")
     db.add(scenario1)
     db.add(scenario2)
 
-    for asset, feeder, data in [
-        ("asset_1", "f1", {"p": 25, "q": 0.5}),
-        ("asset_2", "f2", {"p": {"A": 25}, "q": {"A": 0.5}}),
-        ("asset_3", "f2", {"bla": 25, "blab": 0.5}),
-    ]:
-        for i in range(24):
-            timestamp = datetime(2000, 1, 1, i, 0, 0, 0, timezone.utc)
-            forecast_data = ForecastData(
-                scenario_id="sce1", asset_name=asset, feeder=feeder, data=data, timestamp=timestamp
-            )
-            db.add(forecast_data)
-            db.commit()
+    # seeds 1 year of data for 3 assets on scenario1. no data on scenario 2
+    for asset in ["asset_1", "asset_2", "asset_3"]:
+        for month in range(1, 13):
+            for day in range(1, 29):  # 28 days for now
+                for hour in range(24):
+                    timestamp = datetime(2000, month, day, hour, 0, 0, 0, timezone.utc)
+                    forecast_data = ForecastData(
+                        scenario_id="sce1",
+                        asset_name=asset,
+                        feeder="f1",
+                        data={
+                            "bal_test": hour,
+                            "unbal_test": {"A": hour},
+                            "full_unbal_test": {"A": hour, "B": day, "C": month},
+                        },
+                        timestamp=timestamp,
+                    )
+                    db.add(forecast_data)
+    db.commit()
 
 
-def get_all_scenarios(db: Session) -> schemas.GetScenariosSchema:
-    return schemas.GetScenariosSchema.from_scenarios(db.query(Scenarios).all())
+def get_all_scenarios(db: Session) -> schemas.GetScenariosResponseModel:
+    return schemas.GetScenariosResponseModel.from_scenarios(db.query(Scenarios).all())
 
 
 def get_asset_timespan(
@@ -113,8 +124,24 @@ def get_asset_data(
         .order_by(ForecastData.asset_name, ForecastData.timestamp)
     ).all()
 
-    return _resample_data(
-        start_time, end_time, time_interval, interpolation_method, sampling_modes, query
+    entries_by_asset: Dict[schemas.AssetID, List[ForecastData]] = {}
+    timestamps: Set[datetime] = set()
+    for entry in query:
+        if entry.asset_name not in entries_by_asset:
+            entries_by_asset[entry.asset_name] = []
+
+        asset_entry = entries_by_asset[entry.asset_name]
+        asset_entry.append(entry)
+        timestamps.add(entry.timestamp)
+
+    response_data = schemas.GetSchedulesResponseModel(
+        time_interval=time_interval,
+        timestamps=sorted(timestamps),
+        assets={asset: [val.data for val in values] for asset, values in entries_by_asset.items()},
+    )
+
+    return resampler.resample_data(
+        time_interval, interpolation_method, sampling_modes, response_data
     )
 
 
@@ -144,34 +171,9 @@ def get_scenario_data(
         .all()
     )
 
-    return _resample_data(
-        start_time, end_time, time_interval, interpolation_method, sampling_modes, query
-    )
-
-
-def _resample_data(
-    start: datetime,
-    end: datetime,
-    time_interval: schemas.TimeInterval,
-    interpolation_method: schemas.InterpolationMethod,
-    sampling_mode: schemas.SamplingMode,
-    query_data: List[ForecastData],
-) -> schemas.GetSchedulesResponseModel:
-    """
-    Basic data resampling
-
-    ## Warning
-    This implementation makes many assumptions which are probably not true about real data
-    and is therefore *not* production ready.
-
-    - stored data is evenly sampled at *hourly* intervals
-    - no discrete variables are supported (eg. OPEN/CLOSED state of switches)
-    """
-
-    # TODO: Actually resample the data
     entries_by_asset: Dict[schemas.AssetID, List[ForecastData]] = {}
     timestamps: Set[datetime] = set()
-    for entry in query_data:
+    for entry in query:
         if entry.asset_name not in entries_by_asset:
             entries_by_asset[entry.asset_name] = []
 
@@ -179,8 +181,12 @@ def _resample_data(
         asset_entry.append(entry)
         timestamps.add(entry.timestamp)
 
-    return schemas.GetSchedulesResponseModel(
+    response_data = schemas.GetSchedulesResponseModel(
         time_interval=time_interval,
         timestamps=sorted(timestamps),
         assets={asset: [val.data for val in values] for asset, values in entries_by_asset.items()},
+    )
+
+    return resampler.resample_data(
+        time_interval, interpolation_method, sampling_modes, response_data
     )
