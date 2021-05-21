@@ -4,3 +4,7 @@ class ForecasterException(Exception):
 
 class ScenarioNotFoundException(ForecasterException):
     pass
+
+
+class AssetNotFoundException(ForecasterException):
+    pass

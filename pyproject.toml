@@ -5,16 +5,19 @@ description = "A service implementing IDPs external schedule provider APIs"
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-fastapi = "^0.65.1"
+python = ">=3.7.1,<4.0"
+fastapi = {extras = ["all"], version = "^0.65.1"}
 uvicorn = {extras = ["standard"], version = "^0.13.4"}
+PyJWT = "^2.1.0"
+SQLAlchemy = "^1.4.15"
 
 [tool.poetry.dev-dependencies]
 black = {version="==21.*", allow-prereleases = true}
 isort = "==5.*"
-mypy = "==0.770"
+mypy = "==0.*"
 flake8 = "==3.*"
 pytest = "==6.*"
+sqlalchemy-stubs = "^0.4"
 
 [tool.poetry.scripts]
 create_api_docs = "poetry_scripts:create_docs"
