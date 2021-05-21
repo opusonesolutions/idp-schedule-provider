@@ -12,3 +12,6 @@ venv
 # editor artifacts
 .vscode
 .idea
+
+# test files
+forecast.db

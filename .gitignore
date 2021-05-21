@@ -16,4 +16,4 @@ venv
 **.pyc
 
 # test files
-sql_app.db
+forecast.db
