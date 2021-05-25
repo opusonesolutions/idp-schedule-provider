@@ -57,6 +57,10 @@ build:
         image=$image:COMMIT-$CI_COMMIT_SHA
     fi
     docker build -t $image --build-arg JFROG_USER=$JFROG_USER --build-arg JFROG_PASSWORD=$JFROG_PASSWORD --label commit=$CI_COMMIT_SHA .
+    docker push $image
+  only:
+    - master
+    - tags
 
 pages:
   stage: build
