@@ -8,18 +8,15 @@ RUN poetry export -o requirements.txt
 FROM python:3.7-slim
 
 # Set the working directory to /app
-WORKDIR /app
+WORKDIR /usr/src
 # launch the webserver
-ENTRYPOINT ["uvicorn idp_schedule_provider.main:app"]
-
-# Make port 8000 available to the world outside this container by default
-EXPOSE 8000
+ENTRYPOINT [ "docker_scripts/init.sh" ]
 
 # Install any needed packages specified in requirements.txt
-COPY --from=requirements_export requirements.txt /app
+COPY --from=requirements_export requirements.txt /usr/src
 RUN pip install -r requirements.txt --no-cache-dir
 
-COPY . /app
+ADD . /usr/src
 
 # For when run as nobody in environments on AWS
-RUN chown -R nobody:nogroup /app
+RUN chown -R nobody:nogroup /usr/src
