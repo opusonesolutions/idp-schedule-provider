@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Dict, List, Optional, Set
 
 from sqlalchemy import func
@@ -9,34 +9,16 @@ from idp_schedule_provider.forecaster import exceptions, resampler, schemas
 from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
 
 
-def seed(db: Session):
+def insert_scenarios(db: Session, scenarios: List[Scenarios]):
     """
     This function exists for testing purposes only. It is used to seed the database with fake data
     """
+    db.add_all(scenarios)
+    db.commit()
 
-    scenario1 = Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1")
-    scenario2 = Scenarios(id="sce2", name="Scenario 2", description="Test Scenario 2")
-    db.add(scenario1)
-    db.add(scenario2)
 
-    # seeds 1 year of data for 3 assets on scenario1. no data on scenario 2
-    for asset in ["asset_1", "asset_2", "asset_3"]:
-        for month in range(1, 13):
-            for day in range(1, 29):  # 28 days for now
-                for hour in range(24):
-                    timestamp = datetime(2000, month, day, hour, 0, 0, 0, timezone.utc)
-                    forecast_data = ForecastData(
-                        scenario_id="sce1",
-                        asset_name=asset,
-                        feeder="f1",
-                        data={
-                            "bal_test": hour,
-                            "unbal_test": {"A": hour},
-                            "full_unbal_test": {"A": hour, "B": day, "C": month},
-                        },
-                        timestamp=timestamp,
-                    )
-                    db.add(forecast_data)
+def insert_schedules(db: Session, schedules: List[ForecastData]):
+    db.add_all(schedules)
     db.commit()
 
 
