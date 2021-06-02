@@ -14,12 +14,12 @@ def insert_scenarios(db: Session, scenarios: List[Scenarios]):
     This function exists for testing purposes only. It is used to seed the database with fake data
     """
     db.add_all(scenarios)
-    db.commit()
+    db.flush()
 
 
 def insert_schedules(db: Session, schedules: List[ForecastData]):
     db.add_all(schedules)
-    db.commit()
+    db.flush()
 
 
 def get_all_scenarios(db: Session) -> schemas.GetScenariosResponseModel:
