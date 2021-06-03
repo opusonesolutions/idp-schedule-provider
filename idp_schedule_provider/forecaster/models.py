@@ -1,7 +1,38 @@
-from sqlalchemy import Column, ForeignKey, String
+from datetime import datetime, timezone
+from typing import Optional
+
+from sqlalchemy import Column, ForeignKey, String, TypeDecorator
 from sqlalchemy.sql.sqltypes import JSON, DateTime, Integer
 
 from idp_schedule_provider.forecaster.database import Base, engine
+
+
+class UTCDateTime(TypeDecorator):
+    """
+    Database stores naive timezones which are assumed to be utc
+    """
+
+    impl = DateTime
+    cache_ok = True
+
+    def process_bind_param(self, value: Optional[datetime], engine):
+        if value is not None:
+            # force all datetimes to utc before persistance
+            return value.astimezone(timezone.utc).replace(tzinfo=None)
+
+    def process_result_value(self, value, engine):
+        if value is not None:
+            # force all datetimes to utc on retrieval
+            return datetime(
+                value.year,
+                value.month,
+                value.day,
+                value.hour,
+                value.minute,
+                value.second,
+                value.microsecond,
+                tzinfo=timezone.utc,
+            )
 
 
 class Scenarios(Base):
@@ -20,7 +51,7 @@ class ForecastData(Base):
     asset_name = Column(String, index=True)
     feeder = Column(String, index=True)
     data = Column(JSON)
-    timestamp = Column(DateTime(timezone=True))
+    timestamp = Column(UTCDateTime)
 
 
 Base.metadata.drop_all(engine)

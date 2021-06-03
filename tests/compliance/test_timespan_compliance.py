@@ -94,16 +94,16 @@ def test_get_timespan_assets(test_client: TestClient, data_seed):
     assert response.json() == {
         "assets": {
             "11KV": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2009-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2009-12-31T23:59:59.999999+00:00",
             },
             "Load 1": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2000-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2000-12-31T23:59:59.999999+00:00",
             },
             "Switch 1": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2000-01-01T00:00:00",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2000-01-01T00:00:00+00:00",
             },
         }
     }
@@ -115,12 +115,12 @@ def test_get_timespan_assets_by_feeder(test_client: TestClient, data_seed):
     assert response.json() == {
         "assets": {
             "11KV": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2009-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2009-12-31T23:59:59.999999+00:00",
             },
             "Load 1": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2000-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2000-12-31T23:59:59.999999+00:00",
             },
         }
     }
@@ -132,8 +132,8 @@ def test_get_timespan_assets_by_asset_name(test_client: TestClient, data_seed):
     assert response.json() == {
         "assets": {
             "Load 1": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2000-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2000-12-31T23:59:59.999999+00:00",
             },
         }
     }
@@ -147,8 +147,8 @@ def test_get_timespan_assets_by_asset_name_and_feeder(test_client: TestClient, d
     assert response.json() == {
         "assets": {
             "Load 1": {
-                "start_datetime": "2000-01-01T00:00:00",
-                "end_datetime": "2000-12-31T23:59:59.999999",
+                "start_datetime": "2000-01-01T00:00:00+00:00",
+                "end_datetime": "2000-12-31T23:59:59.999999+00:00",
             },
         }
     }

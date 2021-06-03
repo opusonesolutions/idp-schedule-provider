@@ -153,6 +153,8 @@ async def get_schedules(
     # intentionnally preventing this from working for testing purposes
     if time_interval == schemas.TimeInterval.YEAR_1:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No yearly aggregation available")
+    if time_interval == schemas.TimeInterval.MIN_5:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "No 5 minute interpolation available")
 
     try:
         if asset_name is not None:
