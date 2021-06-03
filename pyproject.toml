@@ -19,6 +19,7 @@ mypy = "==0.*"
 flake8 = "==3.*"
 pytest = "==6.*"
 sqlalchemy-stubs = "^0.4"
+bandit = "^1.7.0"
 
 [tool.poetry.scripts]
 create_api_docs = "poetry_scripts:create_docs"

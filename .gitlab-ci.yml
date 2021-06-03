@@ -27,6 +27,14 @@ isort:
   script:
     - isort --check idp_schedule_provider tests
 
+bandit:
+  stage: static-analysis
+  image: python:3.7-slim
+  before_script:
+    - pip install bandit
+  script:
+    - bandit -r -ll -f screen idp_schedule_provider tests
+
 mypy:
   stage: static-analysis
   image: python:3.7-slim
