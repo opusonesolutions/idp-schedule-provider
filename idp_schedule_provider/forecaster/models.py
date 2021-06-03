@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
-from typing import Optional
+from typing import Optional, cast
 
+import sqlalchemy
 from sqlalchemy import Column, ForeignKey, String, TypeDecorator
 from sqlalchemy.sql.sqltypes import JSON, DateTime, Integer
 
@@ -50,7 +51,7 @@ class ForecastData(Base):
     scenario_id = Column(String, ForeignKey(Scenarios.id))
     asset_name = Column(String, index=True)
     feeder = Column(String, index=True)
-    data = Column(JSON)
+    data = Column(cast("sqlalchemy.types.TypeEngine[dict]", JSON()))  # force type to dict
     timestamp = Column(UTCDateTime)
 
 

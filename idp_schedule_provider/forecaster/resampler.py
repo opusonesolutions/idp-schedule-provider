@@ -46,14 +46,10 @@ def resample_data(
             del response_data.timestamps[start_idx + 1 : stop_idx]
             for entries in response_data.assets.values():
                 del entries[start_idx + 1 : stop_idx]
-    else:
+    elif time_interval < schemas.TimeInterval.HOUR_1:
         delta = time_interval.get_delta()
 
-        num_to_insert = 0
-        while (
-            response_data.timestamps[0] + (num_to_insert + 1) * delta < response_data.timestamps[1]
-        ):
-            num_to_insert += 1
+        num_to_insert = round(60 / delta.minutes) - 1
 
         # upsample
         num_timepoints = len(response_data.timestamps)
@@ -63,32 +59,18 @@ def resample_data(
                 response_data.timestamps.insert(
                     pos_to_update, response_data.timestamps[pos_to_update - 1] + (i + 1) * delta
                 )
-        for entries in response_data.assets.values():
-            for index in range(len(entries)):
-                pos_to_update = num_timepoints - index
-                for i in reversed(range(num_to_insert)):
-                    try:
-                        _prev = entries[pos_to_update - 1]
-                    except IndexError:
-                        _prev = {}
-
-                    try:
-                        _next = entries[pos_to_update]
-                    except IndexError:
-                        _next = {}
-
+                for entries in response_data.assets.values():
                     if interpolation_method == schemas.InterpolationMethod.LOCF:
-                        new_value = _prev
+                        entries.insert(pos_to_update, entries[pos_to_update - 1])
                     elif interpolation_method == schemas.InterpolationMethod.NOCB:
-                        new_value = _next
-                    elif interpolation_method == schemas.InterpolationMethod.LINEAR:
-                        if _prev and _next:
-                            new_value = _linear_interpolate(_prev, _next)
-                        else:
-                            new_value = {}
+                        entries.insert(pos_to_update, entries[pos_to_update])
+                    else:
+                        # add empty values
+                        entries.insert(pos_to_update, {})
 
-                    entries.insert(pos_to_update, new_value)
-        # interpolate
+            for entries in response_data.assets.values():
+                _linear_interpolate(entries)
+
     return response_data
 
 
@@ -112,30 +94,47 @@ def _weighted_average(entries_to_average: Sequence[schemas.ScheduleEntry]) -> sc
     return new_entry
 
 
-def _linear_interpolate(
-    previous: schemas.ScheduleEntry, next: schemas.ScheduleEntry
-) -> schemas.ScheduleEntry:
-    new_entry: schemas.ScheduleEntry = {}
-    for variable in previous.keys():
-        prev_value = previous[variable]
-        next_value = next[variable]
+def _linear_interpolate(entries: List[schemas.ScheduleEntry]):
+    for idx, entry in enumerate(entries):
+        if entry:
+            continue  # already have a value
+        try:
+            _previous = entries[idx - 1]
+        except IndexError:
+            continue  # cannot interpolate if no previous datapoint
 
-        if isinstance(prev_value, schemas.UnbalancedScheduleValue) and isinstance(
-            next_value, schemas.UnbalancedScheduleValue
-        ):
-            new_value = schemas.UnbalancedScheduleValue()
-            if prev_value.A is not None and next_value.A is not None:
-                new_value.A = (next_value.A + prev_value.A) / 2
-            if prev_value.B is not None and next_value.B is not None:
-                new_value.B = (next_value.B + prev_value.B) / 2
-            if prev_value.C is not None and next_value.C is not None:
-                new_value.C = (next_value.C + prev_value.C) / 2
+        try:
+            next_idx = idx
+            while not entries[next_idx]:
+                next_idx += 1
+            _next = entries[next_idx]
+        except IndexError:
+            continue  # cannot interpolate if no next datapoint
 
-            new_entry[variable] = new_value
+        def lerp(_prev: float, _next: float) -> float:
+            return _prev + ((_next - _prev) / (next_idx - idx + 1))
 
-        elif isinstance(next_value, float) and isinstance(prev_value, float):
-            new_entry[variable] = (next_value + prev_value) / 2
-        else:
-            new_entry[variable] = None
+        new_entry: schemas.ScheduleEntry = {}
+        for variable in _previous.keys():
+            prev_value = _previous[variable]
+            next_value = _next[variable]
 
-    return new_entry
+            if isinstance(prev_value, schemas.UnbalancedScheduleValue) and isinstance(
+                next_value, schemas.UnbalancedScheduleValue
+            ):
+                new_value = schemas.UnbalancedScheduleValue()
+                if prev_value.A is not None and next_value.A is not None:
+                    new_value.A = lerp(prev_value.A, next_value.A)
+                if prev_value.B is not None and next_value.B is not None:
+                    new_value.B = lerp(prev_value.B, next_value.B)
+                if prev_value.C is not None and next_value.C is not None:
+                    new_value.C = lerp(prev_value.C, next_value.C)
+
+                new_entry[variable] = new_value
+
+            elif isinstance(next_value, float) and isinstance(prev_value, float):
+                new_entry[variable] = lerp(prev_value, next_value)
+            else:
+                new_entry[variable] = None
+
+        entries[idx] = new_entry
