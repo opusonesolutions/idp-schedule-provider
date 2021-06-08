@@ -1,7 +1,11 @@
 #!/bin/sh
-FASTAPI_APP=idp_schedule_provider.main:app
+set -e
 
-exec uvicorn "$FASTAPI_APP" \
-    --host 0.0.0.0 \
-    --port 8000 \
-    $UVICORN_CMD_ARGS
+exec gunicorn \
+    -k uvicorn.workers.UvicornWorker \
+    --workers 1 \
+    --threads 4 \
+    --bind 0.0.0.0:8000 \
+    --log-level=INFO \
+    $GUNICORN_CMD_ARGS \
+    idp_schedule_provider.main:app

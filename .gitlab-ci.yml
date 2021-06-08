@@ -1,3 +1,5 @@
+image: python:3.7-slim
+
 stages:
   - static-analysis
   - testing
@@ -5,7 +7,6 @@ stages:
 
 flake8:
   stage: static-analysis
-  image: python:3.7-slim
   before_script:
     - pip install flake8
   script:
@@ -13,7 +14,6 @@ flake8:
 
 black:
   stage: static-analysis
-  image: python:3.7-slim
   before_script:
     - pip install black
   script:
@@ -21,7 +21,6 @@ black:
 
 isort:
   stage: static-analysis
-  image: python:3.7-slim
   before_script:
     - pip install isort
   script:
@@ -29,7 +28,6 @@ isort:
 
 bandit:
   stage: static-analysis
-  image: python:3.7-slim
   before_script:
     - pip install bandit
   script:
@@ -37,7 +35,6 @@ bandit:
 
 mypy:
   stage: static-analysis
-  image: python:3.7-slim
   before_script:
     - pip install poetry
     - poetry install
@@ -46,7 +43,6 @@ mypy:
 
 unit_tests:
   stage: testing
-  image: python:3.7-slim
   before_script:
     - pip install poetry
     - poetry install
@@ -72,7 +68,6 @@ build:
 
 pages:
   stage: build
-  image: python:3.7-slim
   before_script:
     - pip install poetry
     - poetry install
