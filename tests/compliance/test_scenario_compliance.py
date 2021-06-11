@@ -6,7 +6,7 @@ from idp_schedule_provider.forecaster.models import Scenarios
 
 
 def test_get_scenarios_none(test_client: TestClient):
-    response = test_client.get("/scenario")
+    response = test_client.get("/scenarios")
     assert response.status_code == 200
     assert response.json() == {"scenarios": {}}
 
@@ -20,7 +20,7 @@ def test_get_scenarios_many(test_client: TestClient, database_client: Session):
         ],
     )
 
-    response = test_client.get("/scenario")
+    response = test_client.get("/scenarios")
     assert response.status_code == 200
     response_data = response.json()
     assert response_data["scenarios"]["sce1"] == {

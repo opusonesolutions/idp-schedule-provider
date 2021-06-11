@@ -55,7 +55,7 @@ client_secret=gridos_pw
 
 and subsequent requests should include the token response in the authorization header
 ```
-GET http://localhost:8000/scenario
+GET http://localhost:8000/scenarios
 Content-Type: application/json
 Authorization: Bearer <JWT Token>
 

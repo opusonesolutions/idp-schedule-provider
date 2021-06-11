@@ -168,6 +168,6 @@ def _query_data_to_schedule_response(
 
     return schemas.GetSchedulesResponseModel(
         time_interval=time_interval,
-        timestamps=sorted(entries_by_time.keys()),
+        time_stamps=sorted(entries_by_time.keys()),
         assets=assets,
     )

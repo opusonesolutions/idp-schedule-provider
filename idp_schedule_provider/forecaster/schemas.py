@@ -129,17 +129,39 @@ class SamplingMode(Enum):
 
 class GetSchedulesResponseModel(BaseModel):
     time_interval: TimeInterval
-    timestamps: List[datetime]
+    time_stamps: List[datetime]
     assets: MutableMapping[AssetID, List[ScheduleEntry]]
 
     class Config:
         schema_extra = {
             "example": {
                 "time_interval": TimeInterval.DAY_1,
-                "timestamps": [
+                "time_stamps": [
                     datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc),
                     datetime(2000, 1, 2, 0, 0, 0, 0, timezone.utc),
                 ],
-                "assets": {"asset_1": "TBD"},
+                "assets": {
+                    "feeder_1": [
+                        {
+                            "load": 450000,
+                            "load_pf": 0.9,
+                            "generation": 45000,
+                            "generation_pf": 0.95,
+                        },
+                        {
+                            "load": 550000,
+                            "load_pf": 0.86,
+                            "generation": 75000,
+                            "generation_pf": 0.95,
+                        },
+                    ],
+                    "asset_2": [
+                        {
+                            "p": {"A": 24000, "B": 16000, "C": 20000},
+                            "q": {"A": 4000, "B": 2000, "C": 3000},
+                        },
+                        None,
+                    ],
+                },
             }
         }

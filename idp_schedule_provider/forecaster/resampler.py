@@ -24,7 +24,7 @@ def resample_data(
     additionally no effort has been made to optimize for performance
     """
     # if there are no timestamp, don't try to resample
-    if len(response_data.timestamps) == 0:
+    if len(response_data.time_stamps) == 0:
         return response_data
 
     if time_interval > schemas.TimeInterval.HOUR_1:
@@ -32,18 +32,18 @@ def resample_data(
         # get the ranges of datapoints which would be merged
         ranges: List[Tuple[int, int]] = []
         start_idx = 0
-        for index in range(len(response_data.timestamps)):
-            if response_data.timestamps[index] >= response_data.timestamps[start_idx] + delta:
+        for index in range(len(response_data.time_stamps)):
+            if response_data.time_stamps[index] >= response_data.time_stamps[start_idx] + delta:
                 ranges.append((start_idx, index))
                 start_idx = index
-        ranges.append((start_idx, len(response_data.timestamps)))
+        ranges.append((start_idx, len(response_data.time_stamps)))
         # iterate through in reverse order to avoid index changes
         for start_idx, stop_idx in reversed(ranges):
             if sampling_mode == schemas.SamplingMode.WEIGHTED_AVERAGE:
                 for entries in response_data.assets.values():
                     entries[start_idx] = _weighted_average(entries[start_idx:stop_idx])
 
-            del response_data.timestamps[start_idx + 1 : stop_idx]
+            del response_data.time_stamps[start_idx + 1 : stop_idx]
             for entries in response_data.assets.values():
                 del entries[start_idx + 1 : stop_idx]
     elif time_interval < schemas.TimeInterval.HOUR_1:
@@ -52,12 +52,12 @@ def resample_data(
         num_to_insert = round(60 / delta.minutes) - 1
 
         # upsample
-        num_timepoints = len(response_data.timestamps)
+        num_timepoints = len(response_data.time_stamps)
         for index in range(num_timepoints):
             pos_to_update = num_timepoints - index
             for i in reversed(range(num_to_insert)):
-                response_data.timestamps.insert(
-                    pos_to_update, response_data.timestamps[pos_to_update - 1] + (i + 1) * delta
+                response_data.time_stamps.insert(
+                    pos_to_update, response_data.time_stamps[pos_to_update - 1] + (i + 1) * delta
                 )
                 for entries in response_data.assets.values():
                     if interpolation_method == schemas.InterpolationMethod.LOCF:

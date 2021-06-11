@@ -53,7 +53,7 @@ async def seed_db(db: Session = Depends(get_db_session)):
     forecast_controller.insert_schedules(db, forecast_data)
 
 
-@router.get("/scenario", response_model=schemas.GetScenariosResponseModel, tags=["spec-required"])
+@router.get("/scenarios", response_model=schemas.GetScenariosResponseModel, tags=["spec-required"])
 async def get_scenarios(_=Depends(validate_token), db: Session = Depends(get_db_session)):
     """
     Gets all scenarios currently available from the schedule provider.

@@ -27,12 +27,12 @@ def auth_token(test_client: TestClient):
 
 
 def test_scenario_requires_auth(test_client: TestClient):
-    response = test_client.get("/scenario")
+    response = test_client.get("/scenarios")
     assert response.status_code == 401
 
 
 def test_scenario_with_token(test_client: TestClient, auth_token: str):
-    response = test_client.get("/scenario", headers={"authorization": f"Bearer {auth_token}"})
+    response = test_client.get("/scenarios", headers={"authorization": f"Bearer {auth_token}"})
     assert response.status_code == 200
 
 

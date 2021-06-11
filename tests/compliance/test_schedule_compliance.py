@@ -93,7 +93,7 @@ def test_get_timespan_none(test_client: TestClient, scenario_seed):
     assert response.json() == {
         "time_interval": TimeInterval.HOUR_1.value,
         "assets": {},
-        "timestamps": [],
+        "time_stamps": [],
     }
 
 
@@ -113,7 +113,7 @@ def test_get_schedule_data_hourly_by_feeder(test_client: TestClient, data_seed):
     assert response.status_code == 200
     assert response.json() == {
         "time_interval": TimeInterval.HOUR_1.value,
-        "timestamps": [
+        "time_stamps": [
             "2000-01-01T00:00:00+00:00",
             "2000-01-01T01:00:00+00:00",
             "2000-01-01T02:00:00+00:00",
@@ -160,7 +160,7 @@ def test_get_schedule_data_hourly_by_asset(test_client: TestClient, data_seed):
     assert response.status_code == 200
     assert response.json() == {
         "time_interval": TimeInterval.HOUR_1.value,
-        "timestamps": [
+        "time_stamps": [
             "2000-01-01T00:00:00+00:00",
             "2000-01-01T01:00:00+00:00",
             "2000-01-01T02:00:00+00:00",
@@ -206,7 +206,7 @@ def test_get_schedule_data_datetime_filter(test_client: TestClient, data_seed):
     assert response.status_code == 200
     assert response.json() == {
         "time_interval": TimeInterval.HOUR_1.value,
-        "timestamps": ["2000-01-01T01:00:00+00:00"],
+        "time_stamps": ["2000-01-01T01:00:00+00:00"],
         "assets": {
             "11KV": [
                 {
@@ -237,7 +237,7 @@ def test_get_schedule_data_sampled(test_client: TestClient, interval: TimeInterv
     assert response.status_code == 200
     assert response.json() == {
         "time_interval": interval.value,
-        "timestamps": ["2000-01-01T00:00:00+00:00"],
+        "time_stamps": ["2000-01-01T00:00:00+00:00"],
         "assets": {
             "11KV": [
                 {
@@ -285,7 +285,7 @@ def test_get_schedule_data_interpolated(test_client: TestClient, interval: TimeI
     assert response.status_code == 200
     assert response.json() == {
         "time_interval": interval.value,
-        "timestamps": [
+        "time_stamps": [
             "2000-01-01T01:00:00+00:00",
             "2000-01-01T01:15:00+00:00",
             "2000-01-01T01:30:00+00:00",
