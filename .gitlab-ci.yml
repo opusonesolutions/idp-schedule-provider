@@ -4,6 +4,7 @@ stages:
   - static-analysis
   - testing
   - build
+  - deploy
 
 flake8:
   stage: static-analysis
@@ -77,5 +78,17 @@ pages:
     when: on_success
     paths:
       - public
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  image: ${DKR_REGISTRY}/gridos/gridos-deploy:master
+  script:
+    - source /usr/src/run
+    - main deploy -f /usr/src/configs/stacks/idp-test-forecaster/stack.yml forecaster test $CI_COMMIT_REF_NAME
+  environment:
+    name: forecaster-test
+    url: http://idp-schedules.gridos.com:5501
   only:
     - master
