@@ -94,7 +94,7 @@ def _weighted_average(entries_to_average: Sequence[schemas.ScheduleEntry]) -> sc
     return new_entry
 
 
-def _linear_interpolate(entries: List[schemas.ScheduleEntry]):
+def _linear_interpolate(entries: List[schemas.ScheduleEntry]) -> None:
     for idx, entry in enumerate(entries):
         if entry:
             continue  # already have a value

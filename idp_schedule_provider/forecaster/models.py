@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import Optional, cast
+from typing import Any, Dict, Optional, cast
 
 import sqlalchemy
 from sqlalchemy import Column, ForeignKey, String, TypeDecorator
@@ -16,12 +16,16 @@ class UTCDateTime(TypeDecorator):
     impl = DateTime
     cache_ok = True
 
-    def process_bind_param(self, value: Optional[datetime], engine):
+    def process_bind_param(  # type: ignore
+        self, value: Optional[datetime], dialect
+    ) -> Optional[datetime]:
         if value is not None:
             # force all datetimes to utc before persistance
             return value.astimezone(timezone.utc).replace(tzinfo=None)
 
-    def process_result_value(self, value, engine):
+        return None
+
+    def process_result_value(self, value: Optional[datetime], *_) -> Optional[datetime]:
         if value is not None:
             # force all datetimes to utc on retrieval
             return datetime(
@@ -34,6 +38,7 @@ class UTCDateTime(TypeDecorator):
                 value.microsecond,
                 tzinfo=timezone.utc,
             )
+        return None
 
 
 class Scenarios(Base):
@@ -51,7 +56,7 @@ class ForecastData(Base):
     scenario_id = Column(String, ForeignKey(Scenarios.id))
     asset_name = Column(String, index=True)
     feeder = Column(String, index=True)
-    data = Column(cast("sqlalchemy.types.TypeEngine[dict]", JSON()))  # force type to dict
+    data = Column(cast("sqlalchemy.types.TypeEngine[Dict[str, Any]]", JSON()))  # force type to dict
     timestamp = Column(UTCDateTime)
 
 

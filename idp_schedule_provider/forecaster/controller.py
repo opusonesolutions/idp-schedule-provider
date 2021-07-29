@@ -9,7 +9,7 @@ from idp_schedule_provider.forecaster import exceptions, resampler, schemas
 from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
 
 
-def insert_scenarios(db: Session, scenarios: List[Scenarios]):
+def insert_scenarios(db: Session, scenarios: List[Scenarios]) -> None:
     """
     This function exists for testing purposes only. It is used to seed the database with fake data
     """
@@ -17,7 +17,7 @@ def insert_scenarios(db: Session, scenarios: List[Scenarios]):
     db.flush()
 
 
-def insert_schedules(db: Session, schedules: List[ForecastData]):
+def insert_schedules(db: Session, schedules: List[ForecastData]) -> None:
     db.add_all(schedules)
     db.flush()
 

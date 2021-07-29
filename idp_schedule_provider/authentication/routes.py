@@ -8,7 +8,7 @@ router = APIRouter()
 @router.post("/token", response_model=schemas.TokenResponseModal, tags=["spec-optional"])
 async def get_access_token(
     form_data: auth.OAuth2ClientCredentialsRequestForm = Depends(),
-):
+) -> schemas.TokenResponseModal:
     """
     Provides an access token to the client providing credentials.
 

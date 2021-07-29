@@ -1,6 +1,6 @@
 import os
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Dict, Optional
 
 import jwt
 from fastapi import Depends, Form, HTTPException, Request, status
@@ -20,8 +20,8 @@ class Oauth2ClientCredentials(OAuth2):
     def __init__(
         self,
         tokenUrl: str,
-        scheme_name: str = None,
-        scopes: dict = None,
+        scheme_name: Optional[str] = None,
+        scopes: Optional[Dict[str, str]] = None,
     ):
         if not scopes:
             scopes = {}
