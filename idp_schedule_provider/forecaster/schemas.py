@@ -3,7 +3,7 @@ from enum import Enum
 from typing import List, MutableMapping, Optional, Union
 
 from dateutil.relativedelta import relativedelta
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from idp_schedule_provider.forecaster.models import Scenarios
 
@@ -12,12 +12,16 @@ ScenarioID = str
 
 
 class ScenarioModel(BaseModel):
-    name: str
-    description: Optional[str] = None
+    name: str = Field(description="A short name describing the scenario")
+    description: Optional[str] = Field(
+        default=None, description="A longer description of the scenario"
+    )
 
 
 class GetScenariosResponseModel(BaseModel):
-    scenarios: MutableMapping[ScenarioID, ScenarioModel]
+    scenarios: MutableMapping[ScenarioID, ScenarioModel] = Field(
+        description="A mapping of scenarios that are available to be used"
+    )
 
     class Config:
         schema_extra = {
@@ -34,7 +38,7 @@ class GetScenariosResponseModel(BaseModel):
         }
 
     @staticmethod
-    def from_scenarios(scenarios: List[Scenarios]):
+    def from_scenarios(scenarios: List[Scenarios]) -> "GetScenariosResponseModel":
         return GetScenariosResponseModel(
             scenarios={
                 scenario.id: ScenarioModel(name=scenario.name, description=scenario.description)
@@ -44,12 +48,21 @@ class GetScenariosResponseModel(BaseModel):
 
 
 class TimeSpanModel(BaseModel):
-    start_datetime: datetime
-    end_datetime: datetime
+    start_datetime: datetime = Field(
+        description="A UTC ISO8601 timestamp which represents the first datapoint available"
+    )
+    end_datetime: datetime = Field(
+        description="A UTC ISO8601 timestamp which represents the last datapoint available"
+    )
 
 
 class GetTimeSpanModel(BaseModel):
-    assets: MutableMapping[AssetID, TimeSpanModel]
+    assets: MutableMapping[AssetID, TimeSpanModel] = Field(
+        description=(
+            "A mapping of assets for which there is data available"
+            "and the timespans where that data is available"
+        )
+    )
 
     class Config:
         schema_extra = {
@@ -91,11 +104,11 @@ class TimeInterval(Enum):
     MONTH_1 = "1 month"
     YEAR_1 = "1 year"
 
-    def __gt__(self, other: "TimeInterval"):
+    def __gt__(self, other: "TimeInterval") -> bool:
         agg_order = [item for item in TimeInterval]
         return agg_order.index(self) > agg_order.index(other)
 
-    def __ge__(self, other: "TimeInterval"):
+    def __ge__(self, other: "TimeInterval") -> bool:
         return self is other or self > other
 
     def get_delta(self) -> relativedelta:
@@ -128,9 +141,18 @@ class SamplingMode(Enum):
 
 
 class GetSchedulesResponseModel(BaseModel):
-    time_interval: TimeInterval
-    time_stamps: List[datetime]
-    assets: MutableMapping[AssetID, List[ScheduleEntry]]
+    time_interval: TimeInterval = Field(
+        description="The interval at which the schedule data is spaced"
+    )
+    time_stamps: List[datetime] = Field(
+        description=(
+            "A list of UTC ISO8601 timestamps (sorted ascending) "
+            "for which data is available in the assets mapping"
+        )
+    )
+    assets: MutableMapping[AssetID, List[ScheduleEntry]] = Field(
+        description="A mapping of assets to their schedule data"
+    )
 
     class Config:
         schema_extra = {
@@ -161,6 +183,16 @@ class GetSchedulesResponseModel(BaseModel):
                             "q": {"A": 4000, "B": 2000, "C": 3000},
                         },
                         None,
+                    ],
+                    "global_ev": [
+                        {
+                            "charge_event_start": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc),
+                            "charge_event_end": datetime(2000, 1, 1, 17, 0, 0, 0, timezone.utc),
+                            "pf": 0.9,
+                            "p_max": 2400,
+                            "start_soc": 75,
+                            "total_battery_capacity": 10000,
+                        }
                     ],
                 },
             }

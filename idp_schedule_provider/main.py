@@ -16,8 +16,14 @@ class AboutResponseModel(BaseModel):
     title: str
     description: str
     docs_url: str
+    redoc_url: str
 
 
 @app.get("/", response_model=AboutResponseModel)
-async def about():
-    return AboutResponseModel(title=app.title, description=app.description, docs_url=app.docs_url)
+async def about() -> AboutResponseModel:
+    return AboutResponseModel(
+        title=app.title,
+        description=app.description,
+        docs_url=app.docs_url,
+        redoc_url=app.redoc_url,
+    )

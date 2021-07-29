@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/seed_data", tags=["test-only"])
-async def seed_db(db: Session = Depends(get_db_session)):
+async def seed_db(db: Session = Depends(get_db_session)) -> None:
     """
     Seeds the database with test data.
 
@@ -54,13 +54,15 @@ async def seed_db(db: Session = Depends(get_db_session)):
 
 
 @router.get("/scenarios", response_model=schemas.GetScenariosResponseModel, tags=["spec-required"])
-async def get_scenarios(_=Depends(validate_token), db: Session = Depends(get_db_session)):
+async def get_scenarios(
+    _: bool = Depends(validate_token), db: Session = Depends(get_db_session)
+) -> schemas.GetScenariosResponseModel:
     """
     Gets all scenarios currently available from the schedule provider.
 
     ## Use Case
     This operation will be used to allow the user to choose between multiple scenarios available.
-    If there is only a single scenario available.
+    It is required that there will always be 1 or more scenarios.
     """
     return forecast_controller.get_all_scenarios(db)
 
@@ -78,9 +80,9 @@ async def get_schedule_timespans(
     asset_name: Optional[str] = Query(
         None, description="The name of the asset for which the asset data should be retrieved."
     ),
-    _=Depends(validate_token),
+    _: bool = Depends(validate_token),
     db: Session = Depends(get_db_session),
-):
+) -> schemas.GetTimeSpanModel:
     """
     Gets the range for which each asset in the scenario has data.
 
@@ -103,9 +105,14 @@ async def get_schedule_timespans(
     return result
 
 
+with open("idp_schedule_provider/forecaster/resources/schedule_response.md") as f:
+    schedule_response = f.read()
+
+
 @router.get(
     "/{scenario}/asset_schedules",
     response_model=schemas.GetSchedulesResponseModel,
+    description=schedule_response,
     tags=["spec-required"],
 )
 async def get_schedules(
@@ -135,18 +142,11 @@ async def get_schedules(
     asset_name: Optional[str] = Query(
         None, description="The name of the asset for which the asset data should be retrieved."
     ),
-    _=Depends(validate_token),
+    _: bool = Depends(validate_token),
     db: Session = Depends(get_db_session),
-):
+) -> schemas.GetSchedulesResponseModel:
     """
     Gets the asset schedule data for a single asset or all assets.
-
-    ## Use Case
-    This single asset version of this API will be used for the following
-    * Displaying graphs in the user interface
-
-    The many asset version of this API will be used for the following
-    * Loading schedule data for analysis
     """
 
     # this is actually implemented and works fine as of writing this but we are
