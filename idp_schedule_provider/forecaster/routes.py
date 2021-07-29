@@ -9,6 +9,7 @@ from idp_schedule_provider.forecaster import controller as forecast_controller
 from idp_schedule_provider.forecaster import exceptions, schemas
 from idp_schedule_provider.forecaster.database import get_db_session
 from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
+from idp_schedule_provider.forecaster.resources import load_resource
 
 router = APIRouter()
 
@@ -53,16 +54,17 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     forecast_controller.insert_schedules(db, forecast_data)
 
 
-@router.get("/scenarios", response_model=schemas.GetScenariosResponseModel, tags=["spec-required"])
+@router.get(
+    "/scenarios",
+    response_model=schemas.GetScenariosResponseModel,
+    description=load_resource('scenarios_response'),
+    tags=["spec-required"]
+)
 async def get_scenarios(
     _: bool = Depends(validate_token), db: Session = Depends(get_db_session)
 ) -> schemas.GetScenariosResponseModel:
     """
     Gets all scenarios currently available from the schedule provider.
-
-    ## Use Case
-    This operation will be used to allow the user to choose between multiple scenarios available.
-    It is required that there will always be 1 or more scenarios.
     """
     return forecast_controller.get_all_scenarios(db)
 
@@ -70,6 +72,7 @@ async def get_scenarios(
 @router.get(
     "/{scenario}/asset_schedules/timespan",
     response_model=schemas.GetTimeSpanModel,
+    description=load_resource('timespan_response'),
     tags=["spec-required"],
 )
 async def get_schedule_timespans(
@@ -85,12 +88,6 @@ async def get_schedule_timespans(
 ) -> schemas.GetTimeSpanModel:
     """
     Gets the range for which each asset in the scenario has data.
-
-    ## Use Case
-    This operation will be used for the following:
-    * Determining if an asset has schedule data
-    * Identifying which assets are included in the feeder schedule
-    * Determining the timerange in which an analysis can be run.
     """
     try:
         if asset_name is not None:
@@ -105,14 +102,10 @@ async def get_schedule_timespans(
     return result
 
 
-with open("idp_schedule_provider/forecaster/resources/schedule_response.md") as f:
-    schedule_response = f.read()
-
-
 @router.get(
     "/{scenario}/asset_schedules",
     response_model=schemas.GetSchedulesResponseModel,
-    description=schedule_response,
+    description=load_resource('schedule_response'),
     tags=["spec-required"],
 )
 async def get_schedules(
