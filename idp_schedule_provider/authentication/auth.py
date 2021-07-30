@@ -54,10 +54,7 @@ class OAuth2ClientCredentialsRequestForm:
 
 
 def authenticate_client(client_id: Optional[str], client_secret: Optional[str]) -> bool:
-    return (
-        client_id in settings.jwt_clients and
-        settings.jwt_clients[client_id] == client_secret
-    )
+    return client_id in settings.jwt_clients and settings.jwt_clients[client_id] == client_secret
 
 
 def validate_token(token: Optional[str] = Depends(oauth2_scheme)) -> bool:

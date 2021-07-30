@@ -57,8 +57,8 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
 @router.get(
     "/scenarios",
     response_model=schemas.GetScenariosResponseModel,
-    description=load_resource('scenarios_response'),
-    tags=["spec-required"]
+    description=load_resource("scenarios_response"),
+    tags=["spec-required"],
 )
 async def get_scenarios(
     _: bool = Depends(validate_token), db: Session = Depends(get_db_session)
@@ -72,7 +72,7 @@ async def get_scenarios(
 @router.get(
     "/{scenario}/asset_schedules/timespan",
     response_model=schemas.GetTimeSpanModel,
-    description=load_resource('timespan_response'),
+    description=load_resource("timespan_response"),
     tags=["spec-required"],
 )
 async def get_schedule_timespans(
@@ -105,7 +105,7 @@ async def get_schedule_timespans(
 @router.get(
     "/{scenario}/asset_schedules",
     response_model=schemas.GetSchedulesResponseModel,
-    description=load_resource('schedule_response'),
+    description=load_resource("schedule_response"),
     tags=["spec-required"],
 )
 async def get_schedules(
