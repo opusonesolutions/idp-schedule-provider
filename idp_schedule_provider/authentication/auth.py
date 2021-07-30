@@ -10,10 +10,10 @@ from fastapi.security.oauth2 import (
     get_authorization_scheme_param,
 )
 
+from idp_schedule_provider import config
 from idp_schedule_provider.authentication import schemas
 
-INSECURE_SECRET_KEY = "INSECURE_SECRET_KEY"
-TOKEN_ALGORITHM = "HS256"
+settings: config.Settings = config.get_settings()
 
 
 class Oauth2ClientCredentials(OAuth2):
@@ -54,7 +54,10 @@ class OAuth2ClientCredentialsRequestForm:
 
 
 def authenticate_client(client_id: Optional[str], client_secret: Optional[str]) -> bool:
-    return client_id == "gridos" and client_secret == "gridos_pw"
+    return (
+        client_id in settings.jwt_clients and
+        settings.jwt_clients[client_id] == client_secret
+    )
 
 
 def validate_token(token: Optional[str] = Depends(oauth2_scheme)) -> bool:
@@ -67,7 +70,7 @@ def validate_token(token: Optional[str] = Depends(oauth2_scheme)) -> bool:
             )
         else:
             try:
-                jwt.decode(token, INSECURE_SECRET_KEY, algorithms=[TOKEN_ALGORITHM])
+                jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
             except jwt.DecodeError:
                 raise HTTPException(
                     status_code=401,
@@ -80,7 +83,7 @@ def validate_token(token: Optional[str] = Depends(oauth2_scheme)) -> bool:
 
 def create_token() -> schemas.TokenResponseModal:
     expiry = datetime.utcnow() + timedelta(days=1)
-    token = jwt.encode({"exp": expiry}, INSECURE_SECRET_KEY, TOKEN_ALGORITHM)
+    token = jwt.encode({"exp": expiry}, settings.jwt_secret_key, settings.jwt_algorithm)
     return schemas.TokenResponseModal(
         access_token=token,
         token_type="Bearer",
