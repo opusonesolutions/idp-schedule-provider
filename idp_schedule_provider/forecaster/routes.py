@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
@@ -8,8 +8,8 @@ from idp_schedule_provider.authentication.auth import validate_token
 from idp_schedule_provider.forecaster import controller as forecast_controller
 from idp_schedule_provider.forecaster import exceptions, schemas
 from idp_schedule_provider.forecaster.database import get_db_session
-from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
 from idp_schedule_provider.forecaster.resources import load_resource
+from idp_schedule_provider.forecaster.seed_data import DUMMY_SOURCE, IEEE123_SOURCE
 
 router = APIRouter()
 
@@ -23,35 +23,10 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     This exists for testing purposes only. It is not part of the external schedule implementation
     and does not need to be implemented as part of the specification.
     """
-
-    scenarios = [
-        Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
-        Scenarios(id="sce2", name="Scenario 2", description="Test Scenario 2"),
-    ]
-
-    forecast_data = []
-    # seeds 1 year of data for 3 assets on scenario1. no data on scenario 2
-    for asset in ["asset_1", "asset_2", "asset_3"]:
-        for month in range(1, 13):
-            for day in range(1, 29):  # 28 days for now
-                for hour in range(24):
-                    timestamp = datetime(2000, month, day, hour, 0, 0, 0, timezone.utc)
-                    forecast_data.append(
-                        ForecastData(
-                            scenario_id="sce1",
-                            asset_name=asset,
-                            feeder="f1",
-                            data={
-                                "bal_test": hour,
-                                "unbal_test": {"A": hour},
-                                "full_unbal_test": {"A": hour, "B": day, "C": month},
-                            },
-                            timestamp=timestamp,
-                        )
-                    )
-
-    forecast_controller.insert_scenarios(db, scenarios)
-    forecast_controller.insert_schedules(db, forecast_data)
+    forecast_controller.insert_scenarios(db, DUMMY_SOURCE.scenarios)
+    forecast_controller.insert_schedules(db, DUMMY_SOURCE.forecast_data)
+    forecast_controller.insert_scenarios(db, IEEE123_SOURCE.scenarios)
+    forecast_controller.insert_schedules(db, IEEE123_SOURCE.forecast_data)
 
 
 @router.get(
@@ -181,5 +156,4 @@ async def get_schedules(
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
-
     return result

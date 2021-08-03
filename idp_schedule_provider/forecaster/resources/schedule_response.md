@@ -11,6 +11,12 @@ The many asset version of this API will be used for the following
 
 <details>
 
+### Timestamp and Asset Value array consistency
+With the exception of EV charging events, the array of timestamps must be exactly
+the same length as the array of values for each asset. The timestamps will be
+assumed to map 1:1 with the array of datapoints. If a datapoint is intentionally
+being skipped, use an empty object.
+
 ### Missing Data
 The data returned by the API should not be missing any timepoints or data for assets.
 In the absence of data, assets will fallback on their default behaviors. See the
@@ -69,7 +75,7 @@ month for multiple asset reqests.
 | -------------------- | -------------------- | ------------- | -------------   |
 | 2000-01-01T00:00:00Z | 2000-01-31T23:59:59Z | 1 day         | 31 timepoints per asset |
 | 2000-01-01T00:00:00Z | 2000-01-01T23:59:59Z | 1 hour        | 24 timepoints per asset |
-| 2000-01-01T00:00:00Z | 2000-01-01T01:59:59Z | 5 minutes     | 24 timepoints per asset |`
+| 2000-01-01T00:00:00Z | 2000-01-01T01:59:59Z | 5 minutes     | 24 timepoints per asset |
 
 </details>
 
