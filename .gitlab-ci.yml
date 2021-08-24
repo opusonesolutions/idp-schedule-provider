@@ -37,6 +37,7 @@ bandit:
 mypy:
   stage: static-analysis
   before_script:
+    - pip install --upgrade pip
     - pip install poetry
     - poetry install
   script:
@@ -45,6 +46,7 @@ mypy:
 unit_tests:
   stage: testing
   before_script:
+    - pip install --upgrade pip
     - pip install poetry
     - poetry install
   script:
@@ -70,6 +72,7 @@ build:
 pages:
   stage: build
   before_script:
+    - pip install --upgrade pip
     - pip install poetry
     - poetry install
   script:
