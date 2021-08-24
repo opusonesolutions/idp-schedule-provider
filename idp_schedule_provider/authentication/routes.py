@@ -17,9 +17,10 @@ async def get_access_token(
     need to secure your endpoint for public use (eg. on prem deployments), this is not necessary.
 
     ## WARNING
-    The implementation included in this reference implement is NOT recomended. It exists for
-    testing and reference purposes only. We recommend an external JWT provider like Keycloak,
-    short lived tokens and token validation for a secure implementation.
+    The implementation included in this reference implementation is NOT recomended.
+    It exists for testing and reference purposes only. We recommend an external
+    JWT provider like Keycloak, short lived tokens and token validation for a
+    secure implementation.
     """
     is_valid_client = auth.authenticate_client(form_data.client_id, form_data.client_secret)
     if not is_valid_client:

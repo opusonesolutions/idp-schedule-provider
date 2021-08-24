@@ -102,9 +102,102 @@ provided. Gaps are likely to cause the analysis to fail or behave unpredictably.
 | generation     | total generation of all assets in of the feeder     | W     |
 | generation_pf  | power factor of the feeder generation               | p.u   |
 
+##### Example(s)
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "feeder_1": [
+            {
+                "load": 450000,
+                "load_pf": 0.9,
+                "generation": 45000,
+                "generation_pf": 0.95
+            },
+            {
+                "load": 550000,
+                "load_pf": 0.86,
+                "generation": 75000,
+                "generation_pf": 0.95
+            },
+            ...
+        ],
+    }
+}
+```
+
 </details>
 
-### Eletric Vehicle Station (EV) Schedules
+### Load / Energy Consumer Schedules
+
+<details>
+Loads/Energy Consumers support both balanced and unbalanced P,Q schedules.
+
+#### PQ Schedule
+If a PQ schedule is provided for a load it will always be used. 
+The load will follow the specified PQ values and no optimization will be performed unless
+the load is otherwise configured with demand response characteristics.
+
+For any timepoints where the PQ values are not specified, P,Q are assumed to be 0.
+
+| Variable Name | Description                                          | Units |
+|---------------|------------------------------------------------------|-------|
+| p             | real power consumption                               | W     |
+| q             | reactive power consumption                           | VAR   |
+
+<details>
+<summary>Balanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "load_1": [
+            {
+                "p": 450000,
+                "q": 500,
+            },
+            {
+                "p": 550000,
+                "q": 1000,
+            },
+            ...
+        ],
+    }
+}
+```
+</details>
+<details>
+<summary>Unbalanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "load_1": [
+            {
+                "p": { "A": 100000, "B": 225000, "C": 125000},
+                "q": { "A": 5000, "B": 7000, "C": 6000},
+            },
+            {
+                "p": { "A": 100000, "B": 325000, "C": 125000},
+                "q": { "A": 5000, "B": 8000, "C": 6000},
+            },
+            ...
+        ],
+    }
+}
+```
+</details>
+
+</details>
+
+
+### Electric Vehicle Station (EV) Schedules
 
 <details>
 EVs support two types of schedules, PQ and charging event schedules
@@ -136,12 +229,14 @@ interval provided.
 If no charging events are provided, the EV Station is assumed to be doing nothing
 and will consume no power.
 
-| Variable Name          | Description                                                             | Units |
-|------------------------|-------------------------------------------------------------------------|-------|
-| pf                     | power factor of the charging event  (number between 0 and 1)            | n/a   |
-| p_max                  | maximum real power of the charging event                                | W     |
-| start_soc              | starting state-of-charge of the EV battery (note: 0 = 0% and 1 = 100%)  | %     |
-| total_battery_capacity | total capacity of the EV battery                                        | Wh    |
+| Variable Name          | Description                                                              | Units |
+|------------------------|--------------------------------------------------------------------------|-------|
+| charge_event_start     | UTC timestamp indicating when the EV is able to start charging (ISO8601) | n/a   |
+| charge_event_end       | UTC timestamp indicating when the EV is finished charging (ISO8601)      | n/a   |
+| pf                     | power factor of the charging event  (number between 0 and 1)             | n/a   |
+| p_max                  | maximum real power of the charging event                                 | W     |
+| start_soc              | starting state-of-charge of the EV battery (note: 0 = 0% and 1 = 100%)   | %     |
+| total_battery_capacity | total capacity of the EV battery                                         | Wh    |
 
 </details>
 
@@ -206,17 +301,45 @@ per-phase or as a single balanced value.
 For any timepoints where the state values are not specified, the capacitor will
 be assumed to be in its default connection state.
 
-#### Balanced Schedule
+#### State Schedule
 | Variable Name | Description                                                       | Units |
 |---------------|-------------------------------------------------------------------|-------|
 | state         | either 0 (indicates disconnected) or 1  (indicates connected)     | n/a   |
 
-#### Unbalanced Schedule
-| Variable Name | Description                                                       | Units |
-|---------------|-------------------------------------------------------------------|-------|
-| state_a       | either 0 (indicates disconnected) or 1  (indicates connected)     | n/a   |
-| state_b       | either 0 (indicates disconnected) or 1  (indicates connected)     | n/a   |
-| state_c       | either 0 (indicates disconnected) or 1  (indicates connected)     | n/a   |
+<details>
+<summary>Balanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "cap_1": [
+            {"state": 1},
+            {"state": 0},
+            ...
+        ],
+    }
+}
+```
+</details>
+<details>
+<summary>Unbalanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "cap_1": [
+            {"state": { "A": 1, "B": 0, "C": 1}},
+            {"state": { "A": 1, "B": 1, "C": 1}},
+            ...
+        ],
+    }
+}
+```
+</details>
 
 </details>
 
@@ -228,7 +351,7 @@ Synchronous machines and their variations support a balanced PQ schedule.
 
 For any timepoints where the PQ values are not specified, P,Q are assumed to be 0.
 
-#### Balanced Schedule
+#### PQ Schedule
 | Variable Name | Description                                          | Units |
 |---------------|------------------------------------------------------|-------|
 | p             | real power generation                                | W     |
@@ -245,7 +368,7 @@ Asynchronous machines and their variations support a balanced PQ schedule.
 For any timepoints where the PQ values are not specified, P,Q are will be allocated
 proportionally from the substation generation.
 
-#### Balanced Schedule
+#### PQ Schedule
 | Variable Name | Description                                          | Units |
 |---------------|------------------------------------------------------|-------|
 | p             | real power generation                                | W     |
@@ -263,17 +386,45 @@ per-phase or as a single balanced value.
 For any timepoints where the status values are not specified, the switch will be
 assumed to be in its default open/closed state.
 
-#### Balanced Schedule
+#### Status Schedule
 | Variable Name | Description                                          | Units |
 |---------------|------------------------------------------------------|-------|
 | status        | either 0 (indicates open) or 1 (indicates closed)    | n/a   |
 
-#### Unbalanced Schedule
-| Variable Name | Description                                          | Units |
-|---------------|------------------------------------------------------|-------|
-| status_a      | either 0 (indicates open) or 1 (indicates closed)    | n/a   |
-| status_b      | either 0 (indicates open) or 1 (indicates closed)    | n/a   |
-| status_c      | either 0 (indicates open) or 1 (indicates closed)    | n/a   |
+<details>
+<summary>Balanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "switch_1": [
+            {"status": 1},
+            {"status": 0},
+            ...
+        ],
+    }
+}
+```
+</details>
+<details>
+<summary>Unbalanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "switch_1": [
+            {"status": { "A": 1, "B": 0, "C": 1}},
+            {"status": { "A": 1, "B": 1, "C": 1}},
+            ...
+        ],
+    }
+}
+```
+</details>
 
 </details>
 
@@ -300,22 +451,58 @@ Equivalent substations support a balanced or unbalanced PQ schedule.
 
 For any timepoints where the PQ values are not specified, P,Q are assumed to be 0.
 
-#### Balanced Schedule
+#### PQ Schedule
 | Variable Name | Description                                                       | Units |
 |---------------|-------------------------------------------------------------------|-------|
 | p             | real power (positive=consumption, negative=backfeeding            | W     |
 | q             | reactive power (positive=consumption, negative=backfeeding)       | VAR   |
 
-#### Unbalanced Schedule
-| Variable Name | Description                                                            | Units |
-|---------------|------------------------------------------------------------------------|-------|
-| timestamp     | UTC timestamp in ISO8601 format (e.g., 2019-09-04T00:00:00+00:00)      | n/a   |
-| p_a           | real power on A phase (positive=consumption, negative=backfeeding      | W     |
-| p_b           | real power on B phase (positive=consumption, negative=backfeeding      | W     |
-| p_c           | real power on C phase (positive=consumption, negative=backfeeding      | W     |
-| q_a           | reactive power on A phase (positive=consumption, negative=backfeeding) | VAR   |
-| q_b           | reactive power on B phase (positive=consumption, negative=backfeeding) | VAR   |
-| q_c           | reactive power on C phase (positive=consumption, negative=backfeeding) | VAR   |
+<details>
+<summary>Balanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "load_1": [
+            {
+                "p": 450000,
+                "q": 500,
+            },
+            {
+                "p": 550000,
+                "q": 1000,
+            },
+            ...
+        ],
+    }
+}
+```
+</details>
+<details>
+<summary>Unbalanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "load_1": [
+            {
+                "p": { "A": 100000, "B": 225000, "C": 125000},
+                "q": { "A": 5000, "B": 7000, "C": 6000},
+            },
+            {
+                "p": { "A": 100000, "B": 325000, "C": 125000},
+                "q": { "A": 5000, "B": 8000, "C": 6000},
+            },
+            ...
+        ],
+    }
+}
+```
+</details>
 
 </details>
 
@@ -328,16 +515,42 @@ Transformers and regulators support a balanced or unbalanced tap position schedu
 For any timepoints where the tap position values are not specified, the transformer will be
 assumed to be in its default tap position.
 
-#### Balanced Schedule
+#### Tap Schedule
 | Column Name     | Description                                        | Units |
 |-----------------|----------------------------------------------------|-------|
 | tap_positions   | integer number indicating the tap position         | n/a   |
 
-#### Unbalanced Schedule
-| Column Name     | Description                                           | Units |
-|-----------------|-------------------------------------------------------|-------|
-| tap_positions_a | integer number indicating the tap position on phase a | n/a   |
-| tap_positions_b | integer number indicating the tap position on phase b | n/a   |
-| tap_positions_c | integer number indicating the tap position on phase c | n/a   |
+<details><summary>Balanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "transformer_1": [
+            {"tap_positions": 1},
+            {"tap_positions": 0},
+            ...
+        ],
+    }
+}
+```
+</details>
+<details><summary>Unbalanced Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "transformer_1": [
+            {"tap_positions": { "A": 10, "B": 12, "C": 8}},
+            {"tap_positions": { "A": 12, "B": 10, "C": 8}},
+            ...
+        ],
+    }
+}
+```
+</details>
 
 </details>
