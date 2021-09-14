@@ -9,7 +9,8 @@ scenarios = [
     Scenarios(
         id=scenario_id,
         name="IEEE123_EXTERNAL_SCHEDULES Supported",
-        description="Scenario Data for the IEEE123_EXTERNAL_SCHEDULES workspace with supported assets",
+        description="Scenario Data for the IEEE123_EXTERNAL_SCHEDULES workspace \
+            with supported assets",
     ),
 ]
 
