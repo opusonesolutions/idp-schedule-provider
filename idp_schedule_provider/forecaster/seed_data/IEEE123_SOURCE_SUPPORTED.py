@@ -4,12 +4,12 @@ from dateutil.relativedelta import relativedelta
 
 from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
 
-scenario_id = "12345"
+scenario_id = "56789"
 scenarios = [
     Scenarios(
         id=scenario_id,
-        name="IEEE123_EXTERNAL_SCHEDULES Scenario",
-        description="Scenario Data for the IEEE123_EXTERNAL_SCHEDULES workspace",
+        name="IEEE123_EXTERNAL_SCHEDULES Supported",
+        description="Scenario Data for the IEEE123_EXTERNAL_SCHEDULES workspace with supported assets",
     ),
 ]
 
@@ -53,16 +53,16 @@ forecast_data = [
         for i in range(0, 24)
     ],
     # ev
-    *[
-        ForecastData(
-            scenario_id=scenario_id,
-            asset_name="_422cdbd8-684d-4416-8604-b056f7470d95",
-            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"p": 375 + 50 * i, "q": 37.5 + 50 * i},
-            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
-        )
-        for i in range(0, 24)
-    ],
+    # *[
+    #     ForecastData(
+    #         scenario_id=scenario_id,
+    #         asset_name="_422cdbd8-684d-4416-8604-b056f7470d95",
+    #         feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+    #         data={"p": 375 + 50 * i, "q": 37.5 + 50 * i},
+    #         timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+    #     )
+    #     for i in range(0, 24)
+    # ],
     # ev2 (charging events)
     # TODO: EV Support
     # *[ForecastData(
@@ -73,38 +73,38 @@ forecast_data = [
     #     timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
     # ) for i in range(0, 24)],
     # bess
-    *[
-        ForecastData(
-            scenario_id=scenario_id,
-            asset_name="_606f79ad-de7c-49cb-b73b-f9a1eba13aeb",
-            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"p": 750 * 25 + i, "q": 75 + 50 * i},
-            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
-        )
-        for i in range(0, 24)
-    ],
-    # bess2 (SoC)
-    *[
-        ForecastData(
-            scenario_id=scenario_id,
-            asset_name="_234d2177-5111-4586-b82a-d36db6286ffc",
-            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"min_SOC": 5 + i, "max_SOC": 95 - i},
-            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
-        )
-        for i in range(0, 24)
-    ],
-    # capacitor
-    *[
-        ForecastData(
-            scenario_id=scenario_id,
-            asset_name="_0B407ED4-9A66-4607-814F-A92BB8D7B1F0",
-            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"state": i % 2},
-            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
-        )
-        for i in range(0, 24)
-    ],
+    # *[
+    #     ForecastData(
+    #         scenario_id=scenario_id,
+    #         asset_name="_606f79ad-de7c-49cb-b73b-f9a1eba13aeb",
+    #         feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+    #         data={"p": 750 * 25 + i, "q": 75 + 50 * i},
+    #         timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+    #     )
+    #     for i in range(0, 24)
+    # ],
+    # # bess2 (SoC)
+    # *[
+    #     ForecastData(
+    #         scenario_id=scenario_id,
+    #         asset_name="_234d2177-5111-4586-b82a-d36db6286ffc",
+    #         feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+    #         data={"min_SOC": 5 + i, "max_SOC": 95 - i},
+    #         timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+    #     )
+    #     for i in range(0, 24)
+    # ],
+    # # capacitor
+    # *[
+    #     ForecastData(
+    #         scenario_id=scenario_id,
+    #         asset_name="_0B407ED4-9A66-4607-814F-A92BB8D7B1F0",
+    #         feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+    #         data={"state": i % 2},
+    #         timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+    #     )
+    #     for i in range(0, 24)
+    # ],
     # load
     *[
         ForecastData(
@@ -116,17 +116,17 @@ forecast_data = [
         )
         for i in range(0, 24)
     ],
-    # switch
-    *[
-        ForecastData(
-            scenario_id=scenario_id,
-            asset_name="_84C331E2-2156-4820-934A-581EE6D4DFBC",
-            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"status": {"A": i % 2, "B": (i + 2) % 2, "C": i % 2}},
-            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
-        )
-        for i in range(0, 24)
-    ],
+    # # switch
+    # *[
+    #     ForecastData(
+    #         scenario_id=scenario_id,
+    #         asset_name="_84C331E2-2156-4820-934A-581EE6D4DFBC",
+    #         feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+    #         data={"status": {"A": i % 2, "B": (i + 2) % 2, "C": i % 2}},
+    #         timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+    #     )
+    #     for i in range(0, 24)
+    # ],
     # not a valid set of variables/assets
     *[
         ForecastData(
