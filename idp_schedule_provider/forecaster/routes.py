@@ -9,11 +9,7 @@ from idp_schedule_provider.forecaster import controller as forecast_controller
 from idp_schedule_provider.forecaster import exceptions, schemas
 from idp_schedule_provider.forecaster.database import get_db_session
 from idp_schedule_provider.forecaster.resources import load_resource
-from idp_schedule_provider.forecaster.seed_data import (
-    DUMMY_SOURCE,
-    IEEE123_SOURCE,
-    IEEE123_SOURCE_SUPPORTED,
-)
+from idp_schedule_provider.forecaster.seed_data import DUMMY_SOURCE, IEEE123_SOURCE
 
 router = APIRouter()
 
@@ -31,8 +27,6 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     forecast_controller.insert_schedules(db, DUMMY_SOURCE.forecast_data)
     forecast_controller.insert_scenarios(db, IEEE123_SOURCE.scenarios)
     forecast_controller.insert_schedules(db, IEEE123_SOURCE.forecast_data)
-    forecast_controller.insert_scenarios(db, IEEE123_SOURCE_SUPPORTED.scenarios)
-    forecast_controller.insert_schedules(db, IEEE123_SOURCE_SUPPORTED.forecast_data)
 
 
 @router.get(
