@@ -94,6 +94,17 @@ forecast_data = [
         )
         for i in range(0, 24)
     ],
+    # bess3 (PQ + SoC)
+    *[
+        ForecastData(
+            scenario_id=scenario_id,
+            asset_name="_feef3932-6324-4ad6-a48e-0b4d8d4850d6",
+            feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
+            data={"p": 750 * 25 + i, "q": 75 + 50 * i, "min_SOC": 5 + i, "max_SOC": 95 - i},
+            timestamp=datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
+        )
+        for i in range(0, 24)
+    ],
     # capacitor
     *[
         ForecastData(
