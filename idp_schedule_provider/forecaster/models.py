@@ -49,15 +49,27 @@ class Scenarios(Base):
     description = Column(String, nullable=True)
 
 
-class ForecastData(Base):
-    __tablename__ = "forecast_data"
+class ScheduleData(Base):
+    __tablename__ = "schedule_data"
 
     id = Column(Integer, primary_key=True, index=True)
     scenario_id = Column(String, ForeignKey(Scenarios.id))
     asset_name = Column(String, index=True)
     feeder = Column(String, index=True)
     data = Column(cast("sqlalchemy.types.TypeEngine[Dict[str, Any]]", JSON()))  # force type to dict
-    timestamp = Column(UTCDateTime)
+    timestamp = Column(UTCDateTime, index=True)
+
+
+class EventData(Base):
+    __tablename__ = "event_data"
+
+    id = Column(Integer, primary_key=True, index=True)
+    scenario_id = Column(String, ForeignKey(Scenarios.id))
+    asset_name = Column(String, index=True)
+    feeder = Column(String, index=True)
+    data = Column(cast("sqlalchemy.types.TypeEngine[Dict[str, Any]]", JSON()))  # force type to dict
+    start_timestamp = Column(UTCDateTime, index=True)
+    end_timestamp = Column(UTCDateTime, index=True)
 
 
 Base.metadata.drop_all(engine)

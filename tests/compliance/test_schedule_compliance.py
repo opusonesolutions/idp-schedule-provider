@@ -9,7 +9,7 @@ from idp_schedule_provider.forecaster.controller import (
     insert_scenarios,
     insert_schedules,
 )
-from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
+from idp_schedule_provider.forecaster.models import Scenarios, ScheduleData
 from idp_schedule_provider.forecaster.schemas import (
     InterpolationMethod,
     SamplingMode,
@@ -32,7 +32,7 @@ def data_seed(database_client: Session, scenario_seed):
     forecast_rows = []
     # add a switch with only a single timepoint
     forecast_rows.append(
-        ForecastData(
+        ScheduleData(
             scenario_id="sce1",
             asset_name="Switch 1",
             feeder="20KV",
@@ -45,7 +45,7 @@ def data_seed(database_client: Session, scenario_seed):
     # add 2 hr of feeder data
     for i in range(3):
         forecast_rows.append(
-            ForecastData(
+            ScheduleData(
                 scenario_id="sce1",
                 asset_name="11KV",
                 feeder="11KV",

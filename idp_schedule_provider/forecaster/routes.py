@@ -65,10 +65,41 @@ async def get_schedule_timespans(
     Gets the range for which each asset in the scenario has data.
     """
     try:
-        if asset_name is not None:
-            result = forecast_controller.get_asset_timespan(db, scenario, asset_name)
-        else:
-            result = forecast_controller.get_scenario_timespan(db, scenario, feeders)
+        result = forecast_controller.get_asset_timespan(
+            db, scenario, asset_name=asset_name, feeders=feeders
+        )
+    except exceptions.AssetNotFoundException:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
+    except exceptions.ScenarioNotFoundException:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+
+    return result
+
+
+@router.get(
+    "/{scenario}/asset_events/timespan",
+    response_model=schemas.GetTimeSpanModel,
+    description=load_resource("timespan_response"),
+    tags=["spec-required"],
+)
+async def get_event_timespans(
+    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    feeders: Optional[List[str]] = Query(
+        None, description="The feeders for which the asset data should be retrieved."
+    ),
+    asset_name: Optional[str] = Query(
+        None, description="The name of the asset for which the asset data should be retrieved."
+    ),
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+) -> schemas.GetTimeSpanModel:
+    """
+    Gets the range for which each asset event in the scenario has data.
+    """
+    try:
+        result = forecast_controller.get_event_timespan(
+            db, scenario, asset_name=asset_name, feeders=feeders
+        )
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
     except exceptions.ScenarioNotFoundException:
@@ -123,35 +154,73 @@ async def get_schedules(
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No yearly aggregation available")
     if time_interval == schemas.TimeInterval.MIN_5:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No 5 minute interpolation available")
+    if asset_name is None and feeders is None:
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            "One of feeders or asset_name must be specified",
+        )
+    try:
+        result = forecast_controller.get_asset_data(
+            db,
+            scenario,
+            start_datetime,
+            end_datetime,
+            time_interval,
+            interpolation_method,
+            sampling_mode,
+            asset_name=asset_name,
+            feeders=feeders,
+        )
+    except exceptions.ScenarioNotFoundException:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+    except exceptions.AssetNotFoundException:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
+    return result
+
+
+@router.get(
+    "/{scenario}/asset_events",
+    response_model=schemas.GetEventsResponseModel,
+    description=load_resource("events_response"),
+    tags=["spec-required"],
+)
+async def get_events(
+    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    start_datetime: datetime = Query(
+        ...,
+        description="The start time of the range being requested (inclusive, ISO8601 UTC).",
+    ),
+    end_datetime: datetime = Query(
+        ...,
+        description="The end time of the range being requested (exclusive, ISO8601 UTC).",
+    ),
+    feeders: Optional[List[str]] = Query(
+        None, description="The feeders for which the asset data should be retrieved."
+    ),
+    asset_name: Optional[str] = Query(
+        None, description="The name of the asset for which the asset data should be retrieved."
+    ),
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+) -> schemas.GetEventsResponseModel:
+    """
+    Gets the asset event data for a single asset or all assets.
+    """
+    if asset_name is None and feeders is None:
+        raise HTTPException(
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            "One of feeders or asset_name must be specified",
+        )
 
     try:
-        if asset_name is not None:
-            result = forecast_controller.get_asset_data(
-                db,
-                scenario,
-                start_datetime,
-                end_datetime,
-                time_interval,
-                interpolation_method,
-                sampling_mode,
-                asset_name,
-            )
-        elif feeders is not None:
-            result = forecast_controller.get_scenario_data(
-                db,
-                scenario,
-                start_datetime,
-                end_datetime,
-                time_interval,
-                interpolation_method,
-                sampling_mode,
-                feeders,
-            )
-        else:
-            raise HTTPException(
-                status.HTTP_422_UNPROCESSABLE_ENTITY,
-                "One of feeders or asset_name must be specified",
-            )
+        result = forecast_controller.get_asset_events_data(
+            db,
+            scenario,
+            start_datetime,
+            end_datetime,
+            asset_name=asset_name,
+            feeders=feeders,
+        )
     except exceptions.ScenarioNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
     except exceptions.AssetNotFoundException:

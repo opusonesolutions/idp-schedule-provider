@@ -83,6 +83,8 @@ class GetTimeSpanModel(BaseModel):
 
 VariableName = str
 ScheduleValue = Optional[float]
+# Order of this is how parsing is attempted
+EventsValue = Optional[Union[float, datetime]]
 
 
 class UnbalancedScheduleValue(BaseModel):
@@ -92,6 +94,7 @@ class UnbalancedScheduleValue(BaseModel):
 
 
 ScheduleEntry = MutableMapping[VariableName, Union[ScheduleValue, UnbalancedScheduleValue]]
+EventsEntry = MutableMapping[VariableName, EventsValue]
 
 
 class TimeInterval(Enum):
@@ -184,10 +187,24 @@ class GetSchedulesResponseModel(BaseModel):
                         },
                         None,
                     ],
-                    "global_ev": [
+                },
+            }
+        }
+
+
+class GetEventsResponseModel(BaseModel):
+    assets: MutableMapping[AssetID, List[EventsEntry]] = Field(
+        description="A mapping of global evto their schedule data"
+    )
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "assets": {
+                    "EV": [
                         {
-                            "charge_event_start": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc),
-                            "charge_event_end": datetime(2000, 1, 1, 17, 0, 0, 0, timezone.utc),
+                            "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc),
+                            "end_datetime": datetime(2000, 1, 1, 17, 0, 0, 0, timezone.utc),
                             "pf": 0.9,
                             "p_max": 2400,
                             "start_soc": 75,

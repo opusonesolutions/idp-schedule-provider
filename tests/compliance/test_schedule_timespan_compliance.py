@@ -1,4 +1,4 @@
-# tests for compliance of the timespan API
+# tests for compliance of the schedule timespan API
 from datetime import datetime, timezone
 
 import pytest
@@ -9,7 +9,7 @@ from idp_schedule_provider.forecaster.controller import (
     insert_scenarios,
     insert_schedules,
 )
-from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
+from idp_schedule_provider.forecaster.models import Scenarios, ScheduleData
 
 
 @pytest.fixture()
@@ -27,7 +27,7 @@ def data_seed(database_client: Session, scenario_seed):
     forecast_rows = []
     # add a switch with only a single timepoint
     forecast_rows.append(
-        ForecastData(
+        ScheduleData(
             scenario_id="sce1",
             asset_name="Switch 1",
             feeder="20KV",
@@ -38,14 +38,14 @@ def data_seed(database_client: Session, scenario_seed):
     # add a feeder with two timepoints
     forecast_rows.extend(
         [
-            ForecastData(
+            ScheduleData(
                 scenario_id="sce1",
                 asset_name="11KV",
                 feeder="11KV",
                 data={},
                 timestamp=datetime(2000, 1, 1, tzinfo=timezone.utc),
             ),
-            ForecastData(
+            ScheduleData(
                 scenario_id="sce1",
                 asset_name="11KV",
                 feeder="11KV",
@@ -57,14 +57,14 @@ def data_seed(database_client: Session, scenario_seed):
     # add a load with two timepoints
     forecast_rows.extend(
         [
-            ForecastData(
+            ScheduleData(
                 scenario_id="sce1",
                 asset_name="Load 1",
                 feeder="11KV",
                 data={},
                 timestamp=datetime(2000, 1, 1, tzinfo=timezone.utc),
             ),
-            ForecastData(
+            ScheduleData(
                 scenario_id="sce1",
                 asset_name="Load 1",
                 feeder="11KV",
@@ -77,18 +77,18 @@ def data_seed(database_client: Session, scenario_seed):
     insert_schedules(database_client, forecast_rows)
 
 
-def test_get_timespan_missing_scenario(test_client: TestClient):
+def test_get_schedule_timespan_missing_scenario(test_client: TestClient):
     response = test_client.get("/missing_scenario/asset_schedules/timespan")
     assert response.status_code == 404
 
 
-def test_get_timespan_none(test_client: TestClient, scenario_seed):
+def test_get_schedule_timespan_none(test_client: TestClient, scenario_seed):
     response = test_client.get("/sce1/asset_schedules/timespan")
     assert response.status_code == 200
     assert response.json() == {"assets": {}}
 
 
-def test_get_timespan_assets(test_client: TestClient, data_seed):
+def test_get_schedule_timespans(test_client: TestClient, data_seed):
     response = test_client.get("/sce1/asset_schedules/timespan")
     assert response.status_code == 200
     assert response.json() == {
@@ -109,7 +109,7 @@ def test_get_timespan_assets(test_client: TestClient, data_seed):
     }
 
 
-def test_get_timespan_assets_by_feeder(test_client: TestClient, data_seed):
+def test_get_schedule_timespans_by_feeder(test_client: TestClient, data_seed):
     response = test_client.get("/sce1/asset_schedules/timespan", params={"feeders": ["11KV"]})
     assert response.status_code == 200
     assert response.json() == {
@@ -126,7 +126,7 @@ def test_get_timespan_assets_by_feeder(test_client: TestClient, data_seed):
     }
 
 
-def test_get_timespan_assets_by_asset_name(test_client: TestClient, data_seed):
+def test_get_schedule_timespan_by_asset_name(test_client: TestClient, data_seed):
     response = test_client.get("/sce1/asset_schedules/timespan", params={"asset_name": "Load 1"})
     assert response.status_code == 200
     assert response.json() == {
@@ -139,7 +139,7 @@ def test_get_timespan_assets_by_asset_name(test_client: TestClient, data_seed):
     }
 
 
-def test_get_timespan_assets_by_asset_name_and_feeder(test_client: TestClient, data_seed):
+def test_get_schedule_timespans_by_asset_name_and_feeder(test_client: TestClient, data_seed):
     response = test_client.get(
         "/sce1/asset_schedules/timespan", params={"asset_name": "Load 1", "feeders": ["11KV"]}
     )

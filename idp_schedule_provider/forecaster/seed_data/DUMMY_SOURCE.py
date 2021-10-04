@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from idp_schedule_provider.forecaster.models import ForecastData, Scenarios
+from idp_schedule_provider.forecaster.models import Scenarios, ScheduleData
 
 scenarios = [
     Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
@@ -15,7 +15,7 @@ for asset in ["asset_1", "asset_2", "asset_3"]:
             for hour in range(24):
                 timestamp = datetime(2000, month, day, hour, 0, 0, 0, timezone.utc)
                 forecast_data.append(
-                    ForecastData(
+                    ScheduleData(
                         scenario_id="sce1",
                         asset_name=asset,
                         feeder="f1",
