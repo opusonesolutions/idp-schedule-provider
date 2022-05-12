@@ -223,6 +223,8 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 | p             | real power consumption     | W     |
 | q             | reactive power consumption | VAR   |
 
+</details>
+
 ### Photovoltaic (PV) Schedules
 
 <details>
