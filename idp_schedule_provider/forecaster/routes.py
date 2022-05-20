@@ -51,7 +51,13 @@ async def get_scenarios(
     tags=["spec-required"],
 )
 async def get_schedule_timespans(
-    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    scenario: schemas.ScenarioID = Path(
+        ...,
+        description=(
+            "The id of the scenario to get data for. This must be an **exact** "
+            "match to an ID returned from the /scenarios API."
+        ),
+    ),
     feeders: Optional[List[str]] = Query(
         None, description="The feeders for which the asset data should be retrieved."
     ),
@@ -83,7 +89,13 @@ async def get_schedule_timespans(
     tags=["spec-required"],
 )
 async def get_event_timespans(
-    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    scenario: schemas.ScenarioID = Path(
+        ...,
+        description=(
+            "The id of the scenario to get data for. This must be an **exact** "
+            "match to an ID returned from the /scenarios API."
+        ),
+    ),
     feeders: Optional[List[str]] = Query(
         None, description="The feeders for which the asset data should be retrieved."
     ),
@@ -115,7 +127,13 @@ async def get_event_timespans(
     tags=["spec-required"],
 )
 async def get_schedules(
-    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    scenario: schemas.ScenarioID = Path(
+        ...,
+        description=(
+            "The id of the scenario to get data for. This must be an **exact** "
+            "match to an ID returned from the /scenarios API."
+        ),
+    ),
     start_datetime: datetime = Query(
         ...,
         description="The start time of the range being requested (inclusive, ISO8601 UTC).",
@@ -185,7 +203,13 @@ async def get_schedules(
     tags=["spec-required"],
 )
 async def get_events(
-    scenario: schemas.ScenarioID = Path(..., description="The id of the scenario to get data for"),
+    scenario: schemas.ScenarioID = Path(
+        ...,
+        description=(
+            "The id of the scenario to get data for. This must be an **exact** "
+            "match to an ID returned from the /scenarios API."
+        ),
+    ),
     start_datetime: datetime = Query(
         ...,
         description="The start time of the range being requested (inclusive, ISO8601 UTC).",
