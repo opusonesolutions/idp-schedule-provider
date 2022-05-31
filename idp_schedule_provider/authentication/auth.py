@@ -68,12 +68,12 @@ def validate_token(token: Optional[str] = Depends(oauth2_scheme)) -> bool:
         else:
             try:
                 jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
-            except jwt.DecodeError:
+            except (jwt.DecodeError, jwt.ExpiredSignatureError) as e:
                 raise HTTPException(
                     status_code=401,
                     detail="Invalid Credentials",
                     headers={"WWW-Authenticate": "Bearer"},
-                )
+                ) from e
 
     return True
 

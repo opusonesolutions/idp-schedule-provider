@@ -1,6 +1,7 @@
 import os
 from unittest import mock
 
+import jwt
 import pytest
 from fastapi.testclient import TestClient
 
@@ -68,3 +69,15 @@ def test_timespan_with_token(test_client: TestClient, auth_token: str):
         headers={"authorization": f"Bearer {auth_token}"},
     )
     assert response.status_code == 404
+
+
+@pytest.mark.parametrize("expected_jwt_error", [jwt.DecodeError, jwt.ExpiredSignatureError])
+def test_we_correctly_return_401(test_client: TestClient, expected_jwt_error):
+    with mock.patch(
+        "idp_schedule_provider.authentication.auth.jwt.decode", side_effect=expected_jwt_error
+    ):
+        response = test_client.get(
+            "/not_a_scenario/asset_schedules",
+            headers={"authorization": "Bearer token"},
+        )
+        assert response.status_code == 401
