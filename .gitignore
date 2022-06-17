@@ -2,6 +2,7 @@
 .git
 venv
 .venv
+.python-version
 
 # caches
 **/__pycache__
