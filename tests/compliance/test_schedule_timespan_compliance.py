@@ -5,21 +5,8 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm.session import Session
 
-from idp_schedule_provider.forecaster.controller import (
-    insert_scenarios,
-    insert_schedules,
-)
-from idp_schedule_provider.forecaster.models import Scenarios, ScheduleData
-
-
-@pytest.fixture()
-def scenario_seed(database_client: Session):
-    insert_scenarios(
-        database_client,
-        [
-            Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
-        ],
-    )
+from idp_schedule_provider.forecaster.controller import insert_rows
+from idp_schedule_provider.forecaster.models import ScheduleData
 
 
 @pytest.fixture()
@@ -74,7 +61,7 @@ def data_seed(database_client: Session, scenario_seed):
         ]
     )
 
-    insert_schedules(database_client, forecast_rows)
+    insert_rows(database_client, forecast_rows)
 
 
 def test_get_schedule_timespan_missing_scenario(test_client: TestClient):

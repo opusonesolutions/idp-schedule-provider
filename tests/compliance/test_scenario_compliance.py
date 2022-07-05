@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from sqlalchemy.orm.session import Session
 
-from idp_schedule_provider.forecaster.controller import insert_scenarios
+from idp_schedule_provider.forecaster.controller import insert_rows
 from idp_schedule_provider.forecaster.models import Scenarios
 
 
@@ -12,7 +12,7 @@ def test_get_scenarios_none(test_client: TestClient):
 
 
 def test_get_scenarios_many(test_client: TestClient, database_client: Session):
-    insert_scenarios(
+    insert_rows(
         database_client,
         [
             Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),

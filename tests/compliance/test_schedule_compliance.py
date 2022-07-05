@@ -5,26 +5,13 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm.session import Session
 
-from idp_schedule_provider.forecaster.controller import (
-    insert_scenarios,
-    insert_schedules,
-)
-from idp_schedule_provider.forecaster.models import Scenarios, ScheduleData
+from idp_schedule_provider.forecaster.controller import insert_rows
+from idp_schedule_provider.forecaster.models import ScheduleData
 from idp_schedule_provider.forecaster.schemas import (
     InterpolationMethod,
     SamplingMode,
     TimeInterval,
 )
-
-
-@pytest.fixture()
-def scenario_seed(database_client: Session):
-    insert_scenarios(
-        database_client,
-        [
-            Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
-        ],
-    )
 
 
 @pytest.fixture()
@@ -59,7 +46,7 @@ def data_seed(database_client: Session, scenario_seed):
             )
         )
 
-    insert_schedules(database_client, forecast_rows)
+    insert_rows(database_client, forecast_rows)
 
 
 def test_get_timespan_missing_scenario(test_client: TestClient):
@@ -221,7 +208,9 @@ def test_get_schedule_data_datetime_filter(test_client: TestClient, data_seed):
 
 
 @pytest.mark.parametrize("interval", [TimeInterval.DAY_1, TimeInterval.MONTH_1])
-def test_get_schedule_data_sampled(test_client: TestClient, interval: TimeInterval, data_seed):
+def test_get_schedule_data_sampled(
+    test_client: TestClient, interval: TimeInterval, data_seed, scenario_seed
+):
     # daily or higher implies sampling due to hourly data stored
     response = test_client.get(
         "/sce1/asset_schedules",

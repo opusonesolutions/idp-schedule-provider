@@ -14,6 +14,10 @@ from idp_schedule_provider.forecaster.seed_data import DUMMY_SOURCE, IEEE123_SOU
 router = APIRouter()
 
 
+def scenario_not_found_exception(scenario_name: str) -> HTTPException:
+    return HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario_name}` not found")
+
+
 @router.post("/seed_data", tags=["test-only"])
 async def seed_db(db: Session = Depends(get_db_session)) -> None:
     """
@@ -23,10 +27,59 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     This exists for testing purposes only. It is not part of the external schedule implementation
     and does not need to be implemented as part of the specification.
     """
-    forecast_controller.insert_scenarios(db, DUMMY_SOURCE.scenarios)
-    forecast_controller.insert_schedules(db, DUMMY_SOURCE.forecast_data)
-    forecast_controller.insert_scenarios(db, IEEE123_SOURCE.scenarios)
-    forecast_controller.insert_schedules(db, IEEE123_SOURCE.forecast_data)
+    forecast_controller.insert_rows(db, DUMMY_SOURCE.scenarios)
+    forecast_controller.insert_rows(db, DUMMY_SOURCE.forecast_data)
+    forecast_controller.insert_rows(db, IEEE123_SOURCE.scenarios)
+    forecast_controller.insert_rows(db, IEEE123_SOURCE.forecast_data)
+
+
+@router.put(
+    "/scenario/{scenario}",
+    tags=["test-only"],
+)
+async def create_scenario(
+    scenario: schemas.ScenarioID,
+    scenario_data: schemas.ScenarioModel,
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+):
+    """
+    Create or update scenario information in schedule provider. If scenario id does not exist,
+    schedule provider will create new scenario; if scenario id exists, schedule provider will
+    update scenario information base on payload.
+
+    ## Use Case
+    This exists for testing purposes only. It is not part of the external schedule implementation
+    and does not need to be implemented as part of the specification.
+    """
+    forecast_controller.create_scenario(db, scenario, scenario_data)
+
+
+@router.delete(
+    "/scenario/{scenario}",
+    tags=["test-only"],
+)
+async def delete_scenario(
+    scenario: schemas.ScenarioID,
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+):
+    """
+    Delete scenario and associated schedules & events in schedule provider.
+
+    ## Use Case
+    This exists for testing purposes only. It is not part of the external schedule implementation
+    and does not need to be implemented as part of the specification.
+    """
+
+    try:
+        forecast_controller.delete_scenario(db, scenario)
+    except exceptions.ScenarioNotFoundException:
+        raise scenario_not_found_exception(scenario)
+    except Exception as e:
+        raise HTTPException(
+            status.HTTP_500_INTERNAL_SERVER_ERROR, "Failed to delete scenario"
+        ) from e
 
 
 @router.get(
@@ -77,7 +130,7 @@ async def get_schedule_timespans(
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
     except exceptions.ScenarioNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+        raise scenario_not_found_exception(scenario)
 
     return result
 
@@ -115,9 +168,41 @@ async def get_event_timespans(
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
     except exceptions.ScenarioNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+        raise scenario_not_found_exception(scenario)
 
     return result
+
+
+@router.post(
+    "/{scenario}/asset_schedules/{feeder}",
+    tags=["test-only"],
+)
+async def add_schedules(
+    scenario: schemas.ScenarioID,
+    feeder: schemas.FeederID,
+    new_schedules: schemas.AddNewSchedulesModel,
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+):
+    """
+    Add schedule data to a scenario.
+
+    ## Use Case
+    This exists for testing purposes only. It is not part of the external schedule implementation
+    and does not need to be implemented as part of the specification.
+    """
+    try:
+        forecast_controller.add_schedules(db, scenario, feeder, new_schedules)
+    except IndexError:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST,
+            "Asset schedules array has more elements than time stamps array",
+        )
+    except exceptions.BadAssetScheduleTimeIntervalException:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST,
+            "Asset schedule data should be evenly sampled at *hourly* intervals",
+        )
 
 
 @router.get(
@@ -190,10 +275,32 @@ async def get_schedules(
             feeders=feeders,
         )
     except exceptions.ScenarioNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+        raise scenario_not_found_exception(scenario)
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
     return result
+
+
+@router.post(
+    "/{scenario}/asset_events/{feeder}",
+    tags=["test-only"],
+)
+async def add_events(
+    scenario: schemas.ScenarioID,
+    feeder: schemas.FeederID,
+    new_events: schemas.AddNewEventsModel,
+    _: bool = Depends(validate_token),
+    db: Session = Depends(get_db_session),
+):
+    """
+    Add asset events to feeder.
+
+    ## Use Case
+    This exists for testing purposes only. It is not part of the external schedule implementation
+    and does not need to be implemented as part of the specification.
+    """
+
+    forecast_controller.add_events(db, scenario, feeder, new_events)
 
 
 @router.get(
@@ -246,7 +353,7 @@ async def get_events(
             feeders=feeders,
         )
     except exceptions.ScenarioNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Scenario not found")
+        raise scenario_not_found_exception(scenario)
     except exceptions.AssetNotFoundException:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
     return result

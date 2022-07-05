@@ -1,5 +1,5 @@
-from datetime import datetime
-from typing import Dict, List, Optional, Set, Union
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
@@ -9,17 +9,139 @@ from idp_schedule_provider.forecaster import exceptions, resampler, schemas
 from idp_schedule_provider.forecaster.models import EventData, Scenarios, ScheduleData
 
 
-def insert_scenarios(db: Session, scenarios: List[Scenarios]) -> None:
-    """
-    This function exists for testing purposes only. It is used to seed the database with fake data
-    """
-    db.add_all(scenarios)
+def scenario_exists(db: Session, scenario_id: str):
+    """check does scenario exist in schedule provider by id"""
+
+    query = db.query(schemas.Scenarios).filter_by(id=scenario_id)
+
+    return query.one_or_none()
+
+
+def create_scenario(
+    db: Session, scenario_id: schemas.ScenarioID, scenario_data: schemas.ScenarioModel
+):
+    """validate and create/update scenario db model"""
+    if scenario_exists(db, scenario_id=scenario_id):
+        db.query(schemas.Scenarios).filter_by(id=scenario_id).update(
+            {"name": scenario_data.name, "description": scenario_data.description}
+        )
+    else:
+        scenario_model = Scenarios(
+            id=scenario_id, name=scenario_data.name, description=scenario_data.description
+        )
+        insert_rows(db, [scenario_model])
+
+
+def delete_scenario(db: Session, scenario: schemas.ScenarioID) -> None:
+    """Delete scenario and associated schedules & events in schedule provider."""
+
+    db.query(EventData).filter_by(scenario_id=scenario).delete()
+    db.query(ScheduleData).filter_by(scenario_id=scenario).delete()
+    db.query(Scenarios).filter_by(id=scenario).delete()
+
+
+def insert_rows(db: Session, rows: List[Union[ScheduleData, EventData, Scenarios]]) -> None:
+    """insert data to database"""
+    db.add_all(rows)
     db.flush()
 
 
-def insert_schedules(db: Session, schedules: List[Union[ScheduleData, EventData]]) -> None:
-    db.add_all(schedules)
-    db.flush()
+def validate_schedules(schedules: schemas.AddNewSchedulesModel):
+    timestamps = schedules.time_stamps
+    asset_schedules = schedules.dict()["assets"]
+
+    # validate asset schedules should have same length with timestamps
+    if any([len(schedules) != len(timestamps) for _, schedules in asset_schedules.items()]):
+        raise IndexError
+
+    if len(timestamps) <= 1:
+        return
+    # validate timestamps interval, it should be 1 hour
+    for idx in range(len(timestamps) - 1):
+        if (timestamps[idx + 1] - timestamps[idx]) != timedelta(hours=1):
+            raise exceptions.BadAssetScheduleTimeIntervalException
+
+
+def add_schedules(
+    db: Session,
+    scenario: schemas.ScenarioID,
+    feeder: schemas.FeederID,
+    new_schedules: schemas.AddNewSchedulesModel,
+) -> None:
+    """Add new asset schedule to schedule provider"""
+    if not scenario_exists(db, scenario_id=scenario):
+        raise exceptions.ScenarioNotFoundException
+
+    timestamps = new_schedules.time_stamps
+    asset_schedules = new_schedules.dict()["assets"]
+    new_schedule_models = []
+
+    validate_schedules(new_schedules)
+
+    query_data = (
+        db.query(ScheduleData)
+        .filter(
+            ScheduleData.scenario_id == scenario,
+            ScheduleData.timestamp.between(timestamps[0], timestamps[-1]),
+            ScheduleData.feeder == feeder,
+        )
+        .all()
+    )
+
+    assets_with_schedules: Set[Tuple[str, datetime]] = set(
+        [(schedule_data.asset_name, schedule_data.timestamp) for schedule_data in query_data]
+    )
+
+    for asset_id, schedules in asset_schedules.items():
+        for idx, schedule in enumerate(schedules):
+
+            timestamp = timestamps[idx]
+
+            if (asset_id, timestamp) in assets_with_schedules:
+                db.query(ScheduleData).filter_by(
+                    scenario_id=scenario, timestamp=timestamp, asset_name=asset_id, feeder=feeder
+                ).update({"data": schedule})
+            else:
+                new_schedule_models.append(
+                    ScheduleData(
+                        scenario_id=scenario,
+                        asset_name=asset_id,
+                        feeder=feeder,
+                        data=schedule,
+                        timestamp=timestamp,
+                    )
+                )
+
+    insert_rows(db, new_schedule_models)
+
+
+def add_events(
+    db: Session,
+    scenario: schemas.ScenarioID,
+    feeder: schemas.FeederID,
+    new_events: schemas.AddNewEventsModel,
+) -> None:
+    """Add new asset events to schedule provider"""
+    if not scenario_exists(db, scenario_id=scenario):
+        raise exceptions.ScenarioNotFoundException
+
+    asset_events = new_events.dict()["assets"]
+    new_event_models = []
+
+    for asset_id, events in asset_events.items():
+        for event in events:
+            start_time, end_time = event.pop("start_datetime"), event.pop("end_datetime")
+            new_event_models.append(
+                EventData(
+                    scenario_id=scenario,
+                    asset_name=asset_id,
+                    feeder=feeder,
+                    data=event,
+                    start_timestamp=start_time,
+                    end_timestamp=end_time,
+                )
+            )
+    insert_rows(db, new_event_models)
 
 
 def get_all_scenarios(db: Session) -> schemas.GetScenariosResponseModel:

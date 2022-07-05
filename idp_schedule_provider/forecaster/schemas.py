@@ -9,6 +9,7 @@ from idp_schedule_provider.forecaster.models import Scenarios
 
 AssetID = str
 ScenarioID = str
+FeederID = str
 
 
 class ScenarioModel(BaseModel):
@@ -143,10 +144,7 @@ class SamplingMode(Enum):
     HOLD_FIRST = "hold_first_value"
 
 
-class GetSchedulesResponseModel(BaseModel):
-    time_interval: TimeInterval = Field(
-        description="The interval at which the schedule data is spaced"
-    )
+class AddNewSchedulesModel(BaseModel):
     time_stamps: List[datetime] = Field(
         description=(
             "A list of UTC ISO8601 timestamps (sorted ascending) "
@@ -155,6 +153,48 @@ class GetSchedulesResponseModel(BaseModel):
     )
     assets: MutableMapping[AssetID, List[ScheduleEntry]] = Field(
         description="A mapping of assets to their schedule data"
+    )
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "time_stamps": [
+                    datetime(2000, 1, 1, 0, 0, 0, 0, timezone.utc),
+                    datetime(2000, 1, 2, 0, 0, 0, 0, timezone.utc),
+                ],
+                "assets": {
+                    "feeder_1": [
+                        {
+                            "load": 450000,
+                            "load_pf": 0.9,
+                            "generation": 45000,
+                            "generation_pf": 0.95,
+                        },
+                        {
+                            "load": 550000,
+                            "load_pf": 0.86,
+                            "generation": 75000,
+                            "generation_pf": 0.95,
+                        },
+                    ],
+                    "asset_2": [
+                        {
+                            "p": {"A": 24000, "B": 16000, "C": 20000},
+                            "q": {"A": 4000, "B": 2000, "C": 3000},
+                        },
+                        {
+                            "p": {"A": 24000, "B": 16000, "C": 20000},
+                            "q": {"A": 4000, "B": 2000, "C": 3000},
+                        },
+                    ],
+                },
+            }
+        }
+
+
+class GetSchedulesResponseModel(AddNewSchedulesModel):
+    time_interval: TimeInterval = Field(
+        description="The interval at which the schedule data is spaced"
     )
 
     class Config:
@@ -192,7 +232,7 @@ class GetSchedulesResponseModel(BaseModel):
         }
 
 
-class GetEventsResponseModel(BaseModel):
+class AddNewEventsModel(BaseModel):
     assets: MutableMapping[AssetID, List[EventsEntry]] = Field(
         description="A mapping of global evto their schedule data"
     )
@@ -214,3 +254,7 @@ class GetEventsResponseModel(BaseModel):
                 },
             }
         }
+
+
+class GetEventsResponseModel(AddNewEventsModel):
+    ...

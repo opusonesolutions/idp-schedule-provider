@@ -8,3 +8,7 @@ class ScenarioNotFoundException(ForecasterException):
 
 class AssetNotFoundException(ForecasterException):
     pass
+
+
+class BadAssetScheduleTimeIntervalException(ForecasterException):
+    pass

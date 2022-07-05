@@ -5,21 +5,8 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm.session import Session
 
-from idp_schedule_provider.forecaster.controller import (
-    insert_scenarios,
-    insert_schedules,
-)
-from idp_schedule_provider.forecaster.models import EventData, Scenarios
-
-
-@pytest.fixture()
-def scenario_seed(database_client: Session):
-    insert_scenarios(
-        database_client,
-        [
-            Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
-        ],
-    )
+from idp_schedule_provider.forecaster.controller import insert_rows
+from idp_schedule_provider.forecaster.models import EventData
 
 
 @pytest.fixture()
@@ -43,7 +30,7 @@ def data_seed(database_client: Session, scenario_seed):
         ),
     ]
 
-    insert_schedules(database_client, forecast_rows)
+    insert_rows(database_client, forecast_rows)
 
 
 def test_get_timespan_missing_scenario(test_client: TestClient):
@@ -205,7 +192,7 @@ def test_get_event_data_datetime_filter(
     ],
 )
 def test_get_event_data_overlapping_datetime_filter(
-    test_client: TestClient, data_seed, query_start: datetime, query_end: datetime
+    test_client: TestClient, data_seed, query_start: datetime, query_end: datetime, scenario_seed
 ):
     # only get data within the specified timerange
     response = test_client.get(
