@@ -83,18 +83,30 @@ class GetTimeSpanModel(BaseModel):
 
 
 VariableName = str
-ScheduleValue = Optional[float]
+BalancedScheduleValue = Optional[float]
 # Order of this is how parsing is attempted
 EventsValue = Optional[Union[float, datetime]]
 
 
 class UnbalancedScheduleValue(BaseModel):
-    A: ScheduleValue
-    B: ScheduleValue
-    C: ScheduleValue
+    A: BalancedScheduleValue
+    B: BalancedScheduleValue
+    C: BalancedScheduleValue
 
 
-ScheduleEntry = MutableMapping[VariableName, Union[ScheduleValue, UnbalancedScheduleValue]]
+class CostScheduleValue(BaseModel):
+    x: float
+    y: float
+
+
+# order matters
+ScheduleValue = Union[
+    BalancedScheduleValue,
+    List[CostScheduleValue],
+    UnbalancedScheduleValue,
+]
+
+ScheduleEntry = MutableMapping[VariableName, ScheduleValue]
 EventsEntry = MutableMapping[VariableName, EventsValue]
 
 
@@ -224,6 +236,10 @@ class GetSchedulesResponseModel(AddNewSchedulesModel):
                         {
                             "p": {"A": 24000, "B": 16000, "C": 20000},
                             "q": {"A": 4000, "B": 2000, "C": 3000},
+                            "active_energy_cost": [
+                                {"x": 100, "y": 100.00},
+                                {"x": 200, "y": 200.00},
+                            ],
                         },
                         None,
                     ],

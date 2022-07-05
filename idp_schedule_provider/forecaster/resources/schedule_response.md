@@ -141,7 +141,7 @@ provided. Gaps are likely to cause the analysis to fail or behave unpredictably.
 ### Load / Energy Consumer Schedules
 
 <details>
-Loads/Energy Consumers support both balanced and unbalanced P,Q schedules.
+Loads/Energy Consumers support both balanced and unbalanced P,Q schedules, as well as cost schedules.
 
 #### PQ Schedule
 
@@ -156,8 +156,21 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 | p             | real power consumption     | W     |
 | q             | reactive power consumption | VAR   |
 
+### Cost Schedule
+
+If a cost schedule is provided for a load it will be used when performing
+Cost Optimization analyses.
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+
 <details>
-<summary>Balanced Example</summary>
+<summary>Balanced Asset Example</summary>
 
 ```json
 {
@@ -168,10 +181,12 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
             {
                 "p": 450000,
                 "q": 500,
+                "active_energy_cost": [{"x": 100, "y": 150}, {"x": 200, "y": 250}]
             },
             {
                 "p": 550000,
                 "q": 1000,
+                "active_energy_cost": 50
             },
             ...
         ],
@@ -181,7 +196,7 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 
 </details>
 <details>
-<summary>Unbalanced Example</summary>
+<summary>Unbalanced Asset Example</summary>
 
 ```json
 {
@@ -192,10 +207,12 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
             {
                 "p": { "A": 100000, "B": 225000, "C": 125000},
                 "q": { "A": 5000, "B": 7000, "C": 6000},
+                "active_energy_cost": [{"x": 100, "y": 150}, {"x": 200, "y": 250}]
             },
             {
                 "p": { "A": 100000, "B": 325000, "C": 125000},
                 "q": { "A": 5000, "B": 8000, "C": 6000},
+                "active_energy_cost": 50
             },
             ...
         ],
@@ -228,7 +245,7 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 ### Photovoltaic (PV) Schedules
 
 <details>
-Photovoltaics only support a PQ schedule
+Photovoltaics only support a PQ schedule and a cost schedule
 
 #### PQ Schedule
 
@@ -243,13 +260,27 @@ proportionally from the substation generation.
 | p             | real power consumption     | W     |
 | q             | reactive power consumption | VAR   |
 
+### Cost Schedule
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name      | Description                    | Units |
+| ------------------ | ------------------------------ | ----- |
+| active_energy_cost | the cost of energy consumption | $/Wh  |
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+
 </details>
 
 ### Battery (BESS) Schedules
 
 <details>
 
-BESS support two types of schedules, PQ and SoC schedules
+BESS support PQ, SoC and Cost Schedules
 
 #### PQ Schedule
 
@@ -277,6 +308,19 @@ of the battery asset will be used.
 | min_SOC       | value between 0 and 1 (where 0 = 0% and 1 = 100%) | %     |
 | max_SOC       | value between 0 and 1 (where 0 = 0% and 1 = 100%) | %     |
 
+### Cost Schedule
+
+If a cost schedule is provided for a load it will be used when performing
+Cost Optimization analyses.
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+
 </details>
 
 ### Capacitor/Reactor Schedules
@@ -284,7 +328,8 @@ of the battery asset will be used.
 <details>
 
 Capacitors support being connected and disconnected via schedules. This can either be provided
-per-phase or as a single balanced value.
+per-phase or as a single balanced value.  They also support cost schedules for the cost of
+operating this capacitor.
 
 For any timepoints where the state values are not specified, the capacitor will
 be assumed to be in its default connection state.
@@ -295,8 +340,16 @@ be assumed to be in its default connection state.
 | ------------- | ------------------------------------------------------------ | ----- |
 | state         | either 0 (indicates disconnected) or 1 (indicates connected) | n/a   |
 
+### Cost Schedules
+
+The values must be a single value that is used throughout that timepoint.
+
+| Variable Name            | Description                                                 | Units        |
+| ------------------------ | ----------------------------------------------------------- | ------------ |
+| capacitor_operation_cost | the cost of changing the connection status of the capacitor | $/operation  |
+
 <details>
-<summary>Balanced Example</summary>
+<summary>Balanced Asset Example</summary>
 
 ```json
 {
@@ -304,8 +357,14 @@ be assumed to be in its default connection state.
     "time_stamps": ...,
     "assets": {
         "cap_1": [
-            {"state": 1},
-            {"state": 0},
+            {
+                "state": 1,
+                "capacitor_operation_cost": 50,
+            },
+            {
+                "state": 0, 
+                "capacitor_operation_cost": 50,
+            }
             ...
         ],
     }
@@ -314,7 +373,7 @@ be assumed to be in its default connection state.
 
 </details>
 <details>
-<summary>Unbalanced Example</summary>
+<summary>Unbalanced Asset Example</summary>
 
 ```json
 {
@@ -322,8 +381,14 @@ be assumed to be in its default connection state.
     "time_stamps": ...,
     "assets": {
         "cap_1": [
-            {"state": { "A": 1, "B": 0, "C": 1}},
-            {"state": { "A": 1, "B": 1, "C": 1}},
+            {
+                "state": { "A": 1, "B": 0, "C": 1}, 
+                "capacitor_operation_cost": 50
+            },
+            {
+                "state": { "A": 1, "B": 1, "C": 1},
+                "capacitor_operation_cost": 50
+            },
             ...
         ],
     }
@@ -338,7 +403,7 @@ be assumed to be in its default connection state.
 
 <details>
 
-Synchronous machines and their variations support a balanced PQ schedule.
+Synchronous machines and their variations support a balanced PQ schedule, as well as a cost schedule
 
 For any timepoints where the PQ values are not specified, P,Q are assumed to be 0.
 
@@ -349,13 +414,23 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 | p             | real power generation     | W     |
 | q             | reactive power generation | VAR   |
 
+### Cost Schedule
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+
 </details>
 
 ### Asynchronous Machine / Wind Schedules
 
 <details>
 
-Asynchronous machines and their variations support a balanced PQ schedule.
+Asynchronous machines and their variations support a balanced PQ schedule and a cost schedule.
 
 For any timepoints where the PQ values are not specified, P,Q are will be allocated
 proportionally from the substation generation.
@@ -366,6 +441,16 @@ proportionally from the substation generation.
 | ------------- | ------------------------- | ----- |
 | p             | real power generation     | W     |
 | q             | reactive power generation | VAR   |
+
+### Cost Schedule
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
 
 </details>
 
@@ -386,7 +471,7 @@ assumed to be in its default open/closed state.
 | status        | either 0 (indicates open) or 1 (indicates closed) | n/a   |
 
 <details>
-<summary>Balanced Example</summary>
+<summary>Balanced Asset Example</summary>
 
 ```json
 {
@@ -404,7 +489,7 @@ assumed to be in its default open/closed state.
 
 </details>
 <details>
-<summary>Unbalanced Example</summary>
+<summary>Unbalanced Asset Example</summary>
 
 ```json
 {
@@ -445,7 +530,7 @@ energy source will be assumed to use its default operating voltage.
 
 <details>
 
-Equivalent substations support a balanced or unbalanced PQ schedule.
+Equivalent substations support a balanced or unbalanced PQ schedule, as well as a cost schedule.
 
 For any timepoints where the PQ values are not specified, P,Q are assumed to be 0.
 
@@ -456,8 +541,17 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 | p             | real power (positive=consumption, negative=backfeeding      | W     |
 | q             | reactive power (positive=consumption, negative=backfeeding) | VAR   |
 
+### Cost Schedule
+
+The values can either be a single value that is used throughout that timepoint,
+or a curve that changes the cost (`y`) based on usage.
+
+| Variable Name                          | Description                            | Units           |
+| -------------------------------------- | -------------------------------------- | --------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
 <details>
-<summary>Balanced Example</summary>
+<summary>Balanced Asset Example</summary>
 
 ```json
 {
@@ -468,10 +562,12 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
             {
                 "p": 450000,
                 "q": 500,
+                "active_energy_cost": [{"x": 100, "y": 150}, {"x": 200, "y": 250}]
             },
             {
                 "p": 550000,
                 "q": 1000,
+                "active_energy_cost": 50
             },
             ...
         ],
@@ -481,7 +577,7 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 
 </details>
 <details>
-<summary>Unbalanced Example</summary>
+<summary>Unbalanced Asset Example</summary>
 
 ```json
 {
@@ -492,10 +588,12 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
             {
                 "p": { "A": 100000, "B": 225000, "C": 125000},
                 "q": { "A": 5000, "B": 7000, "C": 6000},
+                "active_energy_cost": [{"x": 100, "y": 150}, {"x": 200, "y": 250}]
             },
             {
                 "p": { "A": 100000, "B": 325000, "C": 125000},
                 "q": { "A": 5000, "B": 8000, "C": 6000},
+                "active_energy_cost": 50
             },
             ...
         ],
@@ -522,7 +620,15 @@ assumed to be in its default tap position.
 | ------------- | ------------------------------------------ | ----- |
 | tap_positions | integer number indicating the tap position | n/a   |
 
-<details><summary>Balanced Example</summary>
+### Cost Schedules
+
+The values must be a single value that is used throughout that timepoint.
+
+| Variable Name      | Description                                  | Units   |
+| ------------------ | -------------------------------------------- | ------- |
+| tap_operation_cost | the cost of changing the tap position by one | $/step  |
+
+<details><summary>Balanced Asset Example</summary>
 
 ```json
 {
@@ -530,8 +636,14 @@ assumed to be in its default tap position.
     "time_stamps": ...,
     "assets": {
         "transformer_1": [
-            {"tap_positions": 1},
-            {"tap_positions": 0},
+            {
+                "tap_positions": 1,
+                "tap_operation_cost": 50,
+            },
+            {
+                "tap_positions": 0,
+                "tap_operation_cost": 50,
+            },
             ...
         ],
     }
@@ -539,7 +651,7 @@ assumed to be in its default tap position.
 ```
 
 </details>
-<details><summary>Unbalanced Example</summary>
+<details><summary>Unbalanced Asset Example</summary>
 
 ```json
 {
@@ -547,8 +659,14 @@ assumed to be in its default tap position.
     "time_stamps": ...,
     "assets": {
         "transformer_1": [
-            {"tap_positions": { "A": 10, "B": 12, "C": 8}},
-            {"tap_positions": { "A": 12, "B": 10, "C": 8}},
+            {
+                "tap_positions": { "A": 10, "B": 12, "C": 8},
+                "tap_operation_cost": 50,
+            },
+            {
+                "tap_positions": { "A": 12, "B": 10, "C": 8},
+                "tap_operation_cost": 50,
+            },
             ...
         ],
     }

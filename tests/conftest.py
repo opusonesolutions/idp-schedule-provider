@@ -39,9 +39,6 @@ def database_client(db_session: Session):
 
 @pytest.fixture()
 def scenario_seed(database_client: Session):
-    insert_rows(
-        database_client,
-        [
-            Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1"),
-        ],
-    )
+    scenario = Scenarios(id="sce1", name="Scenario 1", description="Test Scenario 1")
+    insert_rows(database_client, [scenario])
+    yield scenario
