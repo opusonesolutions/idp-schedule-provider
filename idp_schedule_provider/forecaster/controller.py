@@ -17,7 +17,7 @@ def scenario_exists(db: Session, scenario_id: str):
     return query.one_or_none()
 
 
-def create_scenario(
+def create_or_update_scenario(
     db: Session, scenario_id: schemas.ScenarioID, scenario_data: schemas.ScenarioModel
 ):
     """validate and create/update scenario db model"""
@@ -123,7 +123,7 @@ def add_events(
 ) -> None:
     """Add new asset events to schedule provider"""
     if not scenario_exists(db, scenario_id=scenario):
-        raise exceptions.ScenarioNotFoundException
+        raise exceptions.ScenarioNotFoundException()
 
     asset_events = new_events.dict()["assets"]
     new_event_models = []
@@ -136,6 +136,7 @@ def add_events(
                     scenario_id=scenario,
                     asset_name=asset_id,
                     feeder=feeder,
+                    event_type=event.get("event_type", None),
                     data=event,
                     start_timestamp=start_time,
                     end_timestamp=end_time,
@@ -188,6 +189,7 @@ def get_event_timespan(
     db: Session,
     scenario_id: schemas.ScenarioID,
     *,
+    event_type: Optional[List[schemas.AssetEventType]] = None,
     asset_name: Optional[str] = None,
     feeders: Optional[List[str]] = None,
 ) -> schemas.GetTimeSpanModel:
@@ -209,6 +211,9 @@ def get_event_timespan(
 
     if feeders:
         query = query.filter(EventData.feeder.in_(feeders))
+
+    if event_type is not None:
+        query = query.filter(EventData.event_type.in_([et.value for et in event_type]))
 
     return schemas.GetTimeSpanModel(
         assets={
@@ -261,9 +266,11 @@ def get_asset_events_data(
     start_time: datetime,
     end_time: datetime,
     *,
+    event_type: Optional[List[schemas.AssetEventType]] = None,
     asset_name: Optional[str] = None,
     feeders: Optional[List[str]] = None,
 ) -> schemas.GetEventsResponseModel:
+
     try:
         db.query(Scenarios).filter(Scenarios.id == scenario_id).one()
     except NoResultFound:
@@ -282,6 +289,9 @@ def get_asset_events_data(
 
     if feeders is not None:
         query = query.filter(EventData.feeder.in_(feeders))
+
+    if event_type is not None:
+        query = query.filter(EventData.event_type.in_([et.value for et in event_type]))
 
     query_data = query.order_by(EventData.start_timestamp).all()
     return _query_data_to_events_response(query_data)

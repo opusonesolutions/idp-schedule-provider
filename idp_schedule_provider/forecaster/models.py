@@ -1,11 +1,18 @@
+import enum
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional, cast
 
 import sqlalchemy
 from sqlalchemy import Column, ForeignKey, String, TypeDecorator
+from sqlalchemy.orm import validates
 from sqlalchemy.sql.sqltypes import JSON, DateTime, Integer
 
 from idp_schedule_provider.forecaster.database import Base, engine
+
+
+class EventType(enum.Enum):
+    EV_CHARGING = "electric_vehicle_charge"
+    CONTROL_MODE = "control_mode"
 
 
 class UTCDateTime(TypeDecorator):
@@ -68,8 +75,17 @@ class EventData(Base):
     asset_name = Column(String, index=True)
     feeder = Column(String, index=True)
     data = Column(cast("sqlalchemy.types.TypeEngine[Dict[str, Any]]", JSON()))  # force type to dict
+    event_type = Column(String, index=True)
     start_timestamp = Column(UTCDateTime, index=True)
     end_timestamp = Column(UTCDateTime, index=True)
+
+    @validates("event_type")
+    def validate_event_type(self, key, event_type):
+        if event_type is None:
+            return None
+
+        EventType(event_type)  # propagate value error if exists
+        return event_type
 
 
 Base.metadata.drop_all(engine)

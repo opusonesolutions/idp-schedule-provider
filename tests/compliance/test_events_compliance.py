@@ -16,7 +16,14 @@ def data_seed(database_client: Session, scenario_seed):
             scenario_id="sce1",
             asset_name="EV",
             feeder="global_ev",
-            data={"pf": 0.9, "p_max": 2400, "start_soc": 75, "total_battery_capacity": 10000},
+            event_type="electric_vehicle_charge",
+            data={
+                "pf": 0.9,
+                "p_max": 2400,
+                "start_soc": 75,
+                "total_battery_capacity": 10000,
+                "event_type": "electric_vehicle_charge",
+            },
             start_timestamp=datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc),
             end_timestamp=datetime(2000, 1, 1, 17, 59, 59, 59, timezone.utc),
         ),
@@ -24,9 +31,25 @@ def data_seed(database_client: Session, scenario_seed):
             scenario_id="sce1",
             asset_name="EV",
             feeder="global_ev",
-            data={"pf": 0.9, "p_max": 2400, "start_soc": 75, "total_battery_capacity": 10000},
+            event_type="electric_vehicle_charge",
+            data={
+                "pf": 0.9,
+                "p_max": 2400,
+                "start_soc": 75,
+                "total_battery_capacity": 10000,
+                "event_type": "electric_vehicle_charge",
+            },
             start_timestamp=datetime(2000, 1, 1, 23, 0, 0, 0, timezone.utc),
             end_timestamp=datetime(2000, 1, 1, 23, 59, 59, 59, timezone.utc),
+        ),
+        EventData(
+            scenario_id="sce1",
+            asset_name="EV",
+            feeder="global_ev",
+            event_type="control_mode",
+            data={"control_mode": "global", "event_type": "control_mode"},
+            start_timestamp=datetime(2000, 1, 1, 23, 0, 0, 0, timezone.utc),
+            end_timestamp=datetime(2000, 1, 1, 23, 29, 59, 59, timezone.utc),
         ),
     ]
 
@@ -79,6 +102,7 @@ def test_get_event_data_by_feeder(test_client: TestClient, data_seed):
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
                 },
                 {
                     "start_datetime": "2000-01-01T23:00:00+00:00",
@@ -87,6 +111,13 @@ def test_get_event_data_by_feeder(test_client: TestClient, data_seed):
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
+                },
+                {
+                    "start_datetime": "2000-01-01T23:00:00+00:00",
+                    "end_datetime": "2000-01-01T23:29:59.000059+00:00",
+                    "control_mode": "global",
+                    "event_type": "control_mode",
                 },
             ],
         },
@@ -114,6 +145,7 @@ def test_get_event_data_by_asset(test_client: TestClient, data_seed):
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
                 },
                 {
                     "start_datetime": "2000-01-01T23:00:00+00:00",
@@ -122,6 +154,13 @@ def test_get_event_data_by_asset(test_client: TestClient, data_seed):
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
+                },
+                {
+                    "start_datetime": "2000-01-01T23:00:00+00:00",
+                    "end_datetime": "2000-01-01T23:29:59.000059+00:00",
+                    "control_mode": "global",
+                    "event_type": "control_mode",
                 },
             ],
         },
@@ -168,6 +207,7 @@ def test_get_event_data_datetime_filter(
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
                 },
             ],
         },
@@ -214,6 +254,7 @@ def test_get_event_data_overlapping_datetime_filter(
                     "p_max": 2400.0,
                     "start_soc": 75.0,
                     "total_battery_capacity": 10000.0,
+                    "event_type": "electric_vehicle_charge",
                 },
             ],
         },
@@ -247,3 +288,66 @@ def test_get_event_data_no_overlap(
     )
     assert response.status_code == 200
     assert response.json() == {"assets": {}}
+
+
+@pytest.mark.parametrize(
+    "event_types, expected_types",
+    [
+        (["electric_vehicle_charge"], ["ev_charge_events"]),
+        (["control_mode"], ["control_mode_events"]),
+        ([], ["ev_charge_events", "control_mode_events"]),
+        (["electric_vehicle_charge", "control_mode"], ["ev_charge_events", "control_mode_events"]),
+    ],
+)
+def test_get_event_data_by_event_type(
+    test_client: TestClient, data_seed, event_types, expected_types
+):
+    expected_by_type = {
+        "ev_charge_events": [
+            {
+                "start_datetime": "2000-01-01T14:00:00+00:00",
+                "end_datetime": "2000-01-01T17:59:59.000059+00:00",
+                "pf": 0.9,
+                "p_max": 2400.0,
+                "start_soc": 75.0,
+                "total_battery_capacity": 10000.0,
+                "event_type": "electric_vehicle_charge",
+            },
+            {
+                "start_datetime": "2000-01-01T23:00:00+00:00",
+                "end_datetime": "2000-01-01T23:59:59.000059+00:00",
+                "pf": 0.9,
+                "p_max": 2400.0,
+                "start_soc": 75.0,
+                "total_battery_capacity": 10000.0,
+                "event_type": "electric_vehicle_charge",
+            },
+        ],
+        "control_mode_events": [
+            {
+                "start_datetime": "2000-01-01T23:00:00+00:00",
+                "end_datetime": "2000-01-01T23:29:59.000059+00:00",
+                "control_mode": "global",
+                "event_type": "control_mode",
+            },
+        ],
+    }
+    expected = []
+    for et in expected_types:
+        expected.extend(expected_by_type[et])
+    # as we are storing our data hourly, there is no interpolation/sampling applied
+    response = test_client.get(
+        "/sce1/asset_events",
+        params={
+            "start_datetime": datetime(2000, 1, 1, tzinfo=timezone.utc),
+            "end_datetime": datetime(2000, 1, 1, 23, 59, 59, 999999, tzinfo=timezone.utc),
+            "asset_name": "EV",
+            "event_type": event_types,
+        },
+    )
+    assert response.status_code == 200, response.json()
+    assert response.json() == {
+        "assets": {
+            "EV": expected,
+        },
+    }

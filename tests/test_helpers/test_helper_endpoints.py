@@ -74,7 +74,7 @@ def test_add_and_update_schedule(test_client, scenario_seed):
         },
     }
     rsp = test_client.post("/sce1/asset_schedules/feeder1", json=data)
-    assert rsp.status_code == 200
+    assert rsp.status_code == 201
 
     params = {
         "start_datetime": datetime(2000, 1, 1, 1, 0, 0, tzinfo=timezone.utc),
@@ -108,7 +108,7 @@ def test_add_and_update_schedule(test_client, scenario_seed):
     data["assets"]["load_1"][1].update({"p": 1500.0, "q": 400.0})
 
     rsp = test_client.post("/sce1/asset_schedules/feeder1", json=data)
-    assert rsp.status_code == 200
+    assert rsp.status_code == 201
 
     response_data = test_client.get(
         "/sce1/asset_schedules",
@@ -129,6 +129,7 @@ def test_add_event(test_client, scenario_seed):
                     "total_battery_capacity": 10000,
                     "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc).isoformat(),
                     "end_datetime": datetime(2000, 1, 1, 17, 59, 59, 59, timezone.utc).isoformat(),
+                    "event_type": "electric_vehicle_charge",
                 },
                 {
                     "pf": 0.9,
@@ -137,6 +138,7 @@ def test_add_event(test_client, scenario_seed):
                     "total_battery_capacity": 10000,
                     "start_datetime": datetime(2000, 1, 1, 23, 0, 0, 0, timezone.utc).isoformat(),
                     "end_datetime": datetime(2000, 1, 1, 23, 59, 59, 59, timezone.utc).isoformat(),
+                    "event_type": "electric_vehicle_charge",
                 },
             ],
             "EV2": [
@@ -147,7 +149,14 @@ def test_add_event(test_client, scenario_seed):
                     "total_battery_capacity": 10000,
                     "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc).isoformat(),
                     "end_datetime": datetime(2000, 1, 1, 17, 59, 59, 59, timezone.utc).isoformat(),
-                }
+                    "event_type": "electric_vehicle_charge",
+                },
+                {
+                    "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc).isoformat(),
+                    "end_datetime": datetime(2000, 1, 1, 17, 59, 59, 59, timezone.utc).isoformat(),
+                    "event_type": "control_mode",
+                    "control_mode": "global",
+                },
             ],
         }
     }
@@ -155,6 +164,7 @@ def test_add_event(test_client, scenario_seed):
     rsp = test_client.post("/sce1/asset_events/test_ev", json=events)
 
     assert rsp.ok
+    assert rsp.status_code == 201
 
     response = test_client.get(
         "/sce1/asset_events",
@@ -165,4 +175,14 @@ def test_add_event(test_client, scenario_seed):
         },
     )
     assert response.ok
-    assert len(response.json()["assets"]["EV1"]) == 1
+    assert response.json()["assets"]["EV1"] == [
+        {
+            "pf": 0.9,
+            "p_max": 2400,
+            "start_soc": 75,
+            "total_battery_capacity": 10000,
+            "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc).isoformat(),
+            "end_datetime": datetime(2000, 1, 1, 17, 59, 59, 59, timezone.utc).isoformat(),
+            "event_type": "electric_vehicle_charge",
+        }
+    ]

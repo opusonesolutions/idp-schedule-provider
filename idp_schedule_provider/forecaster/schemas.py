@@ -5,7 +5,7 @@ from typing import List, MutableMapping, Optional, Union
 from dateutil.relativedelta import relativedelta
 from pydantic import BaseModel, Field
 
-from idp_schedule_provider.forecaster.models import Scenarios
+from idp_schedule_provider.forecaster.models import EventType, Scenarios
 
 AssetID = str
 ScenarioID = str
@@ -85,7 +85,7 @@ class GetTimeSpanModel(BaseModel):
 VariableName = str
 BalancedScheduleValue = Optional[float]
 # Order of this is how parsing is attempted
-EventsValue = Optional[Union[float, datetime]]
+EventsValue = Optional[Union[float, datetime, str]]
 
 
 class UnbalancedScheduleValue(BaseModel):
@@ -154,6 +154,9 @@ class InterpolationMethod(Enum):
 class SamplingMode(Enum):
     WEIGHTED_AVERAGE = "weighted_average"
     HOLD_FIRST = "hold_first_value"
+
+
+AssetEventType = EventType
 
 
 class AddNewSchedulesModel(BaseModel):
@@ -261,11 +264,18 @@ class AddNewEventsModel(BaseModel):
                         {
                             "start_datetime": datetime(2000, 1, 1, 14, 0, 0, 0, timezone.utc),
                             "end_datetime": datetime(2000, 1, 1, 17, 0, 0, 0, timezone.utc),
+                            "event_type": AssetEventType.EV_CHARGING.value,
                             "pf": 0.9,
                             "p_max": 2400,
                             "start_soc": 75,
                             "total_battery_capacity": 10000,
-                        }
+                        },
+                        {
+                            "start_datetime": datetime(2000, 1, 1, 1, 0, 0, 0, timezone.utc),
+                            "end_datetime": datetime(2000, 1, 1, 12, 0, 0, 0, timezone.utc),
+                            "event_type": AssetEventType.CONTROL_MODE.value,
+                            "control_mode": "global",
+                        },
                     ],
                 },
             }

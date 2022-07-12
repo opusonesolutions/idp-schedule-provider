@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
+from fastapi.responses import Response
 from sqlalchemy.orm.session import Session
 
 from idp_schedule_provider.authentication.auth import validate_token
@@ -12,10 +13,6 @@ from idp_schedule_provider.forecaster.resources import load_resource
 from idp_schedule_provider.forecaster.seed_data import DUMMY_SOURCE, IEEE123_SOURCE
 
 router = APIRouter()
-
-
-def scenario_not_found_exception(scenario_name: str) -> HTTPException:
-    return HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario_name}` not found")
 
 
 @router.post("/seed_data", tags=["test-only"])
@@ -37,7 +34,7 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     "/scenario/{scenario}",
     tags=["test-only"],
 )
-async def create_scenario(
+async def update_scenario(
     scenario: schemas.ScenarioID,
     scenario_data: schemas.ScenarioModel,
     _: bool = Depends(validate_token),
@@ -52,7 +49,7 @@ async def create_scenario(
     This exists for testing purposes only. It is not part of the external schedule implementation
     and does not need to be implemented as part of the specification.
     """
-    forecast_controller.create_scenario(db, scenario, scenario_data)
+    forecast_controller.create_or_update_scenario(db, scenario, scenario_data)
 
 
 @router.delete(
@@ -74,12 +71,13 @@ async def delete_scenario(
 
     try:
         forecast_controller.delete_scenario(db, scenario)
-    except exceptions.ScenarioNotFoundException:
-        raise scenario_not_found_exception(scenario)
+    except exceptions.ScenarioNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario}` not found") from e
     except Exception as e:
         raise HTTPException(
             status.HTTP_500_INTERNAL_SERVER_ERROR, "Failed to delete scenario"
         ) from e
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get(
@@ -127,10 +125,10 @@ async def get_schedule_timespans(
         result = forecast_controller.get_asset_timespan(
             db, scenario, asset_name=asset_name, feeders=feeders
         )
-    except exceptions.AssetNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
-    except exceptions.ScenarioNotFoundException:
-        raise scenario_not_found_exception(scenario)
+    except exceptions.AssetNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Asset `{asset_name}` not found.") from e
+    except exceptions.ScenarioNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario}` not found.") from e
 
     return result
 
@@ -165,10 +163,10 @@ async def get_event_timespans(
         result = forecast_controller.get_event_timespan(
             db, scenario, asset_name=asset_name, feeders=feeders
         )
-    except exceptions.AssetNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
-    except exceptions.ScenarioNotFoundException:
-        raise scenario_not_found_exception(scenario)
+    except exceptions.AssetNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Asset `{asset_name}` not found.") from e
+    except exceptions.ScenarioNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario}` not found.") from e
 
     return result
 
@@ -203,11 +201,11 @@ async def add_schedules(
             status.HTTP_400_BAD_REQUEST,
             "Asset schedule data should be evenly sampled at *hourly* intervals",
         )
+    return Response(status_code=status.HTTP_201_CREATED)
 
 
 @router.get(
     "/{scenario}/asset_schedules",
-    response_model=schemas.GetSchedulesResponseModel,
     description=load_resource("schedule_response"),
     tags=["spec-required"],
 )
@@ -274,10 +272,10 @@ async def get_schedules(
             asset_name=asset_name,
             feeders=feeders,
         )
-    except exceptions.ScenarioNotFoundException:
-        raise scenario_not_found_exception(scenario)
-    except exceptions.AssetNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
+    except exceptions.ScenarioNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario}` not found") from e
+    except exceptions.AssetNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Asset `{asset_name}` not found.") from e
     return result
 
 
@@ -301,6 +299,7 @@ async def add_events(
     """
 
     forecast_controller.add_events(db, scenario, feeder, new_events)
+    return Response(status_code=status.HTTP_201_CREATED)
 
 
 @router.get(
@@ -331,6 +330,10 @@ async def get_events(
     asset_name: Optional[str] = Query(
         None, description="The name of the asset for which the asset data should be retrieved."
     ),
+    event_type: Optional[List[schemas.AssetEventType]] = Query(
+        None,
+        description="The type of the event for which the asset data should be retrieved.",
+    ),
     _: bool = Depends(validate_token),
     db: Session = Depends(get_db_session),
 ) -> schemas.GetEventsResponseModel:
@@ -349,11 +352,12 @@ async def get_events(
             scenario,
             start_datetime,
             end_datetime,
+            event_type=event_type,
             asset_name=asset_name,
             feeders=feeders,
         )
-    except exceptions.ScenarioNotFoundException:
-        raise scenario_not_found_exception(scenario)
-    except exceptions.AssetNotFoundException:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Asset not found")
+    except exceptions.ScenarioNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Scenario `{scenario}` not found") from e
+    except exceptions.AssetNotFoundException as e:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"Asset {asset_name} not found.") from e
     return result
