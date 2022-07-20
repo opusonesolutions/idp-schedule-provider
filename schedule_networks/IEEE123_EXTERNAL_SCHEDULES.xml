@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <rdf:RDF xmlns:cim="http://iec.ch/TC57/2013/CIM-schema-cim16#" xmlns:gridos="http://opusonesolutions.com/gridos/CIM/1.0.0#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <cim:BaseVoltage rdf:ID="3fe0d08c-d386-5780-9349-16b1f52afd48">
+    <cim:BaseVoltage.nominalVoltage>4160.0</cim:BaseVoltage.nominalVoltage>
+  </cim:BaseVoltage>
   <gridos:FeederMarketInfo rdf:ID="78753f7c-eafd-41f4-81a9-f239233afc67">
     <gridos:FeederMarketInfo.systemLoss>5.63</gridos:FeederMarketInfo.systemLoss>
     <gridos:FeederMarketInfo.avoidedGenerationCapacityCost>100000.0</gridos:FeederMarketInfo.avoidedGenerationCapacityCost>
@@ -44,7 +47,7 @@
     <cim:EnergyConsumerPhase.EnergyConsumer rdf:resource="#_38443831-23AC-4880-9B05-9DB27433B681"/>
   </cim:EnergyConsumerPhase>
   <cim:TopologicalNode rdf:ID="_00b279e6-de25-4d9b-902b-d46e5659a71a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_00b2a85f-5656-4a61-9f98-d4fcb9c84030">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.B"/>
@@ -237,7 +240,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_0e73a579-493a-473b-b616-6b332cf0c612"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_03756ece-034a-4c69-acb3-6926c418a24c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Location rdf:ID="_037E0380-3E3D-4A81-BA53-F7DEE4A54C9B">
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
@@ -278,7 +281,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_1852C9A0-40EC-418C-8EBF-4A5E8C63B08F"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_0418e19e-fee8-4bea-ad4a-5265bcaee6c4">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_0423cfc0-ae86-419a-8215-cb798da160bc">
     <cim:PhaseImpedanceData.r>0.00020474235930192307</cim:PhaseImpedanceData.r>
@@ -441,7 +444,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_07705805-D417-4504-81EB-B06F57A90ABC"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_07628565-1fd4-49c9-aa26-7f1ca89c9787">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ConnectivityNode rdf:ID="_07705805-D417-4504-81EB-B06F57A90ABC">
     <cim:IdentifiedObject.name>80</cim:IdentifiedObject.name>
@@ -591,7 +594,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_099de698-0064-42c7-a3f9-02fe4dd5aa7c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegment rdf:ID="_09A9DCF8-2B5D-48CC-B962-CBE46F2B9D62">
     <cim:IdentifiedObject.name>CONFIG_3_72_76</cim:IdentifiedObject.name>
@@ -906,7 +909,7 @@
   </gridos:AssetLifecycle>
   <cim:Asset rdf:ID="_0ae619e0-d876-40b8-bdbd-4f74ef707e9b"/>
   <cim:TopologicalNode rdf:ID="_0aec4eb2-10e2-4a84-b44f-b587a3a96e4a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_0afa7522-c335-4687-a1be-a6f2e60becb2">
     <cim:PhaseImpedanceData.r>0.00028995031738465293</cim:PhaseImpedanceData.r>
@@ -930,7 +933,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_607BE0AD-83D4-4A6D-95E9-527833EB3303"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_0bca101f-e109-44db-969f-4d1312b5239b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_0be463a3-2feb-4b72-a0ff-80508a95bbe6">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -938,7 +941,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_2AFDE74F-EA0A-4F8B-B72B-D4D7EAF04013"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_0c1199b6-f44d-4d03-ad30-32e39309006e">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_0c4fe73e-ccf3-4df6-8a8a-f7db4efd5b0b">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -966,7 +969,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_707dec51-2f39-4674-9960-676ee5a58e53"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_0db0cef6-5552-4ce1-b4e6-1a14e4617613">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_0db37fc4-470a-4fe0-9a6c-5fb9d09a40ee">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -1084,7 +1087,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_CCEC646E-C018-47E7-90BC-D080E80E6B44"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_11312f51-da49-4567-89f3-dcda00a2b3f4">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:EnergyConsumerPhase rdf:ID="_113C87E3-98B9-4513-BFB3-E2937FE04408">
     <cim:EnergyConsumerPhase.pfixed>20064.150286</cim:EnergyConsumerPhase.pfixed>
@@ -1224,7 +1227,7 @@
     <cim:EnergyConsumerPhase.EnergyConsumer rdf:resource="#_11E92711-726E-440E-9905-D84C3E24A795"/>
   </cim:EnergyConsumerPhase>
   <cim:TopologicalNode rdf:ID="_1346e2b4-c72f-4c76-8b62-33492c4f2f18">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_1374312A-ED05-4AD5-A703-0F9A08E6DC7D">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -1296,7 +1299,7 @@
   </cim:Junction>
   <cim:PerLengthPhaseImpedance rdf:ID="_1442c73d-8fcb-40b5-aa81-1dabe7a3c8c5"/>
   <cim:TopologicalNode rdf:ID="_14555397-b6e8-493c-8dd8-ae981c521aa1">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_14565f20-0899-4bf7-830b-3b1d0bec1293">
     <cim:PhaseImpedanceData.r>9.690381792780802e-05</cim:PhaseImpedanceData.r>
@@ -1496,7 +1499,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_d1d932b7-ce90-4773-a5ad-8c18b7d893f1"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_16c66060-0ed7-4b0c-bb36-c57e7b1df2c6">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_16e645fc-e934-4d08-a7c8-9d5784ac96d7">
     <cim:PowerSystemResource.Location rdf:resource="#_67637AD2-CED8-4E81-843E-8FAC4CEE1F84"/>
@@ -1670,7 +1673,7 @@
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
   </cim:Location>
   <cim:TopologicalNode rdf:ID="_190cf237-c6fc-4a2a-b807-a6e78bf914b3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:WirePosition rdf:ID="_190f84d4-44a7-4e13-b683-a9e23276b84b">
     <cim:WirePosition.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.B"/>
@@ -2054,7 +2057,7 @@
   </cim:PhaseImpedanceData>
   <cim:Asset rdf:ID="_1a5b396a-eb40-4b75-be70-484921c56c09"/>
   <cim:TopologicalNode rdf:ID="_1a6a6a13-ab68-4002-8b51-d32ff384ba5b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_1b5ff5c5-2b87-47c2-b95a-75f28fdf708b">
     <cim:PhaseImpedanceData.r>9.81814816762271e-05</cim:PhaseImpedanceData.r>
@@ -2073,7 +2076,7 @@
     <cim:TransformerEnd.endNumber>1</cim:TransformerEnd.endNumber>
     <cim:TransformerTankEnd.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
     <cim:TransformerEnd.Terminal rdf:resource="#_7CD61398-04D2-4AEA-B56C-1CC591489531"/>
-    <cim:TransformerEnd.BaseVoltage rdf:resource="#_593dcfcd-b094-409c-90a6-09d8b176e6d1"/>
+    <cim:TransformerEnd.BaseVoltage rdf:resource="#b5643e05-b801-5efd-be54-39be2778d2f2"/>
     <cim:TransformerTankEnd.TransformerTank rdf:resource="#_32e8fc6d-a3a7-44dd-846d-989146c3307a"/>
   </cim:TransformerTankEnd>
   <cim:Asset rdf:ID="_1bdb62fd-350a-4ba0-94db-68c1ff096a76"/>
@@ -2130,7 +2133,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_d1d932b7-ce90-4773-a5ad-8c18b7d893f1"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_1f035407-2f9a-4cf6-a266-6750cf69e0ec">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_1f27ae0a-000e-4164-bff4-c4e9c0bd7946"/>
   <cim:Junction rdf:ID="_1f703222-c2be-48af-9e34-e934d8eb3557">
@@ -2248,7 +2251,7 @@
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
   </cim:Location>
   <cim:TopologicalNode rdf:ID="_2152643c-408d-4b72-8d94-cea8a8c93452">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_2159b802-a7c5-4d7d-a301-9b7af9838e31">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -2284,7 +2287,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:PowerTransformer>
   <cim:TopologicalNode rdf:ID="_21ec4d03-3b25-49fe-b265-68119136fb3c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_21edb036-63ad-474c-aea6-93485d394c68"/>
   <cim:ConnectivityNode rdf:ID="_2220AD2D-7D4E-4F0D-9E44-228341797578">
@@ -2299,7 +2302,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_8B8E0A64-7ACB-4E3B-A0E1-78E4559EB2F0"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_2263d216-8a1f-4e46-8dda-b8858d21d39b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_228A5B45-1859-41D8-9019-AD72E048C176">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -2464,7 +2467,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_dc6c539c-c40e-40ac-96f6-609553e3596d"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_24739a89-f1bf-4569-bdf7-dc38ddb35219">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_24973E39-2AD5-497E-B380-6D810E337772">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -2500,7 +2503,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_8C09DE0A-0713-49B1-A767-B05EDBE3415B"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_24d6bec7-7668-460f-96b9-d23bd0f01f54">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Location rdf:ID="_25175D8B-87DB-4D7A-A232-8B2E290BA099">
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
@@ -2646,7 +2649,7 @@
     <cim:EnergyConsumer.LoadResponse rdf:resource="#_a3c0aff0-45bc-4f90-b05d-d7287b347d73"/>
   </cim:EnergyConsumer>
   <cim:TopologicalNode rdf:ID="_27399f28-722f-48d5-a8f4-77731d7025f0">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_2756c9cb-8cf4-43c7-9567-50d493a140b7">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -2752,7 +2755,7 @@
     <cim:PositionPoint.Location rdf:resource="#_E504565F-D60A-4CA3-9E6C-41A750E25286"/>
   </cim:PositionPoint>
   <cim:TopologicalNode rdf:ID="_2838879e-6131-4054-b057-08013c264e54">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PositionPoint rdf:ID="_285E7210-BF75-48F5-AEB7-8DEF2AA588E3">
     <cim:PositionPoint.xPosition>-79.38761234408373</cim:PositionPoint.xPosition>
@@ -2803,7 +2806,7 @@
     <cim:PositionPoint.Location rdf:resource="#_DCC008FC-A529-4C61-B9CD-DACFBFDD854A"/>
   </cim:PositionPoint>
   <cim:TopologicalNode rdf:ID="_2919a6d8-fbc9-45db-a7ce-0ae52cbf3312">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_29222B8F-B7A1-434D-8EC4-D297F04EC5F5">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -3247,10 +3250,10 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_6069ED0B-3B1B-4ACB-9A86-4E4183E0A4D8"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_2f7b7131-73e6-467f-be16-07028c352839">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_2f8bfcf9-7b44-4d33-860a-b72637a1a467">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_2fa670c5-d6e8-4674-86ff-11c7bb876801">
     <cim:PhaseImpedanceData.r>0.00028674700862471825</cim:PhaseImpedanceData.r>
@@ -3661,7 +3664,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_3C3A11A3-506A-4BF3-B67A-81FA08881259"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_358ad9b4-1d16-45b0-8800-cc2a0c6fdf20">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_35977adc-6ee5-45bf-b1ba-4a2b2954edeb">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -3817,7 +3820,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_DE013774-C4FD-4ED9-AD3E-2C7B29F8B5E9"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_37f3ef75-a76a-4e2c-a8be-c89657c4f2ca">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_37f452e7-5e48-4a85-89a2-cc567c577c68"/>
   <cim:PhaseImpedanceData rdf:ID="_37f893a9-1285-4aff-be5b-1264e2fab5a7">
@@ -4178,10 +4181,10 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_4dc19d91-2212-4b6d-ae65-b1a39f315b72"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_3d472f2a-48b9-40b0-a1de-893e28b6427a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_3d6a5ccd-a8bf-4d97-949e-ea3209a7ec68">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_3e04532a-3cf6-436e-bc10-d113fde20726">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -4241,7 +4244,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_963bba6f-9a78-4f5a-a970-573f4521681f"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_4029c4b6-bfa6-46bc-bac2-c8c0560ede8d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PerLengthPhaseImpedance rdf:ID="_4033a93e-bd52-498b-939b-cdb09eb99f63"/>
   <gridos:AssetLifecycle rdf:ID="_405ea56f-fc3d-4400-a9ba-fb67d2051f3d">
@@ -4276,7 +4279,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_b8e7f270-e9f1-4d32-9ce2-881f5890dc24"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_408d8e82-1cbc-4774-928d-91155b621eda">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ConnectivityNode rdf:ID="_40B9E45E-2623-4362-A8AE-7106413BC56A">
     <cim:IdentifiedObject.name>23</cim:IdentifiedObject.name>
@@ -4296,10 +4299,10 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_09A9DCF8-2B5D-48CC-B962-CBE46F2B9D62"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_40c5e4ac-fe49-4163-9b2a-714d7bc7fdd1">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_4112d102-a246-422b-89bb-b093a484d1e7">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_41159ed6-1c79-4435-bb81-58eb47f03f1c">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -4428,7 +4431,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_8C93A663-8BD5-4637-BE24-1E594BCE10C0"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_43872e4e-84e8-4ad2-9fae-5314a815597d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PositionPoint rdf:ID="_43D9EC08-4DEB-45ED-AD56-7F797DB7A50E">
     <cim:PositionPoint.sequenceNumber>0</cim:PositionPoint.sequenceNumber>
@@ -4460,8 +4463,8 @@
     <cim:WireInfo.material rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#WireMaterialKind.copper"/>
     <cim:WireInfo.sizeDescription>107.218 mm²</cim:WireInfo.sizeDescription>
     <cim:WireInfo.strandCount>7</cim:WireInfo.strandCount>
-    <cim:WireInfo.PerLengthParameters rdf:resource="#_3129DE3C-A5EF-430A-BF10-7817F604CE05"/>
     <cim:WireInfo.PerLengthParameters rdf:resource="#_ADBCC6EE-5130-4759-AF40-9B4593ED0C9C"/>
+    <cim:WireInfo.PerLengthParameters rdf:resource="#_3129DE3C-A5EF-430A-BF10-7817F604CE05"/>
   </cim:OverheadWireInfo>
   <cim:EnergyConsumerPhase rdf:ID="_4474024C-EA63-4B47-BD5C-0DDE3FC4C334">
     <cim:EnergyConsumerPhase.pfixed>27300.0</cim:EnergyConsumerPhase.pfixed>
@@ -4517,7 +4520,7 @@
     <cim:SwitchInfo.ratedVoltage>25000.0</cim:SwitchInfo.ratedVoltage>
   </cim:SwitchInfo>
   <cim:TopologicalNode rdf:ID="_4598d348-e2bc-443e-b40e-d0cc254b0440">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_45C529FC-EE1D-48CA-A094-2FCC82958DE6">
     <cim:ACDCTerminal.sequenceNumber>1</cim:ACDCTerminal.sequenceNumber>
@@ -4716,14 +4719,14 @@
     <cim:ConnectivityNode.ConnectivityNodeContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:ConnectivityNode>
   <cim:TopologicalNode rdf:ID="_47bc1433-d85a-41b8-9d1a-5ad5de9fe794">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_47c3381c-e306-4da9-9854-cfb408aa7d18">
     <cim:PowerSystemResource.Location rdf:resource="#_6B74FA05-0714-4D3E-B4B3-ADC561988AA9"/>
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_48614180-653f-4780-b821-6e8fb5d2a9d9">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegment rdf:ID="_4869DC6F-5595-445B-9F31-B91E089412E7">
     <cim:IdentifiedObject.name>CONFIG_9_87_88</cim:IdentifiedObject.name>
@@ -5092,7 +5095,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_2220AD2D-7D4E-4F0D-9E44-228341797578"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_4c9dbc07-37f5-4d66-95f0-243a9a4e39bd">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_4cc9ddee-00f2-4e20-89b8-84df88dbd41d">
     <cim:PhaseImpedanceData.r>0.00020900542496993336</cim:PhaseImpedanceData.r>
@@ -5125,7 +5128,7 @@
     <cim:TransformerEnd.endNumber>2</cim:TransformerEnd.endNumber>
     <cim:TransformerTankEnd.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
     <cim:TransformerEnd.Terminal rdf:resource="#_1FD65789-4EA7-47AA-A327-764F3A28628F"/>
-    <cim:TransformerEnd.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TransformerEnd.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
     <cim:TransformerTankEnd.TransformerTank rdf:resource="#_32e8fc6d-a3a7-44dd-846d-989146c3307a"/>
   </cim:TransformerTankEnd>
   <cim:Asset rdf:ID="_4dea666e-b608-423c-a1b7-03e6c6b27682"/>
@@ -5165,7 +5168,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_096f1a41-7c9b-4415-8532-c29a9b490dfe"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_4f590238-e914-4643-acea-140e4e5f6fd5">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_500083D9-151D-4A6E-8416-26204E7313C6">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.C"/>
@@ -5349,7 +5352,7 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_9B7C6047-F20C-4A0F-AFF6-8C4766A20330"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_5248ac35-2ee8-4ee2-937c-0b42d7dcece3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_526ec73c-262c-456c-b70c-cfed15926572"/>
   <cim:PositionPoint rdf:ID="_52721BA1-A397-49C5-A6C6-7E8BB272D6B1">
@@ -5364,7 +5367,7 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_855CE912-CFC8-4F1A-9129-D771B43104F2"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_52764025-e306-489c-b3e2-66724dca235c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_527e0e4d-1e1a-4f22-b44f-3c29cb2fa051">
     <cim:PhaseImpedanceData.r>9.81814816762271e-05</cim:PhaseImpedanceData.r>
@@ -5482,7 +5485,7 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_09A9DCF8-2B5D-48CC-B962-CBE46F2B9D62"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_5482c581-0aa6-463f-b76b-433a5c900769">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_5491ac83-c743-4b0d-9811-e2651a201678">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -5618,7 +5621,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_60DE13A3-951A-458D-947F-7CE845912825"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_5682b6f9-8b26-4699-b0cd-21aa576caaa7">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Location rdf:ID="_56B8535B-9DB0-4197-8B53-56E31E00F08F">
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
@@ -5799,9 +5802,6 @@
     <cim:SwitchPhase.phaseSide1 rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.C"/>
     <cim:SwitchPhase.Switch rdf:resource="#_A389367C-34CA-4D27-98A1-253183748447"/>
   </cim:SwitchPhase>
-  <cim:BaseVoltage rdf:ID="_593dcfcd-b094-409c-90a6-09d8b176e6d1">
-    <cim:BaseVoltage.nominalVoltage>36053.33333333333</cim:BaseVoltage.nominalVoltage>
-  </cim:BaseVoltage>
   <gridos:AssetLifecycle rdf:ID="_594b3ae3-9f57-4436-bf55-586e0a1b83f2">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
     <gridos:AssetLifecycle.inServiceDate>1955-01-01</gridos:AssetLifecycle.inServiceDate>
@@ -6130,7 +6130,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_13932DA7-D62F-49F9-A41F-A4206414DC8A"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_5bec612e-5d8a-413e-bcc5-4d5c4268dc96">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_5bef770b-d1ce-46c1-945e-d8af7f6b7751">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -6164,7 +6164,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_1D715AF3-10FD-47F5-86DC-1A0F8CE35192"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_5dd00d05-44d5-4b26-8872-3c4944b02fd8">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:LoadResponseCharacteristic rdf:ID="_5e38ab7f-0709-470c-8d53-e50f32ff239a">
     <cim:IdentifiedObject.name>I</cim:IdentifiedObject.name>
@@ -6179,14 +6179,14 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_D0651C0B-BA71-45C8-B843-B029ADC37393"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_5eb44477-cb47-4877-a8f3-19efa56e2086">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_5ec59ac7-13db-47b5-aea3-e2fef8257a81">
     <cim:PowerSystemResource.Location rdf:resource="#_A9013F06-5422-4C7E-A3CC-FD029CBF7015"/>
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_5ecee914-e654-4912-b868-d52d932aeed5">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_5f165d3e-b460-48eb-a8f7-54ee3bd7f50e">
     <cim:PowerSystemResource.Location rdf:resource="#_06113F90-E453-43DA-A80D-1E11FEF1260C"/>
@@ -6362,7 +6362,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_F40533E2-592F-4A7D-A574-09C3C9CF3DB6"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_61eccc55-9332-482c-a937-18f33a86f649">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:SwitchPhase rdf:ID="_61f4beb4-4df5-4a52-b4cb-6c59441b3bf1">
     <cim:SwitchPhase.closed>true</cim:SwitchPhase.closed>
@@ -6435,7 +6435,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_92425BCD-E587-4BF4-9E18-C00FDABF91C7"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_636716bb-29c3-4995-8beb-b6f3979f3494">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TransformerEndInfo rdf:ID="_636F29EA-F7E5-4B6F-947A-1E42152EC483">
     <cim:TransformerEndInfo.connectionKind rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#WindingConnection.Yn"/>
@@ -6502,10 +6502,10 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_C6BCAAC4-C664-49A6-9AD4-0106AA228CFD"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_6485d386-7c1f-43a0-9ce9-d88583a56dab">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_648f685a-6af9-4d1c-a7a5-0e8e4a62c750">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:EnergyConsumer rdf:ID="_64967546-776C-4EB6-BE51-32B0F1848D2E">
     <cim:IdentifiedObject.name>F112</cim:IdentifiedObject.name>
@@ -6537,7 +6537,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_2c9422e9-8921-4303-8a02-8ff0df9067ff"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_64d1caf4-e2de-4f6c-9d65-32415ae9c109">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_64d684d4-d672-4cb7-863f-a7098e6781df"/>
   <cim:Terminal rdf:ID="_64e05196-a59f-4ed1-997e-8575aa776412">
@@ -6713,7 +6713,7 @@
   </gridos:AssetLifecycle>
   <cim:Asset rdf:ID="_67464443-6ccf-4a93-abd2-3ff43d786bcd"/>
   <cim:TopologicalNode rdf:ID="_675e5a27-6fca-4792-854a-07572b6cf9d5">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Location rdf:ID="_67637AD2-CED8-4E81-843E-8FAC4CEE1F84">
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
@@ -6777,7 +6777,7 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_831DFAD1-B8F4-4D41-9416-42C4A6F2B25D"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_6887d22f-6750-48d1-898f-36cea928555d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_68E1D29E-A12F-4862-8526-7B9FA2A6B97B">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -7112,7 +7112,7 @@
   <cim:SynchronousMachine rdf:ID="_6b6586f6-4b22-4523-a568-96f8ac0434c4">
     <cim:IdentifiedObject.name>Synchronous Machine 1</cim:IdentifiedObject.name>
     <cim:RotatingMachine.p>-100000.0</cim:RotatingMachine.p>
-    <cim:RotatingMachine.q>-48432.21048378525</cim:RotatingMachine.q>
+    <cim:RotatingMachine.q>-48432.21</cim:RotatingMachine.q>
     <cim:RotatingMachine.ratedPowerFactor>0.9</cim:RotatingMachine.ratedPowerFactor>
     <cim:RotatingMachine.ratedS>100000.0</cim:RotatingMachine.ratedS>
     <cim:RotatingMachine.ratedU>4160.0</cim:RotatingMachine.ratedU>
@@ -7201,7 +7201,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_6c2b4fbe-20c0-4cf7-a7c5-ab24f19d3a30"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_6f74a243-8da8-4422-ab82-6f539733d5e7">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_6f947895-8f5f-4363-a529-325de019d1c6">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -7541,7 +7541,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_4dc19d91-2212-4b6d-ae65-b1a39f315b72"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_7504edd1-20cd-4197-8bd1-e0ba8e4178b3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_751b0b9e-cb78-499c-a686-9ac31aa3f1bc">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -7661,7 +7661,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_4562a1cb-74ea-4625-8c8d-a5791eda929b"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_772f9469-4190-41cc-aed3-bfa42bd718d1">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_774ed27b-5562-433a-aff0-35363d2a455a">
     <cim:PowerSystemResource.Location rdf:resource="#_B418D5F8-063E-45EE-BB74-F8233032C634"/>
@@ -7789,7 +7789,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_096f1a41-7c9b-4415-8532-c29a9b490dfe"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_78af84cf-e453-4f84-a192-ae5efd3a6672">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_78bfa689-7c1a-44e7-a97d-6dbcb0dff85b">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -8094,8 +8094,8 @@
     <cim:WireInfo.ratedCurrent>738.0</cim:WireInfo.ratedCurrent>
     <cim:WireInfo.sizeDescription>107.218 mm²</cim:WireInfo.sizeDescription>
     <cim:WireInfo.strandCount>7</cim:WireInfo.strandCount>
-    <cim:WireInfo.PerLengthParameters rdf:resource="#_63EEB5D7-2E43-40F2-877D-B0B9161A67D4"/>
     <cim:WireInfo.PerLengthParameters rdf:resource="#_3129DE3C-A5EF-430A-BF10-7817F604CE05"/>
+    <cim:WireInfo.PerLengthParameters rdf:resource="#_63EEB5D7-2E43-40F2-877D-B0B9161A67D4"/>
   </cim:OverheadWireInfo>
   <cim:EnergyConsumerPhase rdf:ID="_7D65F683-5E6A-452E-BFE9-BE4D37ADD46D">
     <cim:EnergyConsumerPhase.pfixed>30600.0</cim:EnergyConsumerPhase.pfixed>
@@ -8230,7 +8230,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_682FC858-F9BC-4403-8911-123C08D6F600"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_7aaab0bc-a581-4592-b4ca-ee414b942e9e">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_7b533c91-8003-47b3-ab43-ff390a7523a9">
     <cim:PhaseImpedanceData.r>9.818148167622712e-05</cim:PhaseImpedanceData.r>
@@ -8239,7 +8239,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_ac0b5b09-a4a0-41ac-aedb-90a94b6d3ac9"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_7bba3830-8d5d-4160-9e9a-d879c479b7f3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_7bdcab68-d53f-46ad-958f-2a65f6234ab1">
     <cim:PhaseImpedanceData.r>9.690381792780802e-05</cim:PhaseImpedanceData.r>
@@ -8294,7 +8294,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_d9af64c5-2e23-4b79-ac24-9163be44ad71"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_7d0ef4f8-9e33-4835-84f0-7166f10eae11">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_7d8fffe4-3670-439d-b447-d75380c86d6f">
     <cim:PhaseImpedanceData.r>9.81814816762271e-05</cim:PhaseImpedanceData.r>
@@ -8316,7 +8316,7 @@
   <cim:PerLengthPhaseImpedance rdf:ID="_7df25f38-7a66-4dc3-9743-0a03fba8c23a"/>
   <cim:PerLengthPhaseImpedance rdf:ID="_7e282a01-c8ae-4747-be92-710503ad6998"/>
   <cim:TopologicalNode rdf:ID="_7e47efab-292e-4288-9b81-3664e6abab03">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_7e934d60-77be-47ea-aff8-837a1852cd0c">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -8329,7 +8329,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_7e9eded6-2ab9-438b-9f8c-2181454fcf25">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_7ead3cb2-2807-4a92-99b7-cee6d27cc41b">
     <cim:PhaseImpedanceData.r>9.537198711188571e-05</cim:PhaseImpedanceData.r>
@@ -8423,7 +8423,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_0a6d9b2a-3639-4893-8e8a-0291d7116958"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_80edad27-f049-42a5-9e11-741a07910344">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_8107de43-12b2-4f43-870e-3ebc51797d90">
     <cim:PhaseImpedanceData.r>0.00028995031738465293</cim:PhaseImpedanceData.r>
@@ -8504,7 +8504,7 @@
   </cim:PhaseImpedanceData>
   <cim:Asset rdf:ID="_81d2b87f-bbf5-4761-a883-a0ea87b0f3f6"/>
   <cim:TopologicalNode rdf:ID="_81f8f0e5-af14-4ce3-94c0-193d8bb06a11">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_821d3af8-041e-4bd9-a90b-24b28bace884">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -8579,7 +8579,7 @@
     <cim:ACLineSegment.PerLengthImpedance rdf:resource="#_916a35c2-2bfe-4454-941f-fa0c176771cd"/>
   </cim:ACLineSegment>
   <cim:TopologicalNode rdf:ID="_832bcf59-9a19-476d-9f39-fda214e43b20">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_83320f80-2d99-4692-9601-5342c62f7bbc">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.C"/>
@@ -8719,7 +8719,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_9b7a5f67-1a6c-463f-a88a-51168de6892a"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_84f325d2-e0e8-4d1d-bedf-53f1974cfa2b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PositionPoint rdf:ID="_85024371-C29E-4018-8F19-49019AFD889D">
     <cim:PositionPoint.xPosition>-79.38380764104295</cim:PositionPoint.xPosition>
@@ -9406,7 +9406,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_6F62B188-07ED-4D04-9FC6-32FCBCF977BF"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_8b049716-9645-4570-a4c3-2bdc59e5bd6d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_8b578649-83b5-4874-b0d4-ebaf868ff8d8">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -9451,7 +9451,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_b49fea69-83f0-4b5a-8c8e-c80a1a06a3be"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_8d9ba5d5-5e45-4f3c-a8e8-741598340742">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_8dca3607-8ce0-4b11-903f-388fdfbd5411">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.B"/>
@@ -9485,7 +9485,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_d5d2e24a-776a-4afc-94b7-6510a4fbb3d4"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_8ed80ab9-24d3-43ea-aaaf-d2d5f4cf0670">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_8ef5b034-e4a6-48e7-92ce-30f8455fb99b">
     <cim:ACDCTerminal.sequenceNumber>1</cim:ACDCTerminal.sequenceNumber>
@@ -9552,7 +9552,7 @@
     <cim:Location.CoordinateSystem rdf:resource="#_7F877D68-B913-4E83-8AAB-74CC32169CCD"/>
   </cim:Location>
   <cim:TopologicalNode rdf:ID="_9044c1d3-126b-4046-9239-e1a976865b58">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ACLineSegmentPhase rdf:ID="_905923C6-E8AB-43C4-A990-FE55AD430653">
     <cim:ACLineSegmentPhase.phase rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#SinglePhaseKind.N"/>
@@ -9630,7 +9630,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_9127fa81-c423-49c1-85e0-337510e206d4">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PerLengthPhaseImpedance rdf:ID="_916a35c2-2bfe-4454-941f-fa0c176771cd"/>
   <cim:ACLineSegment rdf:ID="_917F3C8B-6A00-49BA-91B4-586098A34BC9">
@@ -10101,7 +10101,7 @@
     <cim:ACLineSegmentPhase.ACLineSegment rdf:resource="#_93442716-B823-4E1E-8F09-03586BCCE6E4"/>
   </cim:ACLineSegmentPhase>
   <cim:TopologicalNode rdf:ID="_98796d4c-fcee-4de4-b86a-c3db4408bdda">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PositionPoint rdf:ID="_989EC644-B1A4-4128-A532-3B5BA23CC65C">
     <cim:PositionPoint.xPosition>-79.39405106551054</cim:PositionPoint.xPosition>
@@ -10218,7 +10218,7 @@
     <cim:WirePosition.WireSpacingInfo rdf:resource="#_28003DCE-FD9A-4D8E-BE7B-90D1BB60F677"/>
   </cim:WirePosition>
   <cim:TopologicalNode rdf:ID="_99c5af74-4462-4003-82a9-b6f772f3c30b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_99cb3f22-a344-48ca-9fe3-9d89ac880600">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -10608,7 +10608,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_17BC235E-9A5A-4413-BDCF-38898F327E2A"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_9e679a89-62df-4c56-baf6-b276a1ae35c3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_9eec5730-7c0b-487f-9a6d-5994d9b09af4">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -14392,10 +14392,10 @@
     <cim:EnergyConsumer.LoadResponse rdf:resource="#_a3c0aff0-45bc-4f90-b05d-d7287b347d73"/>
   </cim:EnergyConsumer>
   <cim:TopologicalNode rdf:ID="_a00db9be-180b-417e-990b-b94dfd1dfa4a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_593dcfcd-b094-409c-90a6-09d8b176e6d1"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#b5643e05-b801-5efd-be54-39be2778d2f2"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_a01556cd-a9aa-4924-ae1f-215ad3f96977">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_a020d55e-0b70-4f82-94f3-af698b4df475">
     <cim:PhaseImpedanceData.r>0.00028995031738465293</cim:PhaseImpedanceData.r>
@@ -14442,7 +14442,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_99df3e32-4cbf-475c-81b8-12dba331fae5"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_a3731f4b-5e11-4617-9142-0d8ff63fe17d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_a3914a99-1835-42d7-94e1-b43c62614bb4">
     <cim:PhaseImpedanceData.r>5.502942496993334e-05</cim:PhaseImpedanceData.r>
@@ -14471,6 +14471,7 @@
   <gridos:EnergyStorageUnit rdf:ID="_a417a7bc-c341-447f-82b3-2d8fc1234037">
     <cim:IdentifiedObject.name>unit-0000</cim:IdentifiedObject.name>
     <gridos:PowerElectronicsUnit.maxP>100000.0</gridos:PowerElectronicsUnit.maxP>
+    <gridos:PowerElectronicsUnit.minP>-100000.0</gridos:PowerElectronicsUnit.minP>
     <gridos:EnergyStorageUnit.energy>200000.0</gridos:EnergyStorageUnit.energy>
     <gridos:EnergyStorageUnit.rated_energy>200000.0</gridos:EnergyStorageUnit.rated_energy>
     <gridos:EnergyStorageUnit.charge_efficiency>100.0</gridos:EnergyStorageUnit.charge_efficiency>
@@ -14582,6 +14583,7 @@
   <gridos:EnergyStorageUnit rdf:ID="_a88f60ab-ebb8-479e-9744-dea1e2e7826f">
     <cim:IdentifiedObject.name>unit-0000</cim:IdentifiedObject.name>
     <gridos:PowerElectronicsUnit.maxP>100000.0</gridos:PowerElectronicsUnit.maxP>
+    <gridos:PowerElectronicsUnit.minP>-100000.0</gridos:PowerElectronicsUnit.minP>
     <gridos:EnergyStorageUnit.energy>200000.0</gridos:EnergyStorageUnit.energy>
     <gridos:EnergyStorageUnit.rated_energy>200000.0</gridos:EnergyStorageUnit.rated_energy>
     <gridos:EnergyStorageUnit.charge_efficiency>100.0</gridos:EnergyStorageUnit.charge_efficiency>
@@ -14662,7 +14664,7 @@
   </cim:Terminal>
   <cim:PerLengthPhaseImpedance rdf:ID="_ac0b5b09-a4a0-41ac-aedb-90a94b6d3ac9"/>
   <cim:TopologicalNode rdf:ID="_ac0fe744-bdc3-4205-81f7-6ced828e4963">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_ac1db71d-6d0c-4cc3-be6a-d546e123b464">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -14713,7 +14715,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_4562a1cb-74ea-4625-8c8d-a5791eda929b"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_ad39fafc-dd10-42a4-956e-0ce301483937">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_ad4d7706-4f14-4743-974b-7785515f6594">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -14816,7 +14818,7 @@
     <cim:TransformerTankInfo.PowerTransformerInfo rdf:resource="#_d784ad00-241e-4a09-86d5-b1a9755e82c8"/>
   </cim:TransformerTankInfo>
   <cim:TopologicalNode rdf:ID="_b14527a5-f984-4ebe-aa99-021109766a52">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_b1741a48-dd31-46a2-9524-e07c493bb1cc">
     <cim:PhaseImpedanceData.r>5.502942496993334e-05</cim:PhaseImpedanceData.r>
@@ -14854,7 +14856,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_d1d932b7-ce90-4773-a5ad-8c18b7d893f1"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_b33dd5b7-988a-48ee-a6b4-4e4b949a2321">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_b33e30d9-a622-43a3-88c4-b70e575e7fa5">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.ABC"/>
@@ -14896,7 +14898,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_11E92711-726E-440E-9905-D84C3E24A795"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_b41d027e-b3f3-4090-9d8d-cb0a01a2b83d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_b426b372-7e18-48df-aac5-5ce6ccea62fc">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -14911,7 +14913,7 @@
   </cim:PhaseImpedanceData>
   <cim:PerLengthPhaseImpedance rdf:ID="_b48ff632-536e-46f2-9ba0-6dedc9022d27"/>
   <cim:TopologicalNode rdf:ID="_b4938d01-b855-48ed-a4c9-0bf65674aa00">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PerLengthPhaseImpedance rdf:ID="_b49fea69-83f0-4b5a-8c8e-c80a1a06a3be"/>
   <cim:PhaseImpedanceData rdf:ID="_b4d5c29b-9718-4524-9a9e-63f2e72a2ecd">
@@ -14982,7 +14984,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_3e4c8ea0-8841-43b3-a3fa-f146a85054b0"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_b74fb64a-2d23-43d5-b0e5-9fe89d506d08">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_b751302c-8017-4272-864d-3b7714c31df0">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -15007,7 +15009,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_d205bd46-8656-494e-a609-f86e82ecfa35"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_b7d86960-f3ca-4486-b4bb-ea74da55c56c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_b7e1eddf-effa-4086-a3cf-a6230947e2fe">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -15076,7 +15078,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_5caa62f1-291d-40c0-a549-221e9b400aa2"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_ba013c76-93dd-4575-92ba-cb3b1677307d">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_ba06e591-bd74-4683-b9a0-d35f8d901a00">
     <cim:PowerSystemResource.Location rdf:resource="#_10FB1845-EB55-40AD-B448-8B3E21042E99"/>
@@ -15095,7 +15097,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_b5305d17-2ec4-400e-965f-78a6721a250c"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_ba9544f2-493d-433e-bc95-3c4c8ce25e77">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_bb295896-a757-4127-86df-b128731999aa">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.B"/>
@@ -15108,7 +15110,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_86788CA8-7C7C-40E2-BCDE-9FC33D10CCF8"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_bb98907c-80d6-41d9-bc27-5135bfed6844">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_bc365a99-3571-402c-8450-b336dc52b21d">
     <cim:PhaseImpedanceData.r>0.00028995031738465293</cim:PhaseImpedanceData.r>
@@ -15157,7 +15159,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_E088D0FC-E1D7-4317-84C1-1CD2A59D4B12"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_be72c124-693a-4502-a4ed-598948c14e5a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_be955d44-ebb2-4702-aa4c-c0a09a9db210">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -15170,9 +15172,6 @@
     <cim:PhaseImpedanceData.x>0.0006618057293022298</cim:PhaseImpedanceData.x>
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_99940f4c-8198-4cff-b9a6-2b5080b67902"/>
   </cim:PhaseImpedanceData>
-  <cim:BaseVoltage rdf:ID="_bf205cc3-42cc-4210-9844-f34693061236">
-    <cim:BaseVoltage.nominalVoltage>4160.0</cim:BaseVoltage.nominalVoltage>
-  </cim:BaseVoltage>
   <cim:Junction rdf:ID="_bf2655d7-9959-4758-8a97-e7e17813f26e">
     <cim:PowerSystemResource.Location rdf:resource="#_C109B748-98E0-4F6D-B0A3-354C1FA3BA0E"/>
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
@@ -15226,7 +15225,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_2b07e559-b9b7-434c-9dba-9a40c5a49427"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_c04d60f8-61d1-40f3-98bc-36421b7a94d9">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_c07acb18-2c61-4d33-ab57-d7f03bc1db97">
     <cim:PhaseImpedanceData.r>0.00020900542496993336</cim:PhaseImpedanceData.r>
@@ -15246,7 +15245,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_8472cd8e-2fcb-44c1-9888-1aee2e13b05e"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_c10ef527-1616-41c4-93d7-52711091a474">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_c12def07-5a19-400e-aa94-eea1c5f69740">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -15356,11 +15355,11 @@
     <cim:TransformerStarImpedance.TransformerEndInfo rdf:resource="#_DD3D57D3-B49F-4C8C-BE18-5CB803031817"/>
   </cim:TransformerStarImpedance>
   <cim:TopologicalNode rdf:ID="_c46888c9-5394-4dfc-a687-c462ccdb2464">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Asset rdf:ID="_c4c3c8ea-a482-48a4-a567-96ea209626ec"/>
   <cim:TopologicalNode rdf:ID="_c52ee867-45c3-4efe-981c-13d695369636">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_c5320df4-19e7-4ad5-9849-2e5e55bf3687">
     <cim:PhaseImpedanceData.r>5.502942496993334e-05</cim:PhaseImpedanceData.r>
@@ -15446,10 +15445,10 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_d07cf7e4-afa5-4baa-bd25-a073bd31fef2"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_c8d22741-cec7-4706-8824-2cd4d808dbac">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_c95017d4-9dcb-44e8-8201-f12d73c622c5">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_c96fc858-bdf3-4fc6-8f80-fa7da37d37aa">
     <cim:PowerSystemResource.Location rdf:resource="#_A8FE06D3-1240-4377-9961-B93E09DAE305"/>
@@ -15467,7 +15466,7 @@
   <cim:PerLengthPhaseImpedance rdf:ID="_c9bea2d2-8759-4eb8-aeb5-0518218898f4"/>
   <cim:Asset rdf:ID="_c9d14c52-9372-469b-8161-ea1d3ab6bc4c"/>
   <cim:TopologicalNode rdf:ID="_c9e40c6e-6d56-42c4-92ac-a9c5a85410cc">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_c9ea1074-c3b5-4a86-a514-ff1efae6c8bc">
     <cim:PowerSystemResource.Location rdf:resource="#_984D63A1-1C16-4AE8-BE0C-EC60C09F6979"/>
@@ -15533,10 +15532,10 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_cb6a2d90-594e-4932-9900-7991eec3bf70">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_cb895baf-db01-4481-8ebe-b50e2fc37080">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_cb8e2b1b-5000-40f8-b80f-d35f2aaecf46">
     <cim:PhaseImpedanceData.r>0.00020900542496993336</cim:PhaseImpedanceData.r>
@@ -15553,7 +15552,7 @@
   </cim:PhaseImpedanceData>
   <cim:PerLengthPhaseImpedance rdf:ID="_ccc0b3e6-bda2-41a9-be7c-79930ea391fc"/>
   <cim:TopologicalNode rdf:ID="_cd0307c6-cabe-46d5-a865-f8781bc7eb54">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_cd046f99-7747-45ef-bd53-ec4a223b9318">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.C"/>
@@ -15573,7 +15572,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_b5305d17-2ec4-400e-965f-78a6721a250c"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_cd390202-51d9-421b-8b50-fdaa3bc4f2d3">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_cd4d371f-0add-4ebe-aeb1-096108f71813">
     <cim:PhaseImpedanceData.r>9.81814816762271e-05</cim:PhaseImpedanceData.r>
@@ -15626,14 +15625,14 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_d0289dab-d01c-4c16-99c6-465864d96ce7">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_d03b3119-579a-430f-a90b-d212f57d1e5d">
     <cim:PowerSystemResource.Location rdf:resource="#_281923E4-FA25-465E-B314-FD2D5F869834"/>
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_d063246a-90b4-4e78-ad72-60c39a1f7826">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_d0766a36-b425-47d4-9795-f0816e6141df">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -15649,7 +15648,7 @@
   <cim:Asset rdf:ID="_d07cf7e4-afa5-4baa-bd25-a073bd31fef2"/>
   <cim:Asset rdf:ID="_d0b14ad5-3dfc-46b5-8905-3057f2259bc8"/>
   <cim:TopologicalNode rdf:ID="_d0baa0e4-a42e-4a59-83f1-60a2a84d1b79">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_d0be538f-a55a-42cc-b007-d75c9d308b64">
     <cim:PhaseImpedanceData.r>9.690381792780802e-05</cim:PhaseImpedanceData.r>
@@ -15690,10 +15689,10 @@
     <cim:UsagePoint.Equipments rdf:resource="#_B6CF1B47-627B-4CAC-AC5E-96C20568911A"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_d27651cd-b1a0-4003-98ab-9547631ecb89">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:TopologicalNode rdf:ID="_d28e3dad-54f4-44b8-858d-055220e3b614">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_d2efdadd-68b9-4359-b049-db3a2ad6ad71">
     <cim:PhaseImpedanceData.r>0.000825917759156248</cim:PhaseImpedanceData.r>
@@ -15776,7 +15775,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_3667c15f-b7ab-49a3-bd41-9b8c027994c1"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_d660b5e3-3724-4c0d-bebb-c5328ded4946">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_d692344f-aae3-404e-9e25-596d13605d6f">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -15808,6 +15807,7 @@
   <gridos:EnergyStorageUnit rdf:ID="_d857ac7a-14e3-43a2-9c5d-2e2d818c640d">
     <cim:IdentifiedObject.name>unit-0000</cim:IdentifiedObject.name>
     <gridos:PowerElectronicsUnit.maxP>100000.0</gridos:PowerElectronicsUnit.maxP>
+    <gridos:PowerElectronicsUnit.minP>-100000.0</gridos:PowerElectronicsUnit.minP>
     <gridos:EnergyStorageUnit.energy>200000.0</gridos:EnergyStorageUnit.energy>
     <gridos:EnergyStorageUnit.rated_energy>200000.0</gridos:EnergyStorageUnit.rated_energy>
     <gridos:EnergyStorageUnit.charge_efficiency>100.0</gridos:EnergyStorageUnit.charge_efficiency>
@@ -15865,7 +15865,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_BAD684F8-F773-43BA-8BAF-84579FC300D6"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_d9672304-7168-450e-a1d5-725e76bf8053">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_d980419f-e6d4-47ec-a72f-92df639ae333">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.B"/>
@@ -15906,7 +15906,7 @@
   </cim:PhaseImpedanceData>
   <cim:PerLengthPhaseImpedance rdf:ID="_dbab08ce-561a-42f7-9280-a4f70c4da5cb"/>
   <cim:TopologicalNode rdf:ID="_dbb6a144-8d61-405a-9f66-88ec2313dbce">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_dbe2e3da-1aa6-45d9-b2bb-d0beb69b9077">
     <cim:ACDCTerminal.sequenceNumber>1</cim:ACDCTerminal.sequenceNumber>
@@ -15933,7 +15933,7 @@
   </cim:UsagePoint>
   <cim:PerLengthPhaseImpedance rdf:ID="_dcddf085-b5f9-4cae-9f91-89eed056e013"/>
   <cim:TopologicalNode rdf:ID="_dcff5494-e89d-4607-b36b-9afbd6888143">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_dd6c3b26-130d-40cd-8eed-a8001dd73bbb">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -16041,7 +16041,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_33AC9D5D-3F34-4011-9519-5AABBEDB1A4B"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_e177f03c-55dd-4be7-ae7d-1e2ebad3a347">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_e17c4730-d6e9-4a90-8805-251d26d78353">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.C"/>
@@ -16126,7 +16126,7 @@
     <gridos:AssetLifecycle.Asset rdf:resource="#_c9d14c52-9372-469b-8161-ea1d3ab6bc4c"/>
   </gridos:AssetLifecycle>
   <cim:TopologicalNode rdf:ID="_e567bc55-d3c5-48d4-847e-7e3b924d8027">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_e5734703-3a4c-4e68-8380-626d2d7ef05a">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -16146,7 +16146,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_5a412252-7b73-46e6-90f6-f075d429e75c"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_e5db6611-4874-4849-9242-8313ea83319a">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_e605ae6d-921a-490c-aea7-25d6277160a8">
     <cim:PhaseImpedanceData.r>9.537198711188573e-05</cim:PhaseImpedanceData.r>
@@ -16155,7 +16155,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_b68d69c2-383b-4d7d-83b4-cd12fb617f06"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_e6138543-3ff2-4f02-8cdb-0ed716cf76a2">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_e626b0f5-0be7-4e41-8ae3-663371f618d3">
     <cim:PhaseImpedanceData.r>9.537198711188571e-05</cim:PhaseImpedanceData.r>
@@ -16181,7 +16181,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_9f56ae2a-8f8e-45d8-ad16-429474ffd9d6"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_e69868a4-d40f-4b6b-bc47-1d3a92b20d90">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:UsagePoint rdf:ID="_e6ee3100-26ee-4b13-8538-dea48d1b8b2a">
     <cim:UsagePoint.phaseCode rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.C"/>
@@ -16204,7 +16204,7 @@
   <cim:PerLengthPhaseImpedance rdf:ID="_e8317529-9e16-4b19-8149-e0886f28babf"/>
   <cim:Asset rdf:ID="_e8882623-3312-4e36-a218-3535ee516420"/>
   <cim:TopologicalNode rdf:ID="_e89ef78d-0e6b-4877-b01d-b1ae19f3d8e9">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Junction rdf:ID="_e903e97b-16df-4592-beec-ae8eee242fd1">
     <cim:PowerSystemResource.Location rdf:resource="#_51E7AFEB-D169-48D8-89D2-65787EE71950"/>
@@ -16223,7 +16223,7 @@
     <cim:PhaseImpedanceData.PhaseImpedance rdf:resource="#_5a412252-7b73-46e6-90f6-f075d429e75c"/>
   </cim:PhaseImpedanceData>
   <cim:TopologicalNode rdf:ID="_ea26b70b-40e7-41b8-87f5-3ec1286b7674">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_ea2cef13-4fde-41d7-bcba-d76718bb698d">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.A"/>
@@ -16277,7 +16277,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_7C4D91E4-C742-4D37-B42F-9B066A749554"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_eb4b391d-2308-4db8-b8ab-eefa00a2543c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_eba91f88-378b-4cae-b0ec-38c0b0994c91">
     <cim:PhaseImpedanceData.r>5.502942496993334e-05</cim:PhaseImpedanceData.r>
@@ -16459,7 +16459,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_f2e065a3-bfd2-4f2a-97a9-cb3377b892c1">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:SwitchPhase rdf:ID="_f300fa3c-5fa4-4895-8750-fda975b996c1">
     <cim:SwitchPhase.closed>true</cim:SwitchPhase.closed>
@@ -16473,7 +16473,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_0BFE82E4-3193-4DD5-A6F7-6324256F70A9"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_f364469d-6157-4ca1-bf90-8049d2411cce">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_f377bd83-a555-408f-903c-2ded8e115be5">
     <cim:PhaseImpedanceData.r>5.502942496993334e-05</cim:PhaseImpedanceData.r>
@@ -16532,7 +16532,7 @@
     <cim:Terminal.ConnectivityNode rdf:resource="#_60DE13A3-951A-458D-947F-7CE845912825"/>
   </cim:Terminal>
   <cim:TopologicalNode rdf:ID="_f55e0469-d6c5-4817-ac08-51401e7c5470">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <gridos:AssetLifecycle rdf:ID="_f5b94cf0-a6a0-4005-9f90-455cb547b5f5">
     <cim:LifecycleDate.retiredDate>2030-01-01</cim:LifecycleDate.retiredDate>
@@ -16550,7 +16550,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_0C80DF60-C7EE-44D8-9220-E0CDC9275A5C"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_f6596e01-ae54-46b0-a86f-ff27456e26db">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_f664851a-1bda-4930-b3bb-ae462b12ffcb">
     <cim:PhaseImpedanceData.r>0.0002843104143000356</cim:PhaseImpedanceData.r>
@@ -16595,7 +16595,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_014D70F1-02A3-433A-85EC-11E5456D4B20"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_f7a2feda-de66-4b21-9337-2b7eb983ff73">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:Terminal rdf:ID="_f7b49881-76d8-4ef7-acda-07c0ad81355e">
     <cim:Terminal.phases rdf:resource="http://iec.ch/TC57/2013/CIM-schema-cim16#PhaseCode.C"/>
@@ -16658,7 +16658,7 @@
   </cim:PhaseImpedanceData>
   <cim:PerLengthPhaseImpedance rdf:ID="_fa4988e0-10bf-4a68-8f96-23e162491a05"/>
   <cim:TopologicalNode rdf:ID="_faa278c0-c46e-4a32-8bad-2693543a801b">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:SwitchPhase rdf:ID="_fb13b840-4db4-46a7-8317-987aa8b4ef5c">
     <cim:SwitchPhase.closed>true</cim:SwitchPhase.closed>
@@ -16689,7 +16689,7 @@
   </cim:Junction>
   <cim:Asset rdf:ID="_fc36bd35-3a4c-4e5b-9395-2bc5ed97bbc1"/>
   <cim:TopologicalNode rdf:ID="_fc8a344d-8bee-4722-b6f0-eb58995be4a8">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PhaseImpedanceData rdf:ID="_fd36a9f0-37f1-47ea-8c51-d174e6cdfd60">
     <cim:PhaseImpedanceData.r>0.0002843104143000356</cim:PhaseImpedanceData.r>
@@ -16709,7 +16709,7 @@
     <cim:UsagePoint.Equipments rdf:resource="#_8C1684B1-C241-4414-BE6E-D0E6E6303588"/>
   </cim:UsagePoint>
   <cim:TopologicalNode rdf:ID="_fdf01006-c3ac-46d4-89f4-94ae3120c147">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:PositionPoint rdf:ID="_fe017fea-4ea0-483f-8fbe-4ec871392223">
     <cim:PositionPoint.sequenceNumber>1</cim:PositionPoint.sequenceNumber>
@@ -16792,7 +16792,7 @@
     <cim:Equipment.EquipmentContainer rdf:resource="#_33D6B389-2A6F-4BA9-8C50-6A342146F87D"/>
   </cim:Junction>
   <cim:TopologicalNode rdf:ID="_ffeabae7-e01e-4d9c-b8eb-04332076760c">
-    <cim:TopologicalNode.BaseVoltage rdf:resource="#_bf205cc3-42cc-4210-9844-f34693061236"/>
+    <cim:TopologicalNode.BaseVoltage rdf:resource="#3fe0d08c-d386-5780-9349-16b1f52afd48"/>
   </cim:TopologicalNode>
   <cim:ShuntCompensatorInfo rdf:ID="_scinfo">
     <cim:ShuntCompensatorInfo.maxPowerLoss>100.0</cim:ShuntCompensatorInfo.maxPowerLoss>
@@ -16800,4 +16800,7 @@
     <cim:ShuntCompensatorInfo.ratedReactivePower>100.0</cim:ShuntCompensatorInfo.ratedReactivePower>
     <cim:ShuntCompensatorInfo.ratedVoltage>100.0</cim:ShuntCompensatorInfo.ratedVoltage>
   </cim:ShuntCompensatorInfo>
+  <cim:BaseVoltage rdf:ID="b5643e05-b801-5efd-be54-39be2778d2f2">
+    <cim:BaseVoltage.nominalVoltage>36053.33333333333</cim:BaseVoltage.nominalVoltage>
+  </cim:BaseVoltage>
 </rdf:RDF>
