@@ -12,8 +12,8 @@ from idp_schedule_provider.forecaster.schemas import (
 @pytest.mark.parametrize(
     "scenario_config, status_code",
     [
-        ({"name": "test1", "description": "test1"}, 200),
-        ({"name": "test2"}, 200),
+        ({"name": "test1", "description": "test1"}, 204),
+        ({"name": "test2"}, 204),
     ],
 )
 def test_create_and_delete_scenario(test_client, scenario_config, status_code):
@@ -40,13 +40,13 @@ def test_update_scenario_name(test_client):
     scenario_2 = {"name": "test_2", "description": "test2"}
 
     rsp_1 = test_client.put(f"/scenario/{scenario_id}", json=scenario_1)
-    assert rsp_1.status_code == 200
+    assert rsp_1.status_code == 204
     all_scenarios = test_client.get("/scenarios").json()
     assert scenario_id in all_scenarios["scenarios"]
     assert all_scenarios["scenarios"][scenario_id] == scenario_1
 
     rsp_2 = test_client.put(f"/scenario/{scenario_id}", json=scenario_2)
-    assert rsp_2.status_code == 200
+    assert rsp_2.status_code == 204
     all_scenarios = test_client.get("/scenarios").json()
     assert scenario_id in all_scenarios["scenarios"]
     assert all_scenarios["scenarios"][scenario_id] == scenario_2

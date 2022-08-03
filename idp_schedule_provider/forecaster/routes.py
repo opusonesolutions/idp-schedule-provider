@@ -15,8 +15,12 @@ from idp_schedule_provider.forecaster.seed_data import DUMMY_SOURCE, IEEE123_SOU
 router = APIRouter()
 
 
-@router.post("/seed_data", tags=["test-only"])
-async def seed_db(db: Session = Depends(get_db_session)) -> None:
+@router.post(
+    "/seed_data",
+    tags=["test-only"],
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def seed_db(db: Session = Depends(get_db_session)):
     """
     Seeds the database with test data.
 
@@ -29,10 +33,13 @@ async def seed_db(db: Session = Depends(get_db_session)) -> None:
     forecast_controller.insert_rows(db, IEEE123_SOURCE.scenarios)
     forecast_controller.insert_rows(db, IEEE123_SOURCE.forecast_data)
 
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 
 @router.put(
     "/scenario/{scenario}",
     tags=["test-only"],
+    status_code=status.HTTP_204_NO_CONTENT,
 )
 async def update_scenario(
     scenario: schemas.ScenarioID,
@@ -51,10 +58,13 @@ async def update_scenario(
     """
     forecast_controller.create_or_update_scenario(db, scenario, scenario_data)
 
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
 
 @router.delete(
     "/scenario/{scenario}",
     tags=["test-only"],
+    status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_scenario(
     scenario: schemas.ScenarioID,
@@ -174,6 +184,7 @@ async def get_event_timespans(
 @router.post(
     "/{scenario}/asset_schedules/{feeder}",
     tags=["test-only"],
+    status_code=status.HTTP_201_CREATED,
 )
 async def add_schedules(
     scenario: schemas.ScenarioID,
@@ -206,6 +217,7 @@ async def add_schedules(
 
 @router.get(
     "/{scenario}/asset_schedules",
+    response_model=schemas.GetSchedulesResponseModel,
     description=load_resource("schedule_response"),
     tags=["spec-required"],
 )
@@ -282,6 +294,7 @@ async def get_schedules(
 @router.post(
     "/{scenario}/asset_events/{feeder}",
     tags=["test-only"],
+    status_code=status.HTTP_201_CREATED,
 )
 async def add_events(
     scenario: schemas.ScenarioID,

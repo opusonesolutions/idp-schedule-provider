@@ -42,15 +42,15 @@ month for multiple asset reqests.
 
 ## Event Variables
 
-### Electric Vehicle Station (EV) Schedules
+### Electric Vehicle Charging Station (EV) Events
 
 <details>
-An event schedule will be used for an EV when it is in *Global* mode and performing an OPF.
+EV events will be used when an EV is in *Global* control mode and the specified analysis objective is an OPF.
 When in this mode the optimization engine will make use of the provided events to determine how to
 optimally charge the electric vehicle to meet the desired objective.
 
-If no charging events are provided, the EV Station is assumed to be doing nothing
-and will consume no power.
+If no charging events are provided or there are no events active for a timepoint,
+the EV station is assumed to be doing nothing and will consume no power.
 
 | Variable Name          | Description                                                              | Units |
 | ---------------------- | ------------------------------------------------------------------------ | ----- |
@@ -64,20 +64,19 @@ and will consume no power.
 
 </details>
 
-### Control Mode Schedules
+### Control Mode Events
 
 <details>
-A control mode schedule will be used for an asset to determine the control mode it should be in for
+Control mode events will be used for an asset to determine the control mode it should be in for
 analysis purposes when performing analyses.
 
-If no control_mode events are provided the asset is assumed to be controlled using the mode specified in the
-network model.
+If no control mode events are provided or there are no events active for a timepoint, the asset is assumed to be controlled using the mode specified in the network model.
 
-| Variable Name          | Description                                                                     | Units |
-| ---------------------- | --------------------------------------------------------------------------------| ----- |
-| start_datetime         | UTC timestamp indicating when the EV is able to start charging (ISO8601)        | n/a   |
-| end_datetime           | UTC timestamp indicating when the EV has stopped charging (IS08601)             | n/a   |
-| event_type             | This should always be "control_mode" for this event                             | n/a   |
-| control_mode           | The mode this asset should be in for the duration of start/end timestamp        | n/a   |
+| Variable Name  | Description                                                              | Units |
+| -------------- | ------------------------------------------------------------------------ | ----- |
+| start_datetime | UTC timestamp indicating when the control mode event begins (ISO8601)    | n/a   |
+| end_datetime   | UTC timestamp indicating when the control mode event ends (IS08601)      | n/a   |
+| event_type     | This should always be "control_mode" for this event                      | n/a   |
+| control_mode   | The mode this asset should be in for the duration of start/end timestamp | n/a   |
 
 </details>
