@@ -58,7 +58,7 @@ def cost_schedule_data_seed(database_client: Session, scenario_seed, feeder_seed
                     asset_name="Battery 2",
                     feeder=feeder_seed[0],
                     data={
-                        "active_energy_cost": [{"x": 1, "y": i}],
+                        "active_energy_cost": [{"x": 1, "y": i}, {"x": 1.5, "y": i + 0.5}],
                     },
                     timestamp=datetime(2000, 1, 1, i, 0, 0, tzinfo=timezone.utc),
                 ),
@@ -428,8 +428,8 @@ def test_get_schedule_data_interpolated_unsupported(
                         {"active_energy_cost": 2.0},
                     ],
                     "Battery 2": [
-                        {"active_energy_cost": [{"x": 1.0, "y": 1.0}]},
-                        {"active_energy_cost": [{"x": 1.0, "y": 2.0}]},
+                        {"active_energy_cost": [{"x": 1.0, "y": 1.0}, {"x": 1.5, "y": 1.5}]},
+                        {"active_energy_cost": [{"x": 1.0, "y": 2.0}, {"x": 1.5, "y": 2.5}]},
                     ],
                     "Tap Changer 1": [{"tap_changer_cost": 1.0}, {"tap_changer_cost": 2.0}],
                     "Capacitor 1": [
@@ -458,18 +458,10 @@ def test_get_schedule_data_interpolated_unsupported(
                         {"active_energy_cost": 2.0},
                     ],
                     "Battery 2": [
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 1.0}],
-                        },
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 1.0}],
-                        },
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 2.0}],
-                        },
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 2.0}],
-                        },
+                        {"active_energy_cost": [{"x": 1.0, "y": 1.0}, {"x": 1.5, "y": 1.5}]},
+                        {"active_energy_cost": [{"x": 1.0, "y": 1.0}, {"x": 1.5, "y": 1.5}]},
+                        {"active_energy_cost": [{"x": 1.0, "y": 2.0}, {"x": 1.5, "y": 2.5}]},
+                        {"active_energy_cost": [{"x": 1.0, "y": 2.0}, {"x": 1.5, "y": 2.5}]},
                     ],
                     "Tap Changer 1": [
                         {"tap_changer_cost": 1.0},
@@ -505,15 +497,9 @@ def test_get_schedule_data_interpolated_unsupported(
                         {},
                     ],
                     "Battery 2": [
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 1.0}],
-                        },
-                        {
-                            "active_energy_cost": None,
-                        },
-                        {
-                            "active_energy_cost": [{"x": 1.0, "y": 2.0}],
-                        },
+                        {"active_energy_cost": [{"x": 1.0, "y": 1.0}, {"x": 1.5, "y": 1.5}]},
+                        {"active_energy_cost": None},
+                        {"active_energy_cost": [{"x": 1.0, "y": 2.0}, {"x": 1.5, "y": 2.5}]},
                         {},
                     ],
                     "Tap Changer 1": [

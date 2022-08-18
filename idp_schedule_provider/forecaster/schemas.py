@@ -1,9 +1,9 @@
 from datetime import datetime, timezone
 from enum import Enum
-from typing import List, MutableMapping, Optional, Union
+from typing import TYPE_CHECKING, List, MutableMapping, Optional, Union
 
 from dateutil.relativedelta import relativedelta
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, conlist
 
 from idp_schedule_provider.forecaster.models import EventType, Scenarios
 
@@ -94,15 +94,22 @@ class UnbalancedScheduleValue(BaseModel):
     C: BalancedScheduleValue
 
 
-class CostScheduleValue(BaseModel):
+class CostCurvePoint(BaseModel):
     x: float
     y: float
 
 
+# Need to do this to make by the apidocs and mypy happy
+# https://github.com/pydantic/pydantic/issues/975#issuecomment-551147305
+if TYPE_CHECKING:
+    CostCurve = List[CostCurvePoint]
+else:
+    CostCurve = conlist(CostCurvePoint, min_items=2, max_items=5)
+
 # order matters
 ScheduleValue = Union[
     BalancedScheduleValue,
-    List[CostScheduleValue],
+    CostCurve,
     UnbalancedScheduleValue,
 ]
 
@@ -253,7 +260,7 @@ class GetSchedulesResponseModel(AddNewSchedulesModel):
 
 class AddNewEventsModel(BaseModel):
     assets: MutableMapping[AssetID, List[EventsEntry]] = Field(
-        description="A mapping of global evto their schedule data"
+        description="A mapping of assets to their event data"
     )
 
     class Config:
