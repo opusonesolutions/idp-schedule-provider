@@ -110,6 +110,27 @@ provided. Gaps are likely to cause the analysis to fail or behave unpredictably.
 | generation    | total generation of all assets in of the feeder | W     |
 | generation_pf | power factor of the feeder generation           | p.u   |
 
+#### Cost of Violations Schedule
+
+A Cost of Violations schedule can be provided for a feeder/substation.
+The costs will be applied to all assets in that feeder/substation. These will take
+precedence over any values in the network model however values specified on that
+asset itself will take precedence over these.
+
+The values can either be a single value or a curve that changes the cost (`y`) based on how much
+the rating is violated by.
+
+A simple curve example of [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}] means that
+
+- Having any value below 100% of the equipment rating will have no cost
+- Any value greater than 100% of the equipment rating will have a cost of $1 per 1%
+
+| Variable Name          | Description                              | Units   |
+| ---------------------- | ---------------------------------------- | ------- |
+| current_violation_cost | The cost of violating the current rating | $/ratio |
+| voltage_violation_cost | The cost of violating the voltage rating | $/ratio |
+| power_violation_cost   | The cost of violating the power rating   | $/ratio |
+
 ##### Example(s)
 
 ```json
@@ -122,13 +143,15 @@ provided. Gaps are likely to cause the analysis to fail or behave unpredictably.
                 "load": 450000,
                 "load_pf": 0.9,
                 "generation": 45000,
-                "generation_pf": 0.95
+                "generation_pf": 0.95,
+                "current_violation_cost": 2
             },
             {
                 "load": 550000,
                 "load_pf": 0.86,
                 "generation": 75000,
-                "generation_pf": 0.95
+                "generation_pf": 0.95,
+                "current_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}]
             },
             ...
         ],
@@ -164,10 +187,10 @@ Cost Optimization analyses.
 The values can either be a single value that is used throughout that timepoint,
 or a curve that changes the cost (`y`) based on usage.
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
 
 <details>
 <summary>Balanced Asset Example</summary>
@@ -269,10 +292,10 @@ or a curve that changes the cost (`y`) based on usage.
 | ------------------ | ------------------------------ | ----- |
 | active_energy_cost | the cost of energy consumption | $/Wh  |
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
 
 </details>
 
@@ -316,10 +339,10 @@ Cost Optimization analyses.
 The values can either be a single value that is used throughout that timepoint,
 or a curve that changes the cost (`y`) based on usage.
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
 
 </details>
 
@@ -328,7 +351,7 @@ or a curve that changes the cost (`y`) based on usage.
 <details>
 
 Capacitors support being connected and disconnected via schedules. This can either be provided
-per-phase or as a single balanced value.  They also support cost schedules for the cost of
+per-phase or as a single balanced value. They also support cost schedules for the cost of
 operating this capacitor.
 
 For any timepoints where the state values are not specified, the capacitor will
@@ -344,9 +367,9 @@ be assumed to be in its default connection state.
 
 The values must be a single value that is used throughout that timepoint.
 
-| Variable Name            | Description                                                 | Units        |
-| ------------------------ | ----------------------------------------------------------- | ------------ |
-| capacitor_operation_cost | the cost of changing the connection status of the capacitor | $/operation  |
+| Variable Name            | Description                                                 | Units       |
+| ------------------------ | ----------------------------------------------------------- | ----------- |
+| capacitor_operation_cost | the cost of changing the connection status of the capacitor | $/operation |
 
 <details>
 <summary>Balanced Asset Example</summary>
@@ -362,7 +385,7 @@ The values must be a single value that is used throughout that timepoint.
                 "capacitor_operation_cost": 50,
             },
             {
-                "state": 0, 
+                "state": 0,
                 "capacitor_operation_cost": 50,
             }
             ...
@@ -382,7 +405,7 @@ The values must be a single value that is used throughout that timepoint.
     "assets": {
         "cap_1": [
             {
-                "state": { "A": 1, "B": 0, "C": 1}, 
+                "state": { "A": 1, "B": 0, "C": 1},
                 "capacitor_operation_cost": 50
             },
             {
@@ -419,10 +442,10 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 The values can either be a single value that is used throughout that timepoint,
 or a curve that changes the cost (`y`) based on usage.
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
 
 </details>
 
@@ -447,10 +470,10 @@ proportionally from the substation generation.
 The values can either be a single value that is used throughout that timepoint,
 or a curve that changes the cost (`y`) based on usage.
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
 
 </details>
 
@@ -459,7 +482,8 @@ or a curve that changes the cost (`y`) based on usage.
 <details>
 
 Switches support being open/closed via schedules. They can either be provided
-per-phase or as a single balanced value.
+per-phase or as a single balanced value. Switches also support violation cost schedules
+which can only be specified as a balanced value.
 
 For any timepoints where the status values are not specified, the switch will be
 assumed to be in its default open/closed state.
@@ -470,6 +494,24 @@ assumed to be in its default open/closed state.
 | ------------- | ------------------------------------------------- | ----- |
 | status        | either 0 (indicates open) or 1 (indicates closed) | n/a   |
 
+#### Cost of Violations Schedule
+
+A Cost of Violations schedule can be provided for a switch. These will take
+precedence over any other switch violation costs.
+
+The values can either be a single value or a curve that changes the cost (`y`) based on how much
+the rating is violated by.
+
+A simple curve example of [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}] means that
+
+- Having any value below 100% of the equipment rating will have no cost
+- Any value greater than 100% of the equipment rating will have a cost of $1 per 1%
+
+| Variable Name          | Description                              | Units   |
+| ---------------------- | ---------------------------------------- | ------- |
+| current_violation_cost | The cost of violating the current rating | $/ratio |
+| power_violation_cost   | The cost of violating the power rating   | $/ratio |
+
 <details>
 <summary>Balanced Asset Example</summary>
 
@@ -479,8 +521,14 @@ assumed to be in its default open/closed state.
     "time_stamps": ...,
     "assets": {
         "switch_1": [
-            {"status": 1},
-            {"status": 0},
+            {
+                "status": 1,
+                "current_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}]
+            },
+            {
+                "status": 0,
+                "current_violation_cost": 2
+            },
             ...
         ],
     }
@@ -497,8 +545,14 @@ assumed to be in its default open/closed state.
     "time_stamps": ...,
     "assets": {
         "switch_1": [
-            {"status": { "A": 1, "B": 0, "C": 1}},
-            {"status": { "A": 1, "B": 1, "C": 1}},
+            {
+                "status": { "A": 1, "B": 0, "C": 1},
+                "current_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}]
+            },
+            {
+                "status": { "A": 1, "B": 1, "C": 1},
+                "current_violation_cost": 2
+            },
             ...
         ],
     }
@@ -546,10 +600,11 @@ For any timepoints where the PQ values are not specified, P,Q are assumed to be 
 The values can either be a single value that is used throughout that timepoint,
 or a curve that changes the cost (`y`) based on usage.
 
-| Variable Name                          | Description                            | Units           |
-| -------------------------------------- | -------------------------------------- | --------------- |
-| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh            |
-| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h  |
+| Variable Name                          | Description                            | Units          |
+| -------------------------------------- | -------------------------------------- | -------------- |
+| active_energy_cost (as a single value) | Cost of procuring energy from device   | $/Wh           |
+| active_energy_cost (as a curve)        | Curve for the cost of procuring energy | x = W, y = $/h |
+
 <details>
 <summary>Balanced Asset Example</summary>
 
@@ -609,7 +664,8 @@ or a curve that changes the cost (`y`) based on usage.
 
 <details>
 
-Transformers and regulators support a balanced or unbalanced tap position schedule.
+Transformers and regulators support a balanced or unbalanced tap position schedule. They also support violation cost schedules
+which can only be specified as a balanced value.
 
 For any timepoints where the tap position values are not specified, the transformer will be
 assumed to be in its default tap position.
@@ -624,9 +680,27 @@ assumed to be in its default tap position.
 
 The values must be a single value that is used throughout that timepoint.
 
-| Variable Name      | Description                                  | Units   |
-| ------------------ | -------------------------------------------- | ------- |
-| tap_operation_cost | the cost of changing the tap position by one | $/step  |
+| Variable Name      | Description                                  | Units  |
+| ------------------ | -------------------------------------------- | ------ |
+| tap_operation_cost | the cost of changing the tap position by one | $/step |
+
+#### Cost of Violations Schedule
+
+A Cost of Violations schedule can be provided for a transformer or regulator. These will take
+precedence over any other violation costs for this asset. Note: As th
+
+The values can either be a single value or a curve that changes the cost (`y`) based on how much
+the rating is violated by.
+
+A simple curve example of [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}] means that
+
+- Having any value below 100% of the equipment rating will have no cost
+- Any value greater than 100% of the equipment rating will have a cost of $1 per 1%
+
+| Variable Name          | Description                              | Units   |
+| ---------------------- | ---------------------------------------- | ------- |
+| current_violation_cost | The cost of violating the current rating | $/ratio |
+| power_violation_cost   | The cost of violating the power rating   | $/ratio |
 
 <details><summary>Balanced Asset Example</summary>
 
@@ -639,10 +713,12 @@ The values must be a single value that is used throughout that timepoint.
             {
                 "tap_positions": 1,
                 "tap_operation_cost": 50,
+                "power_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}],
             },
             {
                 "tap_positions": 0,
                 "tap_operation_cost": 50,
+                "power_violation_cost": 2,
             },
             ...
         ],
@@ -662,10 +738,108 @@ The values must be a single value that is used throughout that timepoint.
             {
                 "tap_positions": { "A": 10, "B": 12, "C": 8},
                 "tap_operation_cost": 50,
+                "power_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}],
             },
             {
                 "tap_positions": { "A": 12, "B": 10, "C": 8},
                 "tap_operation_cost": 50,
+                "power_violation_cost": 2,
+            },
+            ...
+        ],
+    }
+}
+```
+
+</details>
+
+</details>
+
+### Line Segment Schedules
+
+<details>
+
+Line segments support violation cost schedules.
+
+#### Cost of Violations Schedule
+
+A Cost of Violations schedule can be provided for a line segment. These will take
+precedence over any other violation costs for this asset.
+
+The values can either be a single value or a curve that changes the cost (`y`) based on how much
+the rating is violated by.
+
+A simple curve example of [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}] means that
+
+- Having any value below 100% of the equipment rating will have no cost
+- Any value greater than 100% of the equipment rating will have a cost of $1 per 1%
+
+| Variable Name          | Description                              | Units   |
+| ---------------------- | ---------------------------------------- | ------- |
+| current_violation_cost | The cost of violating the current rating | $/ratio |
+| power_violation_cost   | The cost of violating the power rating   | $/ratio |
+
+<details><summary>Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "line_1": [
+            {
+                "power_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}],
+            },
+            {
+                "power_violation_cost": 2
+            },
+            ...
+        ],
+    }
+}
+```
+
+</details>
+
+</details>
+
+### Connectivity Node Schedules
+
+<details>
+
+Connectivity Nodes support violation cost schedules.
+
+#### Cost of Violations Schedule
+
+A Cost of Violations schedule can be provided for a node. These will take
+precedence over any other violation costs for this asset.
+
+The values can either be a single value or a curve that changes the cost (`y`) based on how much
+the rating is violated by.
+
+A simple curve example of [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}] means that
+
+- Having any value below 100% of the equipment rating will have no cost
+- Any value greater than 100% of the equipment rating will have a cost of $1 per 1%
+
+| Variable Name          | Description                              | Units   |
+| ---------------------- | ---------------------------------------- | ------- |
+| voltage_violation_cost | The cost of violating the voltage rating | $/ratio |
+| power_violation_cost   | The cost of violating the power rating   | $/ratio |
+
+<details><summary>Example</summary>
+
+```json
+{
+    "time_interval": ...,
+    "time_stamps": ...,
+    "assets": {
+        "node_1": [
+            {
+                "voltage_violation_cost": [{"x": 0, "y": 0}, {"x": 1, "y": 0}, {"x": 2, "y": 100}],
+            },
+            {
+                "voltage_violation_cost": 2
             },
             ...
         ],
