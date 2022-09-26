@@ -18,5 +18,7 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 ADD . /usr/src
 
-# For when run as nobody in environments on AWS
-RUN chown -R nobody:nogroup /usr/src
+RUN chown -R 398:398 /usr/src
+
+# run with no permissions (random id below 499 to make it system user)
+USER 398

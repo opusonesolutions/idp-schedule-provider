@@ -69,6 +69,26 @@ build:
     - master
     - tags
 
+
+build_for_artifactory:
+  stage: build
+  image: docker:19.03.8
+  script: |
+    set -e -x
+    image=${DKR_REGISTRY}/gridos/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+    DOCKER_BUILDKIT=1 docker build -t $image-rootless --build-arg ROOT=false --build-arg JFROG_USER=$JFROG_USER --build-arg JFROG_PASSWORD=$JFROG_PASSWORD --label commit=$CI_COMMIT_SHA .
+    docker push $image-rootless
+    image=${ARTIFACTORY}/gridos/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+    DOCKER_BUILDKIT=1 docker build -t $image-rootless --build-arg ROOT=false --build-arg JFROG_USER=$JFROG_USER --build-arg JFROG_PASSWORD=$JFROG_PASSWORD --label commit=$CI_COMMIT_SHA .
+    docker push $image-rootless
+  when: manual
+  only:
+    - master
+  except:
+    - schedules
+    - pipelines
+
+
 pages:
   stage: build
   before_script:
