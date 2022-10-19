@@ -37,7 +37,11 @@ forecast_data: List[Union[EventData, ScheduleData]] = [
             scenario_id=scenario_id,
             asset_name="_6b6586f6-4b22-4523-a568-96f8ac0434c4",
             feeder="_33D6B389-2A6F-4BA9-8C50-6A342146F87D",
-            data={"p": 500 + 50 * i, "q": 50 + 50 * i, "active_energy_cost": 10 + i},
+            data={
+                "p": 500 + 50 * i,
+                "q": 50 + 50 * i,
+                "active_energy_cost": [{"x": 10 + i, "y": 10 + i}, {"x": i, "y": i}],
+            },
             timestamp=datetime(2022, 1, 1, 0, 0, 0, 0, timezone.utc) + relativedelta(hours=i),
         )
         for i in range(0, 24)
