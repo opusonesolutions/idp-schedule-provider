@@ -1,11 +1,11 @@
-FROM python:3.7-slim as requirements_export
+FROM python:3.10-slim as requirements_export
 RUN pip install poetry
 COPY poetry.lock .
 COPY pyproject.toml .
 RUN poetry export -o requirements.txt
 
 # Use an official Python runtime as a base image
-FROM python:3.7-slim
+FROM python:3.10-slim
 
 # Set the working directory to /app
 WORKDIR /usr/src

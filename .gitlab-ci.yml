@@ -1,4 +1,4 @@
-image: python:3.7-slim
+image: python:3.10-slim
 
 stages:
   - static-analysis
@@ -69,7 +69,6 @@ build:
     - master
     - tags
 
-
 build_for_artifactory:
   stage: build
   image: docker:19.03.8
@@ -87,7 +86,6 @@ build_for_artifactory:
   except:
     - schedules
     - pipelines
-
 
 pages:
   stage: build
