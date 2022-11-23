@@ -56,8 +56,17 @@ async def update_scenario(
     This exists for testing purposes only. It is not part of the external schedule implementation
     and does not need to be implemented as part of the specification.
     """
-    forecast_controller.create_or_update_scenario(db, scenario, scenario_data)
-
+    try:
+        forecast_controller.create_or_update_scenario(db, scenario, scenario_data)
+    except exceptions.DuplicateScenarioNameException as e:
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            f"Scenario name `{scenario_data.name}` is already found",
+        ) from e
+    except Exception as e:
+        raise HTTPException(
+            status.HTTP_500_INTERNAL_SERVER_ERROR, "Failed to update scenario"
+        ) from e
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 

@@ -9,10 +9,24 @@ from idp_schedule_provider.forecaster import exceptions, resampler, schemas
 from idp_schedule_provider.forecaster.models import EventData, Scenarios, ScheduleData
 
 
-def scenario_exists(db: Session, scenario_id: str):
-    """check does scenario exist in schedule provider by id"""
+def get_scenario(
+    db: Session,
+    scenario_id: Optional[schemas.ScenarioID] = None,
+    name: Optional[str] = None,
+) -> Optional[schemas.Scenarios]:
+    """check does scenario exist in schedule provide"""
 
-    query = db.query(schemas.Scenarios).filter_by(id=scenario_id)
+    filters = {}
+    if scenario_id is not None:
+        filters["id"] = scenario_id
+
+    if name is not None:
+        filters["name"] = name
+
+    if not filters:
+        raise exceptions.ScenarioNotFoundException()
+
+    query = db.query(schemas.Scenarios).filter_by(**filters)
 
     return query.one_or_none()
 
@@ -21,7 +35,12 @@ def create_or_update_scenario(
     db: Session, scenario_id: schemas.ScenarioID, scenario_data: schemas.ScenarioModel
 ):
     """validate and create/update scenario db model"""
-    if scenario_exists(db, scenario_id=scenario_id):
+
+    scenario = get_scenario(db, name=scenario_data.name)
+    if scenario is not None and scenario.id != scenario_id:
+        raise exceptions.DuplicateScenarioNameException
+
+    if get_scenario(db, scenario_id=scenario_id):
         db.query(schemas.Scenarios).filter_by(id=scenario_id).update(
             {"name": scenario_data.name, "description": scenario_data.description}
         )
@@ -69,7 +88,7 @@ def add_schedules(
     new_schedules: schemas.AddNewSchedulesModel,
 ) -> None:
     """Add new asset schedule to schedule provider"""
-    if not scenario_exists(db, scenario_id=scenario):
+    if not get_scenario(db, scenario_id=scenario):
         raise exceptions.ScenarioNotFoundException
 
     timestamps = new_schedules.time_stamps
@@ -122,7 +141,7 @@ def add_events(
     new_events: schemas.AddNewEventsModel,
 ) -> None:
     """Add new asset events to schedule provider"""
-    if not scenario_exists(db, scenario_id=scenario):
+    if not get_scenario(db, scenario_id=scenario):
         raise exceptions.ScenarioNotFoundException()
 
     asset_events = new_events.dict()["assets"]

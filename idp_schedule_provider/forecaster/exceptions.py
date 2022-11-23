@@ -12,3 +12,7 @@ class AssetNotFoundException(ForecasterException):
 
 class BadAssetScheduleTimeIntervalException(ForecasterException):
     pass
+
+
+class DuplicateScenarioNameException(ForecasterException):
+    pass
